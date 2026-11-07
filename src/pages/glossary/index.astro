@@ -41,22 +41,6 @@ terms.sort((a, b) => a[0].localeCompare(b[0]));
     <div id="glossary-empty" class="empty-state" hidden>No matching terms. Try a shorter search.</div>
     <div class="callout glossary-note"><strong>Precision note</strong><p>Some terms have specialised meanings that depend on the context or reference frame. These are introductory definitions, not substitutes for formal standards or technical papers.</p></div>
   </section>
-  <script>
-    const glossaryInput = document.querySelector<HTMLInputElement>("#glossary-search");
-    const glossaryItems = Array.from(document.querySelectorAll<HTMLElement>(".glossary-item"));
-    const glossaryCount = document.querySelector<HTMLElement>("#glossary-count");
-    const glossaryEmpty = document.querySelector<HTMLElement>("#glossary-empty");
-    glossaryInput?.addEventListener("input", () => {
-      const q = glossaryInput.value.trim().toLowerCase();
-      let visible = 0;
-      glossaryItems.forEach((item) => {
-        const match = (item.dataset.term || "").includes(q) || (item.dataset.definition || "").includes(q);
-        item.hidden = !match;
-        if (match) visible += 1;
-      });
-      if (glossaryCount) glossaryCount.textContent = visible + (visible === 1 ? " term" : " terms");
-      if (glossaryEmpty) glossaryEmpty.hidden = visible !== 0;
-    });
-  </script>
+  <script is:inline src="/scripts/glossary-search.js"></script>
   <style>.glossary-search{max-width:600px;margin:0 0 10px}.glossary-count{color:var(--quiet);font-size:.75rem}.glossary-list{border-top:1px solid var(--line);margin-top:22px}.glossary-item{display:grid;grid-template-columns:.55fr 1.45fr;gap:28px;padding:19px 0;border-bottom:1px solid var(--line)}.glossary-item dt{font:600 1.04rem "Space Grotesk",sans-serif;color:var(--gold-bright)}.glossary-item dd{margin:0;color:var(--muted);font-size:.88rem;line-height:1.8}.glossary-note{margin-top:30px}@media(max-width:600px){.glossary-item{grid-template-columns:1fr;gap:6px}}</style>
 </SiteLayout>
