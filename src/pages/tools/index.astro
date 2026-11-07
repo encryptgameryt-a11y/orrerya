@@ -66,7 +66,7 @@ import { planets } from "../../data/planets";
           <div class="orbit-legend"><span><i class="legend-sun"></i> Sun · focus</span><span><i class="legend-planet"></i> Planet</span><span>Orbit shape · schematic</span></div>
         </div>
         <div class="orbit-controls">
-          <div class="field"><label for="orbit-world">Choose a planet</label><select id="orbit-world">{planets.map((planet)=><option value={planet.distanceAu} data-a={planet.distanceAu} data-e={planet.eccentricity} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+          <div class="field"><label for="orbit-world">Choose a planet</label><select id="orbit-world">{planets.map((planet)=><option value={planet.distanceAu} data-a={planet.semiMajorAxisAu} data-e={planet.eccentricityValue} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
           <div class="field"><label for="orbit-angle">Move around the orbit <output id="orbit-angle-value" for="orbit-angle">0°</output></label><input id="orbit-angle" type="range" min="0" max="360" step="0.1" value="0" /></div>
           <div class="orbit-play-row">
             <button type="button" class="btn small secondary" id="orbit-play" aria-pressed="false">Play orbit</button>
