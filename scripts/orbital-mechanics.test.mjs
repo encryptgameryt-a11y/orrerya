@@ -8,6 +8,12 @@ import {
   solveEccentricAnomaly,
   trueAnomalyFromMeanAnomaly
 } from "../src/lib/orbital-mechanics.js";
+import {
+  EARTH_SIDEREAL_YEAR_DAYS,
+  GRAVITATIONAL_CONSTANT_KM3_KG_S2,
+  JULIAN_YEAR_DAYS,
+  SPEED_OF_LIGHT_KM_S
+} from "../src/lib/scientific-constants.js";
 
 function angularDifferenceDegrees(a, b) {
   return Math.abs(((a - b + 540) % 360) - 180);
@@ -83,4 +89,25 @@ test("invalid orbital inputs fail clearly", () => {
   assert.throws(() => orbitalState(1, 1, 0), RangeError);
   assert.throws(() => orbitalState(1, -0.1, 0), RangeError);
   assert.throws(() => meanAnomalyFromTrueAnomaly(Number.NaN, 0.1), RangeError);
+});
+
+
+test("shared astronomical constants match their cited definitions", () => {
+  assert.equal(ASTRONOMICAL_UNIT_KM, 149597870.7);
+  assert.equal(SPEED_OF_LIGHT_KM_S, 299792.458);
+  assert.equal(JULIAN_YEAR_DAYS, 365.25);
+  assert.equal(EARTH_SIDEREAL_YEAR_DAYS, 365.25635535);
+  assert.equal(GRAVITATIONAL_CONSTANT_KM3_KG_S2, 6.67430e-20);
+  assert.equal(SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2, 1.32712440041279419e11);
+});
+
+test("Earth-like J2000 orbit gives the expected sidereal-year scale", () => {
+  const semiMajorAxisAu = 1.00000018; // JPL Earth–Moon barycentre element
+  const semiMajorAxisKm = semiMajorAxisAu * ASTRONOMICAL_UNIT_KM;
+  const periodDays = 2 * Math.PI
+    * Math.sqrt((semiMajorAxisKm ** 3) / SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2)
+    / 86400;
+  // This is a Sun-only two-body estimate; the Earth–Moon mass and N-body
+  // perturbations account for the small difference from the JPL sidereal period.
+  assert.ok(Math.abs(periodDays - EARTH_SIDEREAL_YEAR_DAYS) < 0.001);
 });
