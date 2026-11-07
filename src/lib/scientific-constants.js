@@ -17,4 +17,4 @@ export const SCIENTIFIC_CONSTANT_SOURCES = {
   astronomicalUnit: "https://www.iau.org/static/resolutions/IAU2012_English.pdf",
   codata2022: "https://physics.nist.gov/constants",
   solarGravitationalParameter: "https://ssd.jpl.nasa.gov/astro_par.html"
-} as const;
+};
