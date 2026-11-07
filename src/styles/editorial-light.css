@@ -759,3 +759,29 @@ body.home-nebula .orrery-map-captions text {
     background: rgba(0,0,0,.70) !important;
   }
 }
+
+/* Final specificity pass: neutralise older component-level navy backgrounds. */
+body.home-nebula main > section.home-hero.orrery-home-hero {
+  background: linear-gradient(180deg,rgba(0,0,0,.58),rgba(0,0,0,.42)) !important;
+  background-color: #030303 !important;
+  border-bottom-color: rgba(255,255,255,.16) !important;
+}
+body.home-nebula main > section.home-hero.orrery-home-hero::before,
+body.home-nebula main > section.home-hero.orrery-home-hero::after {
+  background: none !important;
+  content: none !important;
+}
+body.home-nebula .site-footer {
+  color: #f1f1ed !important;
+  background: linear-gradient(180deg,#080808,#020202) !important;
+  border-top-color: rgba(255,255,255,.16) !important;
+}
+body.home-nebula .footer-brand p,
+body.home-nebula .footer-links a,
+body.home-nebula .footer-bottom {
+  color: #d8d8d3 !important;
+}
+body.home-nebula .footer-links strong,
+body.home-nebula .footer-bottom a {
+  color: #e0c18f !important;
+}
