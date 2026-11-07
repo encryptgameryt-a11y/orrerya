@@ -18,12 +18,12 @@ const homeSummaries: Record<string, string> = {
     <div class="container orrery-home-inner">
       <div class="orrery-hero-head">
         <div class="orrery-brand-feature">
-          <span class="eyebrow">EXPLORE OUR SOLAR SYSTEM</span>
+          <span class="eyebrow">NAVIGATE THE CELESTIAL FRONTIER</span>
           <h1 class="orrery-logo-title">ORRERYA</h1>
           <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
         <div class="orrery-hero-intro">
-          <p class="orrery-hero-line">One star. Eight worlds. Endless wonder.</p>
+          <p class="orrery-hero-line">The Mechanics of the Cosmos.</p>
           <p class="orrery-hero-description">Meet the Sun, eight planets and icy worlds beyond Neptune.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
@@ -119,21 +119,21 @@ const homeSummaries: Record<string, string> = {
 
   <section class="section container home-planets-section">
     <div class="section-head">
-      <div><div class="eyebrow">01 / THE EIGHT PLANETS</div><h2>Eight planets.<br /><span class="heading-muted">A thousand different stories.</span></h2></div>
-      <div class="section-side"><p>From small, rocky Mercury to distant Neptune, every planet has its own story.</p><a class="text-link" href="/planets/">View all eight planets ↗</a></div>
+      <div><div class="eyebrow">01 / THE TERRESTRIAL WORLDS</div><h2>The Terrestrial Frontier.</h2></div>
+      <div class="section-side"><p>Four rocky worlds. Infinite untold histories.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
     </div>
     <div class="home-planet-grid">
       {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{homeSummaries[planet.slug] ?? planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
-      <div class="outer-band-copy"><span class="eyebrow">The giant worlds</span><h3>The outer planets are much bigger than Earth.</h3><p>Jupiter and Saturn are mostly gas. Uranus and Neptune are colder worlds with large amounts of icy material.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
+      <div class="outer-band-copy"><span class="eyebrow">02 / THE OUTER GIANTS</span><h3>Titans of the Outer Dark.</h3><p>Beyond the asteroid belt, two gas giants and two ice giants command the outer Solar System. Jupiter and Saturn are dominated by hydrogen and helium; Uranus and Neptune contain much larger proportions of heavier volatile compounds.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
       <div class="outer-mini-grid">{outer.map((planet) => <a href={"/planets/" + planet.slug + "/"}><img src={planet.image} alt={planet.imageAlt} loading="lazy" /><span>{planet.name}</span></a>)}</div>
     </div>
   </section>
 
   <section class="section home-discover">
     <div class="container">
-      <div class="section-head"><div><div class="eyebrow">02 / Beyond the familiar</div><h2>There is so much<br /><span class="heading-muted">more to discover.</span></h2></div><p>Some moons may hide oceans beneath their ice. Comets preserve clues from the Solar System’s early days. And the Sun sends a steady stream of particles into space.</p></div>
+      <div class="section-head"><div><div class="eyebrow">03 / THE WIDER SYSTEM</div><h2>Beyond the Familiar.</h2></div><p>From solar activity to hidden oceans, the science of our system is still unfolding.</p></div>
 
       <div class="discover-grid">
         <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-number">01</span><span class="discover-icon"><LineIcon name="sun" size={28} /></span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun gives us light and heat. It also creates magnetic storms and sends tiny particles into space.</p><span class="text-link">Meet our star ↗</span></div></a>
@@ -164,14 +164,14 @@ const homeSummaries: Record<string, string> = {
           </svg>
         </div>
         <div class="comets-banner-copy">
-          <span class="eyebrow">ROCKS, ICE & OLD CLUES</span><h3>Comets & asteroids</h3>
-          <p>Asteroids are rocky leftovers from the planets' beginnings. Comets carry ice and dust from the colder reaches of the Solar System.</p>
+          <span class="eyebrow">04 / PRIMORDIAL REMNANTS</span><h3>Relics of Creation.</h3>
+          <p>Rocky asteroids and ice-rich comets preserve clues from the Solar System’s formation.</p>
           <span class="text-link">Explore comets & asteroids ↗</span>
         </div>
       </a>
       <section class="distant-worlds" aria-labelledby="distant-worlds-title">
         <div class="distant-worlds-heading">
-          <div><span class="eyebrow">05 / THE FAR REACHES</span><h3 id="distant-worlds-title">Distant icy worlds</h3><p>Beyond Neptune, the Sun is distant and the worlds are cold. The Kuiper Belt is one part of this faraway region.</p></div>
+          <div><span class="eyebrow">05 / THE TRANS-NEPTUNIAN FRONTIER</span><h3 id="distant-worlds-title">The Kuiper Frontier.</h3><p>Beyond Neptune, icy worlds orbit in the Sun’s distant light. The Kuiper Belt is one part of the wider trans-Neptunian region.</p></div>
           <span class="carousel-hint">SCROLL TO EXPLORE <span aria-hidden="true">→</span></span>
         </div>
         <div class="distant-worlds-track" role="region" aria-label="Distant icy worlds. Scroll sideways to explore." tabindex="0">
