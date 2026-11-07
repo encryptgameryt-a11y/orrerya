@@ -3,34 +3,104 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { planets } from "../data/planets";
 const featured = planets.slice(0, 4);
 const outer = planets.slice(4);
+const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
 ---
 <SiteLayout title="Explore our Solar System" description="One star. Eight worlds. Endless wonder. Explore a growing, science-first Solar System encyclopedia with NASA imagery, planetary data and interactive tools.">
-  <section class="home-hero">
-    <div class="container home-hero-grid">
-      <div class="home-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> A field guide to our cosmic neighbourhood</div>
-        <h1>One star.<br />Eight worlds.<br /><em>Endless wonder.</em></h1>
-        <p class="lede">The Solar System is more than a set of planets. It is a story of gravity, fire, ice, oceans, ancient collisions and worlds waiting to be understood.</p>
-        <div class="hero-actions">
-          <a class="btn" href="/planets/">Begin with the planets <span aria-hidden="true">↗</span></a>
-          <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
+
+  <section class="home-hero orrery-home-hero">
+    <div class="container orrery-home-inner">
+      <div class="orrery-hero-head">
+        <div class="orrery-brand-feature">
+          <span class="eyebrow">OUR COSMIC NEIGHBOURHOOD</span>
+          <h1 class="orrery-logo-title">ORRERYA</h1>
+          <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
-        <div class="home-proof"><span class="proof-dot"></span> Built around evidence. Designed for curiosity.</div>
+        <div class="orrery-hero-intro">
+          <p class="orrery-hero-line">One star. Eight worlds. Endless wonder.</p>
+          <p class="orrery-hero-description">Meet the Sun, explore the planets and discover the icy worlds that share our corner of space.</p>
+          <div class="hero-actions">
+            <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
+            <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
       </div>
-      <div class="home-art">
-        <div class="home-sun-glow"></div>
-        <div class="home-sun"><span></span></div>
-        <div class="home-orbit orbit-a"><i></i></div>
-        <div class="home-orbit orbit-b"><i></i></div>
-        <div class="home-orbit orbit-c"><i></i></div>
-        <div class="home-orbit orbit-d"><i></i></div>
-        <div class="home-orbit orbit-e"><i></i></div>
-        <div class="home-art-note">Schematic illustration · Not to scale</div>
-        <div class="home-art-label"><span>01</span> THE SUN IS THE ANCHOR</div>
+      <div class="orrery-map-frame">
+        <div class="orrery-map-topline">
+          <span>OUR SOLAR SYSTEM</span>
+          <span>SCHEMATIC · NOT TO SCALE</span>
+        </div>
+        <div class="orrery-map-scroll">
+          <div class="orrery-map" role="img" aria-label="A schematic view of the Solar System showing the Sun, the eight planets in order, the asteroid belt between Mars and Jupiter, and the Kuiper Belt among trans-Neptunian objects. Planet sizes and orbital distances are not to scale.">
+            <svg class="orrery-orbit-art" viewBox="0 0 1400 420" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="orrery-sun-fill" cx="34%" cy="30%">
+                  <stop offset="0%" stop-color="#fff6d9" />
+                  <stop offset="24%" stop-color="#f9cb78" />
+                  <stop offset="63%" stop-color="#e79542" />
+                  <stop offset="100%" stop-color="#a95c32" />
+                </radialGradient>
+                <radialGradient id="orrery-sun-halo">
+                  <stop offset="0%" stop-color="#e7a653" stop-opacity=".22" />
+                  <stop offset="62%" stop-color="#e7a653" stop-opacity=".08" />
+                  <stop offset="100%" stop-color="#e7a653" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <g class="orrery-orbits">
+                <ellipse cx="110" cy="210" rx="165" ry="50" />
+                <ellipse cx="110" cy="210" rx="230" ry="68" />
+                <ellipse cx="110" cy="210" rx="295" ry="86" />
+                <ellipse cx="110" cy="210" rx="360" ry="105" />
+                <ellipse cx="110" cy="210" rx="540" ry="145" />
+                <ellipse cx="110" cy="210" rx="705" ry="185" />
+                <ellipse cx="110" cy="210" rx="865" ry="220" />
+                <ellipse cx="110" cy="210" rx="1025" ry="255" />
+              </g>
+              <ellipse class="orrery-kuiper-orbit" cx="110" cy="210" rx="1125" ry="280" />
+              <circle class="orrery-sun-halo" cx="110" cy="210" r="112" fill="url(#orrery-sun-halo)" />
+              <circle class="orrery-sun-core" cx="110" cy="210" r="49" fill="url(#orrery-sun-fill)" />
+              <circle class="orrery-sun-edge" cx="110" cy="210" r="54" />
+              <g class="orrery-asteroid-points">
+                <circle cx="568" cy="182" r="3.4"/><circle cx="580" cy="198" r="2.3"/><circle cx="592" cy="220" r="3"/>
+                <circle cx="604" cy="174" r="2.2"/><circle cx="618" cy="202" r="4"/><circle cx="628" cy="235" r="2.4"/>
+                <circle cx="642" cy="188" r="2.6"/><circle cx="653" cy="216" r="3.5"/><circle cx="665" cy="176" r="2.1"/>
+                <circle cx="578" cy="246" r="2.1"/><circle cx="600" cy="257" r="3.1"/><circle cx="625" cy="164" r="1.8"/>
+                <circle cx="646" cy="260" r="2.2"/><circle cx="670" cy="238" r="2.8"/><circle cx="687" cy="203" r="1.9"/>
+                <circle cx="557" cy="215" r="1.8"/><circle cx="590" cy="157" r="2.3"/><circle cx="636" cy="146" r="1.8"/>
+              </g>
+              <g class="orrery-kuiper-points">
+                <circle cx="1260" cy="147" r="2.6"/><circle cx="1281" cy="172" r="3.1"/><circle cx="1304" cy="195" r="2"/>
+                <circle cx="1250" cy="223" r="2.1"/><circle cx="1292" cy="245" r="3.2"/><circle cx="1324" cy="213" r="2.2"/>
+                <circle cx="1271" cy="278" r="2.5"/><circle cx="1306" cy="294" r="1.8"/><circle cx="1340" cy="262" r="2.6"/>
+                <circle cx="1244" cy="310" r="1.9"/><circle cx="1284" cy="327" r="2.4"/><circle cx="1320" cy="342" r="1.8"/>
+              </g>
+              <g class="orrery-map-captions">
+                <text x="110" y="326" text-anchor="middle">THE SUN</text>
+                <text x="612" y="72" text-anchor="middle">ASTEROID BELT</text>
+                <path d="M612 82 L612 126" />
+                <text x="1252" y="82" text-anchor="middle">TRANS-NEPTUNIAN</text>
+                <text x="1252" y="101" text-anchor="middle">OBJECTS</text>
+                <path d="M1252 110 L1252 132" />
+                <text x="1265" y="382" text-anchor="middle">KUIPER BELT</text>
+              </g>
+            </svg>
+            <div class="orrery-sun-label" aria-hidden="true">Sun</div>
+            {orbitalDisplay.map((item) => <div class="orrery-world" style={"--world-x:" + (item.x / 14) + "%;--world-size:" + item.size + "px"}>
+              <img src={item.image} alt="" loading="lazy" decoding="async" />
+              <span>{item.name}</span>
+            </div>)}
+            <div class="orrery-map-legend">
+              <span><i class="legend-asteroid"></i> Asteroid Belt</span>
+              <span><i class="legend-kuiper"></i> Kuiper Belt</span>
+              <span class="legend-note">The Kuiper Belt is part of the trans-Neptunian population.</span>
+            </div>
+          </div>
+        </div>
+        <p class="orrery-map-note">Planet sizes and orbital spacing are simplified so the whole system can be seen at a glance.</p>
       </div>
-    </div>
-    <div class="container home-hero-bottom">
-      <span>START ANYWHERE</span><span class="line"></span><a href="/explore/sun/">The Sun</a><span>·</span><a href="/planets/">The planets</a><span>·</span><a href="/explore/moons/">The moons</a><span>·</span><a href="/science/">The science</a>
+      <div class="orrery-hero-bottom">
+        <span>START ANYWHERE</span><span class="line"></span>
+        <a href="/explore/sun/">The Sun</a><span>·</span><a href="/planets/">The planets</a><span>·</span><a href="/explore/moons/">Moons & rings</a><span>·</span><a href="/science/">The science</a>
+      </div>
     </div>
   </section>
 
@@ -63,7 +133,7 @@ const outer = planets.slice(4);
         <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon">◌</span><div><span class="eyebrow">Worlds in orbit</span><h3>Moons & rings</h3><p>Ocean worlds, volcanic satellites, captured objects and rings built from countless fragments.</p><span class="text-link">Explore the satellites ↗</span></div></a>
         <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-number">03</span><span class="discover-icon">✧</span><div><span class="eyebrow">Small worlds</span><h3>Dwarf planets</h3><p>Pluto, Ceres, Haumea, Makemake and Eris — and the classification that sets them apart.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
         <a class="discover-card" href="/explore/small-bodies/"><span class="discover-number">04</span><span class="discover-icon">☄</span><div><span class="eyebrow">Ancient leftovers</span><h3>Comets & asteroids</h3><p>Primitive building blocks, near-Earth asteroids, meteors and icy visitors from afar.</p><span class="text-link">Explore small bodies ↗</span></div></a>
-        <a class="discover-card" href="/explore/"><span class="discover-number">05</span><span class="discover-icon">◎</span><div><span class="eyebrow">The far frontier</span><h3>Outer Solar System</h3><p>The Kuiper Belt, scattered disc, distant objects and the hypothesised Oort Cloud.</p><span class="text-link">Journey outward ↗</span></div></a>
+        <a class="discover-card" href="/explore/"><span class="discover-number">05</span><span class="discover-icon">◎</span><div><span class="eyebrow">Distant icy worlds</span><h3>Trans-Neptunian Objects</h3><p>Icy bodies in the outer Solar System, including the Kuiper Belt and dwarf planets such as Pluto.</p><span class="text-link">Journey outward ↗</span></div></a>
         <a class="discover-card" href="/science/"><span class="discover-number">06</span><span class="discover-icon">⌁</span><div><span class="eyebrow">The hidden rules</span><h3>How it works</h3><p>Gravity, orbital motion, seasons, tides, eclipses, planetary interiors and stellar physics.</p><span class="text-link">Understand the science ↗</span></div></a>
       </div>
     </div>
@@ -146,5 +216,42 @@ const outer = planets.slice(4);
     @media(max-width:900px){.home-hero-grid{grid-template-columns:1fr;min-height:auto;padding-top:35px}.home-copy{padding:20px 0 0}.home-art{height:410px;grid-row:1}.home-planet-grid{grid-template-columns:repeat(2,1fr)}.home-outer-band{grid-template-columns:1fr}.outer-mini-grid a{min-height:130px}}
     @media(max-width:900px){.tool-preview-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:600px){.home-hero-grid{padding-top:20px;gap:0}.home-copy h1{font-size:clamp(3.1rem,15vw,4.5rem)}.home-art{height:300px}.home-sun{width:76px;height:76px}.orbit-a{width:130px;height:80px}.orbit-b{width:195px;height:120px}.orbit-c{width:260px;height:160px}.orbit-d{width:325px;height:200px}.orbit-e{width:390px;height:240px}.home-art-label{top:8px}.home-hero-bottom{gap:7px;flex-wrap:wrap}.home-hero-bottom>span:first-child{display:none}.home-hero-bottom .line{max-width:30px}.home-facts{grid-template-columns:repeat(2,1fr);gap:18px}.home-facts>div{padding:0;border:0}.home-planet-grid{gap:10px}.home-planet-card .planet-card-image{height:140px}.home-outer-band{padding:17px}.outer-mini-grid{grid-template-columns:repeat(2,1fr)}.discover-grid,.tool-preview-grid{grid-template-columns:1fr}.discover-card{min-height:210px}.home-endcap{align-items:flex-start;flex-direction:column;padding:25px}.home-endcap .btn{width:100%}}
+  </style>
+
+  <style>
+    /* ORRERYA homepage: brand first, real planetary imagery, quiet scientific diagram. */
+    .orrery-home-hero {background:linear-gradient(180deg,#fbfaf7 0%,#f3f5f5 100%)!important;border-bottom:1px solid rgba(25,47,70,.13)!important;overflow:hidden}
+    .orrery-home-inner{padding-top:52px}
+    .orrery-hero-head{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:end;padding:14px 0 30px;border-bottom:1px solid rgba(25,47,70,.14)}
+    .orrery-brand-feature .eyebrow{letter-spacing:.16em;font-size:.68rem}
+    .orrery-logo-title{margin:10px 0 0!important;font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(4.2rem,9vw,7.5rem)!important;line-height:.9!important;font-weight:500!important;letter-spacing:.045em!important;color:#142a40!important}
+    .orrery-brand-tag{margin:16px 0 0!important;color:#8c683b!important;font-size:.78rem!important;letter-spacing:.24em!important;font-weight:600;text-transform:uppercase}
+    .orrery-hero-intro{max-width:520px;justify-self:end;padding-bottom:3px}
+    .orrery-hero-line{color:#18354d!important;font:italic 1.55rem/1.25 Georgia,"Times New Roman",serif!important;margin:0 0 10px!important}
+    .orrery-hero-description{max-width:460px;font-size:.95rem;line-height:1.65;margin:0;color:#5b6e80!important}
+    .orrery-hero-intro .hero-actions{margin-top:20px}
+    .orrery-map-frame{padding:22px 0 12px}
+    .orrery-map-topline{display:flex;justify-content:space-between;gap:16px;margin:0 4px 8px;color:#64778a;font-size:.65rem;font-weight:700;letter-spacing:.15em}
+    .orrery-map-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-color:#c2ccd3 transparent;scrollbar-width:thin}
+    .orrery-map{position:relative;width:100%;min-width:900px;height:340px;isolation:isolate;background:radial-gradient(ellipse at 8% 50%,rgba(230,179,106,.12),transparent 16%),linear-gradient(180deg,rgba(255,255,255,.45),rgba(236,241,244,.36));border-block:1px solid rgba(39,64,86,.08)}
+    .orrery-orbit-art{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
+    .orrery-orbits ellipse{fill:none;stroke:#8297a8;stroke-width:1.15;opacity:.34;vector-effect:non-scaling-stroke}
+    .orrery-kuiper-orbit{fill:none;stroke:#9a825d;stroke-width:1.35;stroke-dasharray:4 7;opacity:.62;vector-effect:non-scaling-stroke}
+    .orrery-sun-halo{opacity:1}.orrery-sun-core{filter:drop-shadow(0 0 14px rgba(221,157,79,.34))}.orrery-sun-edge{fill:none;stroke:#c28d4c;stroke-width:1.2;opacity:.42}
+    .orrery-asteroid-points circle{fill:#8f7654;opacity:.75}.orrery-kuiper-points circle{fill:#8196a7;opacity:.7}
+    .orrery-map-captions text{fill:#52677a;font-family:Inter,Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px}
+    .orrery-map-captions path{fill:none;stroke:#98713e;stroke-width:1;opacity:.7}
+    .orrery-world{position:absolute;left:var(--world-x);top:50%;width:var(--world-size);display:flex;flex-direction:column;align-items:center;gap:10px;transform:translate(-50%,-50%);z-index:2}
+    .orrery-world img{display:block;width:var(--world-size);height:var(--world-size);object-fit:cover;border-radius:50%;background:#d9e0e4;border:1px solid rgba(28,51,70,.18);box-shadow:0 5px 16px rgba(25,47,70,.14)}
+    .orrery-world span{color:#29465e;font-size:.72rem;font-weight:650;letter-spacing:.015em;background:rgba(250,251,249,.82);padding:2px 6px;border-radius:3px;white-space:nowrap}
+    .orrery-sun-label{position:absolute;left:7.85%;top:75%;transform:translateX(-50%);color:#8a6335;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .orrery-map-legend{position:absolute;right:1.4%;bottom:10px;display:flex;align-items:center;gap:16px;color:#5c7183;font-size:.65rem;background:rgba(250,251,249,.88);border:1px solid rgba(39,64,86,.1);border-radius:5px;padding:7px 10px;z-index:3}
+    .orrery-map-legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.orrery-map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%}
+    .legend-asteroid{background:#99805b}.legend-kuiper{background:#7b93a7}.orrery-map-legend .legend-note{color:#718294;font-style:italic}
+    .orrery-map-note{text-align:right;margin:8px 3px 0!important;font-size:.7rem;color:#7b8996!important}
+    .orrery-hero-bottom{display:flex;align-items:center;gap:13px;padding:15px 0 20px;border-top:1px solid rgba(25,47,70,.13);color:#77899a;font-size:.68rem;letter-spacing:.1em}
+    .orrery-hero-bottom a{color:#315771;font-size:.74rem;letter-spacing:0}.orrery-hero-bottom .line{height:1px;max-width:70px;flex:1;background:rgba(25,47,70,.16)}
+    @media(max-width:800px){.orrery-home-inner{padding-top:30px}.orrery-hero-head{grid-template-columns:1fr;gap:20px}.orrery-hero-intro{justify-self:start}.orrery-logo-title{font-size:clamp(4rem,17vw,6rem)!important}.orrery-map{height:300px}.orrery-map-legend{right:8px;bottom:7px;gap:10px;font-size:.6rem}.orrery-map-legend .legend-note{display:none}}
+    @media(max-width:540px){.orrery-map-topline{font-size:.58rem}.orrery-hero-bottom{gap:8px;flex-wrap:wrap}.orrery-hero-bottom>span:first-child{display:none}.orrery-hero-bottom .line{max-width:28px}.orrery-map-note{text-align:left}.orrery-world span{font-size:.66rem}}
   </style>
 </SiteLayout>
