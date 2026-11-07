@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import { sunFacts } from "../../data/solar-system";
 const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26681/PIA26681.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg";
 ---
 <SiteLayout title="The Sun" description="Learn how the Sun works: nuclear fusion, its layers, magnetic activity, solar wind and the heliosphere." image={sunImage}>
@@ -10,6 +11,21 @@ const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photoj
   </section>
   <section class="section container">
     <div class="grid-4 sun-stats"><div class="stat"><span class="label">Mass share</span><strong>~99.8%</strong><small>Of the Solar System's mass</small></div><div class="stat"><span class="label">Core temperature</span><strong>~15 million K</strong><small>Approximate central temperature</small></div><div class="stat"><span class="label">Light to Earth</span><strong>~8 min 20 s</strong><small>At one astronomical unit</small></div><div class="stat"><span class="label">Power source</span><strong>Fusion</strong><small>Hydrogen nuclei become helium</small></div></div>
+
+    <div class="sun-physical-reference card">
+      <div><span class="eyebrow">PHYSICAL REFERENCE</span><h2>The Sun in numbers.</h2><p>These are rounded reference values. Mean radius describes an equivalent sphere; equatorial gravity is measured at the equator.</p></div>
+      <div class="sun-physical-grid">
+        <div><span>Mass</span><strong>1.9884 × 10³⁰ kg</strong><small>332,900 Earth masses</small></div>
+        <div><span>Mean radius</span><strong>695,700 km</strong><small>Mean diameter 1,391,400 km</small></div>
+        <div><span>Mean density</span><strong>1,408 kg/m³</strong><small>0.255 × Earth's mean density</small></div>
+        <div><span>Equatorial gravity</span><strong>274.0 m/s²</strong><small>About 28 × Earth's equatorial value</small></div>
+        <div><span>Escape velocity</span><strong>617.6 km/s</strong><small>From the photospheric radius</small></div>
+        <div><span>Luminosity</span><strong>3.828 × 10²⁶ W</strong><small>Total radiant power</small></div>
+        <div><span>Spectral class</span><strong>G2 V</strong><small>G-type main-sequence star</small></div>
+        <div><span>Core temperature</span><strong>~15.7 million K</strong><small>Model-dependent central value</small></div>
+      </div>
+      <p class="sun-reference-note">Reference values: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noreferrer">NASA NSSDC Sun Fact Sheet ↗</a>. The Sun rotates differentially: the equator and higher latitudes have different rotation periods.</p>
+    </div>
     <div class="sun-content">
       <article class="prose">
         <h2>A star powered by nuclear fusion</h2>
@@ -30,4 +46,17 @@ const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photoj
     <div class="source-panel"><div><span class="eyebrow">Sources</span><h3>Science behind this page</h3><p>General solar structure, energy generation and solar activity summaries.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/sun/" target="_blank" rel="noreferrer">NASA Science — The Sun ↗</a></li><li><a href="https://science.nasa.gov/heliophysics/" target="_blank" rel="noreferrer">NASA — Heliophysics ↗</a></li><li><a href="https://science.nasa.gov/photojournal/image-of-sun-from-nasas-solar-dynamics-observatory/" target="_blank" rel="noreferrer">NASA Photojournal — Solar Dynamics Observatory image ↗</a></li></ul></div>
   </section>
   <style>.sun-stats{margin-bottom:44px}.sun-content{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(230px,.65fr);gap:45px;align-items:start}.sun-content aside{position:sticky;top:100px}.sun-content hr{border:0;border-top:1px solid var(--line);margin:24px 0}.sun-content aside p{font-size:.86rem;line-height:1.75}.source-panel{margin-top:45px}@media(max-width:800px){.sun-content{grid-template-columns:1fr}.sun-content aside{position:static}}@media(max-width:600px){.sun-stats{grid-template-columns:repeat(2,1fr)}}</style>
+
+  <style>
+    .sun-physical-reference{padding:26px;margin:0 0 38px}
+    .sun-physical-reference h2{font:500 1.8rem Georgia,serif;margin:6px 0}
+    .sun-physical-reference>div:first-child p{font-size:.84rem;max-width:760px;color:#5b7083}
+    .sun-physical-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:20px 0}
+    .sun-physical-grid>div{padding:14px;border:1px solid var(--line);border-radius:7px;background:#f5f7f8}
+    .sun-physical-grid span,.sun-physical-grid small{display:block;color:#607589;font-size:.7rem}
+    .sun-physical-grid strong{display:block;color:#17354e;font-size:1rem;margin:5px 0}
+    .sun-reference-note{font-size:.74rem;color:#62798c;margin:0}.sun-reference-note a{color:#1b5d82}
+    @media(max-width:850px){.sun-physical-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:480px){.sun-physical-reference{padding:18px}.sun-physical-grid{grid-template-columns:1fr 1fr;gap:7px}.sun-physical-grid>div{padding:10px}.sun-physical-grid strong{font-size:.86rem}}
+  </style>
 </SiteLayout>
