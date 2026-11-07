@@ -63,7 +63,7 @@ export const planetDataSources = {
   factSheet: {
     name: "NASA NSSDCA — Planetary Fact Sheet",
     url: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
-    fields: ["mean Sun distance", "perihelion", "aphelion"]
+    fields: ["mean Sun distance", "perihelion", "aphelion", "mean temperature at the 1-bar pressure level for giant planets"]
   },
   orbitalElements: {
     name: "NASA/JPL Solar System Dynamics — Approximate Positions of the Planets, Tables 2a and 2b",
