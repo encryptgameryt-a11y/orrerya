@@ -1,11 +1,10 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { planets } from "../../data/planets";
-import { sunFacts, planetPhysics, dwarfPlanets, satellitePhysical, satelliteDerived, solarSystemSources } from "../../data/solar-system";
+import { planetPhysics, dwarfPlanets, satellitePhysical, satelliteDerived, solarSystemSources } from "../../data/solar-system";
 
 const fmt = (n: number, digits = 3) => n.toLocaleString("en-US", { maximumFractionDigits: digits });
 const sci = (n: number) => n.toExponential(3).replace("e+", " × 10^").replace("e-", " × 10^−");
-const planetImage = Object.fromEntries(planets.map(p => [p.slug, p.image]));
 const moonShowcase = ["Moon","Io","Europa","Ganymede","Titan","Enceladus","Triton"];
 const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
 ---
@@ -156,7 +155,7 @@ const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
     </div>
     <div class="small-body-panels">
       <article class="small-body-card">
-        <img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1200" alt="NASA OSIRIS-REx view of asteroid Bennu's rocky, boulder-covered surface." loading="lazy"/>
+        <img src="https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536" alt="NASA OSIRIS-REx view of asteroid Bennu's rocky, boulder-covered surface." loading="lazy"/>
         <div><span class="eyebrow">ROCKY & METAL-RICH OBJECTS</span><h3>Asteroids</h3><p>Most are rocky, metallic or carbon-rich remnants. The main asteroid belt lies mostly between Mars and Jupiter. Ceres is the belt's largest body and is classified as a dwarf planet; Vesta is the next most massive major body.</p><ul><li><strong>C-type:</strong> carbon-rich, dark and often rich in hydrated minerals.</li><li><strong>S-type:</strong> silicate-rich rocky material, commonly with some metal.</li><li><strong>M-type:</strong> metal-rich; often associated with iron-nickel compositions, though asteroid classes are not simple ingredient labels.</li></ul></div>
       </article>
       <article class="small-body-card">
@@ -182,7 +181,7 @@ const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
         <p>Saturn's rings are especially bright because they are rich in water ice. They are extremely thin compared with their enormous width.</p>
         <a class="text-link" href="https://science.nasa.gov/solar-system/rings/" target="_blank" rel="noreferrer">NASA: planetary rings ↗</a>
       </div>
-      <figure><img src="https://images-assets.nasa.gov/image/PIA18325/PIA18325~large.jpg" alt="Saturn and its rings photographed by NASA's Cassini spacecraft." loading="lazy"/><figcaption>NASA / Cassini · Saturn's ring system</figcaption></figure>
+      <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia21/pia21047/PIA21047.jpg?w=1441&h=1173&fit=clip&crop=faces%2Cfocalpoint" alt="Saturn and its rings during Cassini's long-duration natural-colour observation." loading="lazy"/><figcaption>NASA/JPL-Caltech/SSI · Cassini · Full view of Saturn and its rings</figcaption></figure>
     </div>
   </section>
 
