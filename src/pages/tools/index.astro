@@ -4,11 +4,11 @@ import { planets } from "../../data/planets";
 ---
 <SiteLayout title="Interactive Solar System tools" description="Explore ORRERYA's free planetary calculators, orbital mechanics lab, JPL-based planet position explorer and planetary correlation tools.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Interactive tools</span></div>
-  <header class="page-intro container"><div class="eyebrow">Learn by experimenting · Free tools</div><h1>Make the numbers<br />mean something.</h1><p class="lede">A few small experiments can make planetary science feel real. Change a mass, choose another world or convert an astronomical distance — the calculations run right here in your browser.</p></header>
+  <header class="page-intro container"><div class="eyebrow">SOLAR SYSTEM TOOLS</div><h1>Solar System calculators<br />and interactive models.</h1><p class="lede">Change a value, choose another world or convert a distance. Each tool shows the calculation behind its result.</p></header>
   <section class="section container">
     <div class="tools-grid">
       <article class="card tool-panel" id="weight">
-        <span class="eyebrow">Tool 01 · Gravity</span><h2>Your weight, elsewhere.</h2><p>Mass is the amount of matter in you. Weight is the gravitational force acting on that mass. Your mass stays the same as you travel; your weight changes with local gravity.</p>
+        <span class="eyebrow">Tool 01 · Gravity</span><h2>How much would you weigh on other worlds?</h2><p>Mass is the amount of matter in you. Weight is the gravitational force acting on that mass. Your mass stays the same as you travel; your weight changes with local gravity.</p>
         <div class="field"><label for="mass-input">Your mass (kilograms)</label><input id="mass-input" type="number" min="0" max="1000000" step="any" value="70" inputmode="decimal" /></div>
         <div class="field"><label for="gravity-world">Choose a world</label><select id="gravity-world">{planets.map((planet)=><option value={planet.gravityValue} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="result-box" aria-live="polite"><span>Gravitational force on you</span><strong id="weight-result">686 N</strong><span id="weight-subresult">Equivalent to about 70 kg on an Earth-calibrated scale.</span></div>
@@ -21,7 +21,7 @@ import { planets } from "../../data/planets";
         <p class="tool-footnote">Uses the exact AU definition and the speed of light in vacuum, 299,792.458 km/s. Light time is a simple straight-line vacuum calculation.</p>
       </article>
       <article class="card tool-panel" id="compare">
-        <span class="eyebrow">Tool 03 · Planetary scale</span><h2>How big is that world?</h2><p>Compare a planet's equatorial diameter with Earth's. The circles use a common scale, capped so the largest planet fits on the card.</p>
+        <span class="eyebrow">Tool 03 · Planetary scale</span><h2>Compare planet sizes.</h2><p>Compare a planet's equatorial diameter with Earth's. The circles use a common scale, capped so the largest planet fits on the card.</p>
         <div class="field"><label for="size-world">Choose a planet</label><select id="size-world">{planets.map((planet)=><option value={planet.diameterKm} data-name={planet.name} data-mass={planet.mass1024} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="size-stage"><div id="size-orb" class="size-orb" style="width:56px;height:56px"></div><div><strong id="size-name">Earth</strong><span id="size-diameter">12,756 km diameter</span><b id="size-ratio">1.00 × Earth's diameter</b><small id="mass-ratio">1.00 × Earth's mass</small></div></div>
         <div class="scale-legend"><span>Relative diameter</span><span>Earth = 1</span></div>
@@ -47,7 +47,7 @@ import { planets } from "../../data/planets";
     </div>
     <section class="card orbit-lab" id="orbit">
       <div class="orbit-lab-heading">
-        <div><span class="eyebrow">Tool 05 · Orbital mechanics</span><h2>Take a planet around its orbit.</h2><p>Choose a planet and move it through its orbit. Watch its distance from the Sun and orbital speed change between perihelion and aphelion.</p></div>
+        <div><span class="eyebrow">Tool 05 · Orbital mechanics</span><h2>Move a planet around its orbit.</h2><p>Choose a planet and move it through its orbit. Watch its distance from the Sun and orbital speed change between perihelion and aphelion.</p></div>
         <span class="tag">Two-body teaching model</span>
       </div>
       <div class="orbit-lab-layout">
@@ -79,7 +79,7 @@ import { planets } from "../../data/planets";
       <div class="orbit-equations"><div><span class="eyebrow">Distance along an ellipse</span><strong>r = a(1 − e²) / (1 + e cos ν)</strong></div><div><span class="eyebrow">Vis-viva equation</span><strong>v² = μ(2/r − 1/a)</strong></div></div>
     </section>
     <div class="callout tools-note"><strong>These are transparent educational models.</strong><p>They use rounded reference values and standard equations. They are not a navigation system, a live ephemeris or a precision engineering tool. Open the linked NASA/JPL references for definitions, uncertainties and higher-precision parameters.</p></div>
-    <div class="source-panel"><div><span class="eyebrow">Calculation references</span><h3>Where the constants come from</h3><p>Planetary gravity and orbital values are taken from NASA/JPL and NASA NSSDCA tables.</p></div><ul class="source-list"><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://www.iau.org/public/themes/measuring/" target="_blank" rel="noreferrer">International Astronomical Union — Measuring the Universe ↗</a></li></ul></div>
+    <div class="source-panel"><div><span class="eyebrow">Calculation references</span><h3>Sources and constants</h3><p>Planetary gravity and orbital values are taken from NASA/JPL and NASA NSSDCA tables.</p></div><ul class="source-list"><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://www.iau.org/public/themes/measuring/" target="_blank" rel="noreferrer">International Astronomical Union — Measuring the Universe ↗</a></li></ul></div>
   </section>
   <script>
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
