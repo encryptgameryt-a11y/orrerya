@@ -18,7 +18,7 @@ const next = planets[planet.order];
         <h1>{planet.name}</h1>
         <p class="lede">{planet.short}</p>
         <div class="hero-chips"><span class="tag">{planet.distance}</span><span class="tag">{planet.orbit} orbit</span></div>
-        <div class="hero-actions"><a class="btn" href="/tools/#weight">Calculate your weight here ↗</a><a class="btn secondary" href="/planets/">All planets</a></div>
+        <div class="hero-actions"><a class="btn" href="/tools/#weight">Compare gravity on other worlds ↗</a><a class="btn secondary" href="/planets/">All planets</a></div>
       </div>
       <figure class="image-figure planet-feature-image"><div class="hero-image"><img src={planet.image} alt={planet.imageAlt} fetchpriority="high" /><span class="image-credit">Image: NASA · <a href={planet.imageSource} target="_blank" rel="noreferrer">image source ↗</a></span></div><figcaption>NASA imagery is presented for educational context. Processing and colour may vary by mission and instrument.</figcaption></figure>
     </section>
@@ -32,7 +32,7 @@ const next = planets[planet.order];
   <section class="section container planet-content">
     <div class="planet-content-grid">
       <article class="prose">
-        <div class="eyebrow">A closer look</div><h2>What makes {planet.name} remarkable?</h2>
+        <div class="eyebrow">A closer look</div><h2>About {planet.name}</h2>
         {planet.story.map((paragraph) => <p>{paragraph}</p>)}
         <div class="callout"><strong>Keep this distinction in mind</strong><p>{planet.highlight}</p></div>
         <h2>Inside the planet</h2><p>{planet.inside}</p>
@@ -44,7 +44,7 @@ const next = planets[planet.order];
       <aside class="planet-aside">
         <div class="card card-pad">
           <span class="eyebrow">Orbit & rotation</span>
-          <h3>The rhythm of {planet.name}</h3>
+          <h3>Rotation and orbit</h3>
           <dl class="fact-list">
             <div><dt>Semi-major axis · mean distance</dt><dd>{planet.distance}</dd></div>
             <div><dt>Orbital period</dt><dd>{planet.orbit}</dd></div>
@@ -73,7 +73,7 @@ const next = planets[planet.order];
       </aside>
     </div>
     <div class="source-panel">
-      <div><span class="eyebrow">Evidence & attribution</span><h3>Where these facts come from</h3><p>Values are rounded for readability. Perihelion and aphelion distances are rounded to 0.1 million km; orbital inclination is measured relative to the ecliptic plane. Definitions and reference epochs matter when comparing datasets.</p></div>
+      <div><span class="eyebrow">Evidence & attribution</span><h3>Sources and data notes</h3><p>Values are rounded for readability. Perihelion and aphelion distances are rounded to 0.1 million km; orbital inclination is measured relative to the ecliptic plane. Definitions and reference epochs matter when comparing datasets.</p></div>
       <ul class="source-list">
         <li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Planetary Physical Parameters ↗</a></li>
         <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA Space Science Data Coordinated Archive — Planetary Fact Sheet ↗</a></li>
