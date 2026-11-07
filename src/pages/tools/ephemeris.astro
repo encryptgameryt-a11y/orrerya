@@ -12,7 +12,7 @@ import { ephemerisElements } from "../../data/ephemeris";
 
   <section class="section container ephem-section">
     <div class="ephem-toolbar card">
-      <div><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="1800-01-01T00:00" max="2050-12-31T23:59" /></div>
+      <div class="ephemeris-date-control"><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="1800-01-01T00:00" max="2050-12-31T23:59" /><button type="button" class="btn secondary" id="ephemeris-now">Use current time</button></div>
       <div class="ephem-status"><span class="eyebrow">Calculation status</span><strong id="ephemeris-status">Preparing planetary positions…</strong><p id="ephemeris-message" role="status">The model is limited to dates from 1800 through 2050.</p></div>
     </div>
 
@@ -66,6 +66,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     import { ephemerisElements } from "../../data/ephemeris";
 
     const dateField = document.querySelector<HTMLInputElement>("#ephemeris-date");
+    const nowButton = document.querySelector<HTMLButtonElement>("#ephemeris-now");
     const status = document.querySelector<HTMLElement>("#ephemeris-status");
     const message = document.querySelector<HTMLElement>("#ephemeris-message");
     const orbitLayer = document.querySelector<SVGGElement>("#ephemeris-orbits");
@@ -242,6 +243,10 @@ import { ephemerisElements } from "../../data/ephemeris";
     if (dateField) {
       dateField.value = localDateTimeValue(new Date());
       dateField.addEventListener("change", calculate);
+      nowButton?.addEventListener("click", () => {
+        dateField.value = localDateTimeValue(new Date());
+        calculate();
+      });
       calculate();
     }
   </script>
@@ -250,7 +255,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     .heading-muted{color:#8796ad}
     .ephem-section{padding-top:45px}
     .ephem-toolbar{display:grid;grid-template-columns:.8fr 1.2fr;gap:26px;padding:22px;margin-bottom:18px}
-    .ephem-toolbar label,.ephem-toolbar input{display:block;width:100%}
+    .ephem-toolbar label,.ephem-toolbar input{display:block;width:100%}.ephemeris-date-control .btn{margin-top:11px;min-height:39px;padding:8px 13px;font-size:.74rem}
     .ephem-toolbar label{font-size:.78rem;color:var(--muted);margin:10px 0 7px}
     .ephem-toolbar input{min-height:45px;padding:10px 12px;color:var(--text);background:#0a1220;border:1px solid var(--line-strong);border-radius:5px;color-scheme:dark}
     .ephem-status{border-left:1px solid var(--line);padding-left:25px}
