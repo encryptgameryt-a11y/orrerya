@@ -18,6 +18,11 @@ const moons = [
 <SiteLayout title="Moons and rings" description="Meet remarkable Solar System moons: Europa, Titan, Enceladus, Io, Ganymede, Triton and more. Learn how planetary rings work.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/explore/">Explore</a><span aria-hidden="true">/</span><span>Moons & rings</span></div>
   <header class="page-intro container"><div class="eyebrow">MOONS AND RINGS</div><h1>Moons of the Solar System.</h1><p class="lede">Some moons have atmospheres, volcanoes, magnetic fields or possible oceans beneath their icy crusts. Tides help shape many of these environments.</p></header>
+  <aside class="container callout moon-count-note" aria-label="Current moon catalogue count">
+    <strong>Catalogue snapshot · 4 November 2026</strong>
+    <p>NASA reports 461 officially recognised moons orbiting planets, including Pluto. The JPL Solar System Dynamics catalogue listed 461 planetary satellites on 4 November 2026. Hundreds of additional moons are confirmed around asteroids and other small bodies, so 461 is not a count of every natural satellite in the Solar System.</p>
+    <p><a href="https://ssd.jpl.nasa.gov/" target="_blank" rel="noreferrer">JPL Solar System Dynamics catalogue ↗</a> · <a href="https://science.nasa.gov/solar-system/moons/facts/" target="_blank" rel="noreferrer">NASA Moons: Facts ↗</a></p>
+  </aside>
   <section class="section container">
     <div class="section-head"><div><div class="eyebrow">SELECTED NATURAL SATELLITES</div><h2>Explore notable moons.</h2></div><p>This is a curated starting set, not a complete moon catalogue. Confirmed moon totals change as new discoveries are announced and objects are re-observed.</p></div>
     <div class="moon-grid">{moons.map((moon, i) => <article class="card moon-card"><div class="moon-index">{String(i+1).padStart(2,"0")} <span>ORBITING {moon.host.toUpperCase()}</span></div><h3>{moon.name}</h3><span class="tag">{moon.role}</span><p>{moon.detail}</p></article>)}</div>
