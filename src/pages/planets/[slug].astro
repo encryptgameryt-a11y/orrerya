@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import { planets } from "../../data/planets";
+import { planets, planetDataSources } from "../../data/planets";
 
 export function getStaticPaths() {
   return planets.map((planet) => ({ params: { slug: planet.slug }, props: { planet } }));
@@ -46,14 +46,15 @@ const next = planets[planet.order];
           <span class="eyebrow">Orbit & rotation</span>
           <h3>Rotation and orbit</h3>
           <dl class="fact-list">
-            <div><dt>Semi-major axis · mean distance</dt><dd>{planet.distance}</dd></div>
-            <div><dt>Orbital period</dt><dd>{planet.orbit}</dd></div>
+            <div><dt>Mean distance from Sun · NASA</dt><dd>{planet.distance}</dd></div>
+            <div><dt>Semi-major axis · JPL J2000</dt><dd>{planet.semiMajorAxisAu.toFixed(6)} AU</dd></div>
+            <div><dt>Sidereal orbital period · JPL</dt><dd>{planet.orbit}</dd></div>
             <div><dt>Sidereal rotation</dt><dd>{planet.rotation}</dd></div>
             <div><dt>Solar day</dt><dd>{planet.solarDay}</dd></div>
             <div><dt>Perihelion · closest</dt><dd>{planet.perihelion}</dd></div>
             <div><dt>Aphelion · farthest</dt><dd>{planet.aphelion}</dd></div>
-            <div><dt>Orbital eccentricity</dt><dd>{planet.eccentricity}</dd></div>
-            <div><dt>Inclination to ecliptic</dt><dd>{planet.inclination}</dd></div>
+            <div><dt>Orbital eccentricity · JPL J2000</dt><dd>{planet.eccentricity}</dd></div>
+            <div><dt>Inclination to J2000 ecliptic</dt><dd>{planet.inclination}</dd></div>
             <div><dt>Axial tilt</dt><dd>{planet.tilt}</dd></div>
             <div><dt>Mean temperature</dt><dd>{planet.temperature}</dd></div>
           </dl>
@@ -73,10 +74,11 @@ const next = planets[planet.order];
       </aside>
     </div>
     <div class="source-panel">
-      <div><span class="eyebrow">Evidence & attribution</span><h3>Sources and data notes</h3><p>Values are rounded for readability. Perihelion and aphelion distances are rounded to 0.1 million km; orbital inclination is measured relative to the ecliptic plane. Definitions and reference epochs matter when comparing datasets.</p></div>
+      <div><span class="eyebrow">Evidence & attribution</span><h3>Sources and data notes</h3><p>Mass, mean radius, bulk density, sidereal rotation and orbital periods, equatorial gravity and escape velocity use the JPL physical-parameters table. Equatorial diameter, mean distance from the Sun, perihelion and aphelion use the NASA NSSDCA fact sheet. Semi-major axis, eccentricity and inclination are JPL Table 2a elements referred to the J2000 mean ecliptic and equinox; Earth’s row is the Earth–Moon barycentre, a close proxy for Earth’s orbit. Values shown here are rounded, and the reference epoch and definition are stated because they matter when comparing datasets.</p></div>
       <ul class="source-list">
-        <li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Planetary Physical Parameters ↗</a></li>
-        <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA Space Science Data Coordinated Archive — Planetary Fact Sheet ↗</a></li>
+        <li><a href={planetDataSources.physicalParameters.url} target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Planetary Physical Parameters ↗</a></li>
+        <li><a href={planetDataSources.factSheet.url} target="_blank" rel="noreferrer">NASA Space Science Data Coordinated Archive — Planetary Fact Sheet ↗</a></li>
+        <li><a href={planetDataSources.orbitalElements.url} target="_blank" rel="noreferrer">NASA/JPL — Approximate Planetary Positions, Tables 2a and 2b ↗</a></li>
         <li><a href={planet.imageSource} target="_blank" rel="noreferrer">NASA Science — {planet.name} image and overview ↗</a></li>
       </ul>
     </div>
