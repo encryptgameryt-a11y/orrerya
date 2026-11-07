@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/components.css";
 import "../styles/premium.css";
+import "../styles/editorial-light.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 
@@ -25,8 +26,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString(
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#050914" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#f3f6f8" />
+    <meta name="color-scheme" content="light" />
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonical} />
