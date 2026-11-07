@@ -1,0 +1,181 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout title="How the giant planets moved" description="An interactive, carefully qualified visual guide to early Solar System migration, planetesimal scattering and the Nice-model family of scenarios.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/science/">The science</a><span aria-hidden="true">/</span><span>Planetary migration</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">The early Solar System · Dynamical evolution</div>
+    <h1>The planets may have<br /><span class="heading-muted">moved from where they formed.</span></h1>
+    <p class="lede">The Solar System's present arrangement is not necessarily its birth arrangement. Gravitational exchanges with leftover gas and planetesimals could have shifted giant planets over time — and reshaped the small-body populations around them.</p>
+  </header>
+
+  <section class="section container migration-story">
+    <div class="migration-intro"><span class="eyebrow">A four-stage visual explanation</span><h2>Follow the changing architecture.</h2><p>Scroll through the steps or select one. The diagram responds while the explanation remains readable without animation.</p></div>
+    <div class="migration-layout">
+      <aside class="migration-visual" aria-label="Schematic animation of giant-planet migration">
+        <div class="migration-visual-head"><span class="eyebrow">Orbital architecture</span><span class="tag" id="migration-stage-label">Stage 01 · Formation</span></div>
+        <svg id="migration-diagram" viewBox="0 0 520 520" role="img" aria-labelledby="migration-title migration-desc">
+          <title id="migration-title">Schematic of giant-planet migration</title>
+          <desc id="migration-desc">A not-to-scale top-down diagram. The giant planets begin in a more compact arrangement and migrate outward through gravitational interactions in one family of models.</desc>
+          <defs>
+            <radialGradient id="migration-sun-gradient"><stop offset="0" stop-color="#fff4c7"/><stop offset=".55" stop-color="#efb966"/><stop offset="1" stop-color="#b76736"/></radialGradient>
+          </defs>
+          <g fill="none" stroke="rgba(151,184,220,.15)" stroke-width="1">
+            <circle cx="260" cy="260" r="38"/><circle cx="260" cy="260" r="52"/><circle cx="260" cy="260" r="70"/><circle cx="260" cy="260" r="95"/><circle cx="260" cy="260" r="120"/><circle cx="260" cy="260" r="145"/><circle cx="260" cy="260" r="170"/><circle cx="260" cy="260" r="195"/><circle cx="260" cy="260" r="220"/>
+            <path d="M 25 260 H 495 M 260 25 V 495" stroke-dasharray="3 7"/>
+          </g>
+          <g opacity=".55" fill="none" stroke="#8b9bb1" stroke-width="1" stroke-dasharray="2 6"><ellipse cx="260" cy="260" rx="222" ry="218"/></g>
+          <g id="migration-particles" fill="#b8c8dc" opacity="0"></g>
+          <g id="migration-arrows" fill="none" stroke="#e6c88e" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 5" opacity="0">
+            <path id="migration-arrow-uranus" d="M 390 260 Q 420 220 450 180"/><path id="migration-arrow-neptune" d="M 410 260 Q 448 292 475 330"/>
+          </g>
+          <g fill="none" stroke-width="1.3" stroke-opacity=".38">
+            <circle id="migration-jupiter-orbit" cx="260" cy="260" r="90" stroke="#d6a77b"/>
+            <circle id="migration-saturn-orbit" cx="260" cy="260" r="120" stroke="#d7c18e"/>
+            <circle id="migration-uranus-orbit" cx="260" cy="260" r="165" stroke="#82c9c6"/>
+            <circle id="migration-neptune-orbit" cx="260" cy="260" r="195" stroke="#658fe0"/>
+          </g>
+          <circle cx="260" cy="260" r="8" fill="url(#migration-sun-gradient)"/><circle cx="260" cy="260" r="16" fill="none" stroke="rgba(237,185,102,.24)"/>
+          <g id="migration-inner-planets"><circle cx="292" cy="260" r="2.7" fill="#aeb8c5"/><circle cx="306" cy="260" r="3.4" fill="#e8bd91"/><circle cx="317" cy="260" r="3.8" fill="#62a9d8"/><circle cx="328" cy="260" r="3.1" fill="#d88368"/></g>
+          <circle id="migration-jupiter" cx="350" cy="260" r="8" fill="#d6a77b" stroke="#f3f1eb" stroke-width="1.2"/>
+          <circle id="migration-saturn" cx="380" cy="260" r="7" fill="#d7c18e" stroke="#f3f1eb" stroke-width="1.2"/>
+          <circle id="migration-uranus" cx="405" cy="260" r="5.5" fill="#82c9c6" stroke="#f3f1eb" stroke-width="1.1"/>
+          <circle id="migration-neptune" cx="430" cy="260" r="5.5" fill="#658fe0" stroke="#f3f1eb" stroke-width="1.1"/>
+          <g fill="#9aa9bd" font-size="10" letter-spacing="1"><text x="260" y="290" text-anchor="middle" fill="#e6c88e">SUN</text><text x="260" y="22" text-anchor="middle">SCHEMATIC · NOT TO SCALE</text></g>
+        </svg>
+        <div class="migration-legend"><span><i style="--legend:#d6a77b"></i> Jupiter</span><span><i style="--legend:#d7c18e"></i> Saturn</span><span><i style="--legend:#82c9c6"></i> Uranus</span><span><i style="--legend:#658fe0"></i> Neptune</span></div>
+        <div class="migration-controls" aria-label="Choose a migration stage">
+          <button type="button" data-migration-step="0" aria-current="step">01</button><button type="button" data-migration-step="1">02</button><button type="button" data-migration-step="2">03</button><button type="button" data-migration-step="3">04</button>
+        </div>
+        <p class="diagram-caption" id="migration-caption">The young Sun is surrounded by a gas-and-dust disk. This is a conceptual reconstruction, not a numerical simulation.</p>
+      </aside>
+
+      <div class="migration-steps">
+        <article class="migration-step is-active" data-story-step="0">
+          <span class="step-kicker">01 · The starting system</span><h2>Planets emerge from a disk.</h2>
+          <p>About 4.6 billion years ago, the Solar System formed from a collapsing cloud of gas and dust. The young Sun grew at the centre of a rotating protoplanetary disk. Solid grains collided and accumulated into planetesimals and larger planetary embryos; the giant planets assembled in the colder outer disk.</p>
+          <p>Where each giant planet first finished forming is still an active research question. Many dynamical models begin with the giant planets on more compact orbits than the ones they occupy today.</p>
+        </article>
+        <article class="migration-step" data-story-step="1">
+          <span class="step-kicker">02 · Slow orbital change</span><h2>Gravity trades energy and momentum.</h2>
+          <p>A planet can exchange orbital energy and angular momentum with a disk of leftover planetesimals. When a small body is scattered inward or outward, the planet's orbit can shift in response. Repeating this process can move a planet's average orbital distance over millions of years.</p>
+          <p>This is planetesimal-driven migration. Interactions with the gas disk can also move young planets earlier, while the gas is still present. The direction and rate depend on the disk and the planet's circumstances.</p>
+        </article>
+        <article class="migration-step" data-story-step="2">
+          <span class="step-kicker">03 · A possible instability</span><h2>Resonances can change the story.</h2>
+          <p>In one influential family of scenarios called the Nice model, the giant planets began in a compact, resonant configuration. As the system interacted with the outer planetesimal disk, the orbital spacing changed. Resonance crossings and close gravitational encounters could then trigger a short, chaotic reorganisation of the giant planets.</p>
+          <p>Different versions of the model use different starting arrangements and timelines. The diagram shows the idea of migration and instability, not a single agreed sequence or a faithful reconstruction of one simulation.</p>
+        </article>
+        <article class="migration-step" data-story-step="3">
+          <span class="step-kicker">04 · The system we observe</span><h2>Today's layout preserves clues.</h2>
+          <p>The giant planets now occupy widely spaced orbits. Their present arrangement, the structure of the Kuiper Belt, Jupiter's Trojan asteroids and the populations of irregular moons provide tests for models of early dynamical evolution.</p>
+          <p>Planetary migration is a leading part of modern Solar System formation research — but the details remain debated. The strongest models are judged by whether they reproduce many independent features at once, not by one attractive animation.</p>
+          <a class="text-link" href="/explore/small-bodies/">See the Kuiper Belt and distant small bodies ↗</a>
+        </article>
+      </div>
+    </div>
+    <div class="migration-takeaway"><span class="eyebrow">Keep the distinction clear</span><p><strong>Observed:</strong> the current planetary orbits and small-body populations. <strong>Modelled:</strong> the Solar System's exact initial giant-planet arrangement and the detailed sequence of migration and instability.</p></div>
+    <div class="migration-sources">
+      <span class="eyebrow">Further reading · Research and reference</span>
+      <a href="https://science.nasa.gov/universe/stars/planetary-system/" target="_blank" rel="noreferrer">NASA · Planetary systems and protoplanetary disks ↗</a>
+      <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-astro-081817-052028" target="_blank" rel="noreferrer">Nesvorný (2018) · Dynamical Evolution of the Early Solar System ↗</a>
+      <a href="https://journals.sagepub.com/doi/10.1089/ast.2021.0127" target="_blank" rel="noreferrer">Chapter 3 (2021) · Origins and Evolution of Planetary Systems ↗</a>
+    </div>
+  </section>
+
+  <script>
+    const steps = Array.from(document.querySelectorAll<HTMLElement>("[data-story-step]"));
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-migration-step]"));
+    const diagram = document.querySelector<SVGSVGElement>("#migration-diagram");
+    const stageLabel = document.querySelector<HTMLElement>("#migration-stage-label");
+    const caption = document.querySelector<HTMLElement>("#migration-caption");
+    const arrowLayer = document.querySelector<SVGGElement>("#migration-arrows");
+    const particleLayer = document.querySelector<SVGGElement>("#migration-particles");
+    const planetNodes = {
+      jupiter: document.querySelector<SVGCircleElement>("#migration-jupiter"),
+      saturn: document.querySelector<SVGCircleElement>("#migration-saturn"),
+      uranus: document.querySelector<SVGCircleElement>("#migration-uranus"),
+      neptune: document.querySelector<SVGCircleElement>("#migration-neptune")
+    };
+    const stages = [
+      { label: "Stage 01 · Formation", caption: "A compact young giant-planet system and a remnant outer disk are one possible starting point for migration models.", coords: [[350,245],[372,282],[398,220],[416,300]], particles: 0, arrows: false },
+      { label: "Stage 02 · Slow migration", caption: "Repeated gravitational encounters with planetesimals exchange orbital energy and angular momentum, gradually changing planetary orbits.", coords: [[348,235],[388,292],[420,208],[438,314]], particles: 18, arrows: true },
+      { label: "Stage 03 · Instability", caption: "In some Nice-model scenarios, resonance crossings and close encounters rapidly reorganise the outer planets. The exact history is model-dependent.", coords: [[340,230],[404,300],[447,195],[466,330]], particles: 34, arrows: true },
+      { label: "Stage 04 · Present layout", caption: "A widely spaced giant-planet architecture remains today. The exact migration pathway is inferred by comparing dynamical models with observations.", coords: [[362,238],[405,292],[432,205],[474,320]], particles: 9, arrows: false }
+    ];
+    function setStage(index: number) {
+      const stage = stages[index];
+      if (!stage || !diagram) return;
+      const names = ["jupiter", "saturn", "uranus", "neptune"] as const;
+      names.forEach((name, i) => {
+        const node = planetNodes[name];
+        const point = stage.coords[i];
+        if (node) { node.setAttribute("cx", String(point[0])); node.setAttribute("cy", String(point[1])); }
+      });
+      if (stageLabel) stageLabel.textContent = stage.label;
+      if (caption) caption.textContent = stage.caption;
+      if (arrowLayer) arrowLayer.setAttribute("opacity", stage.arrows ? "1" : "0");
+      if (particleLayer) {
+        particleLayer.replaceChildren();
+        for (let i = 0; i < stage.particles; i++) {
+          const angle = i * 2.399963229728653;
+          const radius = 177 + (i % 5) * 10;
+          const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          dot.setAttribute("cx", String(260 + Math.cos(angle) * radius));
+          dot.setAttribute("cy", String(260 + Math.sin(angle) * radius));
+          dot.setAttribute("r", String(1.2 + (i % 3) * .45));
+          dot.setAttribute("opacity", String(.3 + (i % 4) * .14));
+          particleLayer.append(dot);
+        }
+      }
+      steps.forEach((step, i) => step.classList.toggle("is-active", i === index));
+      buttons.forEach((button, i) => {
+        if (i === index) button.setAttribute("aria-current", "step");
+        else button.removeAttribute("aria-current");
+      });
+      diagram.setAttribute("aria-label", stage.label + ". " + stage.caption);
+    }
+    buttons.forEach((button, index) => button.addEventListener("click", () => setStage(index)));
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setStage(Number((visible.target as HTMLElement).dataset.storyStep));
+      }, { rootMargin: "-35% 0px -45% 0px", threshold: [0, .25, .5, .75, 1] });
+      steps.forEach((step) => observer.observe(step));
+    }
+    setStage(0);
+  </script>
+
+  <style>
+    .heading-muted{color:#8796ad}
+    .migration-story{padding-top:40px}
+    .migration-intro{max-width:730px;margin-bottom:30px}
+    .migration-intro h2{font-size:clamp(1.9rem,4vw,2.7rem);margin:10px 0}
+    .migration-intro p{font-size:.87rem;line-height:1.7}
+    .migration-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+    .migration-visual{position:sticky;top:98px;padding:19px;border:1px solid var(--line);border-radius:8px;background:radial-gradient(ellipse at center,rgba(38,67,105,.24),transparent 65%),#0a1321}
+    .migration-visual-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .migration-visual svg{display:block;width:100%;height:auto;max-height:590px;margin:8px auto}
+    .migration-legend{display:flex;flex-wrap:wrap;gap:9px 14px;color:var(--quiet);font-size:.68rem}
+    .migration-legend span{display:flex;align-items:center;gap:6px}
+    .migration-legend i{width:7px;height:7px;background:var(--legend);border-radius:50%}
+    .migration-controls{display:flex;gap:7px;margin-top:17px}
+    .migration-controls button{width:38px;height:34px;border:1px solid var(--line-strong);border-radius:4px;background:transparent;color:var(--muted);font-size:.72rem;cursor:pointer}
+    .migration-controls button[aria-current="step"]{border-color:var(--gold);color:var(--gold-bright);background:rgba(230,200,142,.08)}
+    .diagram-caption{font-size:.7rem;line-height:1.55;color:var(--quiet);margin:12px 0 0}
+    .migration-steps{display:grid;gap:35px}
+    .migration-step{padding:24px 22px;border:1px solid var(--line);border-radius:7px;background:rgba(13,22,37,.64);scroll-margin-top:110px;transition:border-color .25s,background .25s}
+    .migration-step.is-active{border-color:rgba(230,200,142,.48);background:rgba(20,34,56,.86)}
+    .step-kicker{color:var(--gold);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+    .migration-step h2{font-size:1.55rem;margin:12px 0}
+    .migration-step p{font-size:.84rem;line-height:1.8}
+    .migration-step .text-link{font-size:.78rem}
+    .migration-takeaway{display:grid;grid-template-columns:.35fr 1fr;gap:22px;padding:20px 22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:30px}
+    .migration-takeaway p{margin:0;font-size:.85rem;line-height:1.75}
+    .migration-sources{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:25px}
+    .migration-sources .eyebrow{width:100%}
+    .migration-sources a{color:var(--muted);font-size:.75rem;text-decoration:underline;text-decoration-color:rgba(230,200,142,.35);text-underline-offset:3px}
+    @media(max-width:800px){.migration-layout{grid-template-columns:1fr}.migration-visual{position:relative;top:auto;max-width:600px;margin:0 auto;width:100%}.migration-step{padding:20px}.migration-takeaway{grid-template-columns:1fr;gap:8px}}
+    @media(prefers-reduced-motion:reduce){.migration-step{transition:none}}
+  </style>
+</SiteLayout>
