@@ -49,7 +49,8 @@ export const planetDataSources = {
   physicalParameters: {
     name: "NASA/JPL Solar System Dynamics — Planetary Physical Parameters",
     url: "https://ssd.jpl.nasa.gov/planets/phys_par.html",
-    fields: ["mass", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"]
+    fields: ["mass", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"],
+    periodConversion: "Sidereal orbital periods are converted from Julian years using 365.25 days per Julian year."
   },
   factSheet: {
     name: "NASA NSSDCA — Planetary Fact Sheet",
@@ -62,7 +63,6 @@ export const planetDataSources = {
     epoch: "J2000 mean ecliptic and equinox",
     fittedInterval: "3000 BCE to 3000 CE",
     fields: ["semi-major axis", "eccentricity", "inclination", "other Keplerian elements and secular rates"],
-    periodConversion: "Sidereal orbital periods from the JPL physical-parameter table are converted from Julian years using 365.25 days per Julian year.",
     note: "Table 2b periodic terms must be applied to Jupiter through Neptune. The Earth row is the Earth–Moon barycentre, used as a close proxy for Earth's orbit."
   },
   checkedDate: "2026-11-08"
