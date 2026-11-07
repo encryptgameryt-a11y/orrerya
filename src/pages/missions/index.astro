@@ -1,22 +1,43 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 const missions = [
-  {year:"1974",name:"Mariner 10",target:"Mercury & Venus",detail:"The first spacecraft to use a gravity-assist manoeuvre at Venus to reach another planet. It made three Mercury flybys and revealed a globally cratered world."},
-  {year:"1977",name:"Voyager 1 & 2",target:"Jupiter, Saturn and beyond",detail:"The twin spacecraft transformed knowledge of the giant planets and their moons. They continue on trajectories through interstellar space."},
-  {year:"1989",name:"Galileo",target:"Jupiter",detail:"Orbited Jupiter, studied its magnetosphere and atmosphere, and transformed knowledge of the Galilean moons. Its probe sampled Jupiter's atmosphere."},
-  {year:"1997",name:"Cassini–Huygens",target:"Saturn & Titan",detail:"Cassini orbited Saturn from 2004 to 2017. Huygens descended through Titan's atmosphere and landed on its surface in 2005."},
-  {year:"2004",name:"MESSENGER",target:"Mercury",detail:"Orbited Mercury from 2011 to 2015, mapping its surface and investigating its composition, magnetic field and exosphere."},
-  {year:"2007",name:"Dawn",target:"Vesta & Ceres",detail:"Used ion propulsion to orbit two major bodies in the asteroid belt, revealing their distinct histories and interior evolution."},
-  {year:"2006",name:"New Horizons",target:"Pluto & Kuiper Belt",detail:"Flew past Pluto in 2015 and Arrokoth in 2019, revealing the diversity of distant icy worlds and primitive planetesimals."},
-  {year:"2011",name:"Juno",target:"Jupiter",detail:"Entered Jupiter orbit in 2016 to investigate its gravity, magnetic field, atmospheric circulation and deep interior."},
-  {year:"2018",name:"Parker Solar Probe",target:"The Sun",detail:"Flies through the Sun's outer atmosphere, studying the corona and the origin and evolution of the solar wind."},
-  {year:"2020",name:"OSIRIS-REx",target:"Asteroid Bennu",detail:"Collected a sample from near-Earth asteroid Bennu and returned it to Earth in 2023 for laboratory analysis."},
-  {year:"2020",name:"Perseverance",target:"Mars",detail:"Explores Jezero crater, studies rocks and ancient environments, and collects samples for possible future return to Earth."}
-];
+  {year:"1974",name:"Mariner 10",target:"Mercury & Venus",detail:"Used a Venus gravity assist to reach Mercury and made three Mercury flybys. It revealed a densely cratered surface and discovered Mercury's magnetic field."},
+  {year:"1977",name:"Voyager 1 & 2",target:"Jupiter, Saturn and interstellar space",detail:"The twin spacecraft transformed knowledge of the giant planets and their moons. Both crossed the heliopause and continue to send data from interstellar space."},
+  {year:"1989",name:"Galileo",target:"Jupiter",detail:"Reached Jupiter in 1995, orbited the planet and released an atmospheric probe. It transformed our understanding of Jupiter's atmosphere, magnetosphere and Galilean moons."},
+  {year:"1997",name:"Cassini–Huygens",target:"Saturn & Titan",detail:"Cassini entered orbit around Saturn in 2004 and explored the planet and its moons until 2017. ESA's Huygens probe landed on Titan on 14 January 2005."},
+  {year:"2004",name:"MESSENGER",target:"Mercury",detail:"Launched in 2004 and orbited Mercury from 2011 to 2015, mapping its surface and investigating its composition, magnetic field and exosphere."},
+  {year:"2006",name:"New Horizons",target:"Pluto & Arrokoth",detail:"Flew past Pluto in July 2015 and the Kuiper Belt object Arrokoth in January 2019. The mission remains active in the distant Solar System."},
+  {year:"2007",name:"Dawn",target:"Vesta & Ceres",detail:"Used ion propulsion to orbit two major bodies in the asteroid belt. It revealed their distinct geological histories before the mission ended in 2018."},
+  {year:"2011",name:"Juno",target:"Jupiter",detail:"Entered Jupiter orbit in 2016 and continues to investigate the planet's gravity, magnetic field, atmosphere, interior and large moons."},
+  {year:"2016",name:"OSIRIS-REx → OSIRIS-APEX",target:"Bennu → Apophis",detail:"Launched in 2016, collected 121.6 g of material from Bennu in 2020 and delivered the sample to Earth in 2023. The spacecraft then began its extended mission as OSIRIS-APEX, heading to Apophis in 2029."},
+  {year:"2018",name:"BepiColombo",target:"Mercury",detail:"The ESA–JAXA mission carries two orbiters to study Mercury's surface, interior and magnetic environment. Its Mercury orbit-capture sequence is scheduled for November–December 2026."},
+  {year:"2018",name:"Parker Solar Probe",target:"The Sun",detail:"Became the first spacecraft to fly through the Sun's corona in 2021. It measures the solar wind and magnetic fields close to the Sun."},
+  {year:"2020",name:"Perseverance",target:"Mars",detail:"Landed in Jezero crater in February 2021. It studies ancient environments and collects rock and regolith samples for possible future return."},
+  {year:"2021",name:"Lucy",target:"Jupiter Trojan asteroids",detail:"Studies the small bodies that share Jupiter's orbit. NASA lists 11 planned asteroid flybys; the next is scheduled for 11 August 2027."},
+  {year:"2021",name:"DART",target:"Didymos & Dimorphos",detail:"Impacted Dimorphos on 26 September 2022. The impact shortened the moonlet's orbit around Didymos by 33 minutes 15 seconds, demonstrating kinetic-impact asteroid deflection."},
+  {year:"2023",name:"JUICE",target:"Jupiter & icy moons",detail:"ESA's Jupiter Icy Moons Explorer launched in April 2023 and completed an Earth flyby in September 2026. It is scheduled to reach Jupiter in July 2031."},
+  {year:"2023",name:"Psyche",target:"Asteroid Psyche",detail:"Launched in October 2023 to study a metal-rich main-belt asteroid. Arrival and the start of its prime mission are planned for August 2029."},
+  {year:"2024",name:"Europa Clipper",target:"Europa & Jupiter",detail:"Launched in October 2024. It is due to fly past Earth in December 2026 and enter orbit around Jupiter in April 2030, then make repeated close flybys of Europa."}
+];;
 ---
 <SiteLayout title="Exploring the Solar System" description="A timeline of landmark spacecraft missions that explored the Sun, planets, moons, asteroids and distant icy worlds.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Exploration</span></div>
   <header class="page-intro container"><div class="eyebrow">SPACECRAFT AND OBSERVATORIES</div><h1>Space missions to<br />the Solar System.</h1><p class="lede">Spacecraft carry instruments to places we cannot study closely from Earth. These selected missions transformed our knowledge of the Sun, planets, moons and small bodies.</p></header>
+  <section class="container mission-milestones" aria-labelledby="mission-milestones-title">
+    <div class="section-head"><div><span class="eyebrow">UPCOMING MILESTONES · STATUS CHECKED 8 NOVEMBER 2026</span><h2 id="mission-milestones-title">What happens next?</h2></div><p>These are published mission plans, not guaranteed dates. Agencies may revise schedules as operations progress.</p></div>
+    <div class="milestone-list">
+      <article><div><strong>21 November 2026</strong><span>BepiColombo · Mercury orbit capture scheduled</span></div><a href="https://www.esa.int/media/bepicolombo-arrival-at-mercury-timeline" target="_blank" rel="noreferrer">ESA timeline ↗</a></article>
+      <article><div><strong>3 December 2026</strong><span>Europa Clipper · Earth gravity assist scheduled</span></div><a href="https://science.nasa.gov/mission/europa-clipper/mission-timeline/" target="_blank" rel="noreferrer">NASA timeline ↗</a></article>
+      <article><div><strong>9–10 December 2026</strong><span>BepiColombo · MPO and Mio separation scheduled</span></div><a href="https://www.esa.int/media/bepicolombo-arrival-at-mercury-timeline" target="_blank" rel="noreferrer">ESA timeline ↗</a></article>
+      <article><div><strong>11 August 2027</strong><span>Lucy · next asteroid flyby listed by NASA</span></div><a href="https://science.nasa.gov/mission/lucy/" target="_blank" rel="noreferrer">NASA mission page ↗</a></article>
+      <article><div><strong>June 2029</strong><span>OSIRIS-APEX · Apophis rendezvous</span></div><a href="https://science.nasa.gov/mission/osiris-apex/" target="_blank" rel="noreferrer">NASA mission page ↗</a></article>
+      <article><div><strong>August 2029</strong><span>Psyche · arrival at asteroid Psyche planned</span></div><a href="https://science.nasa.gov/mission/psyche/" target="_blank" rel="noreferrer">NASA mission page ↗</a></article>
+      <article><div><strong>11 April 2030</strong><span>Europa Clipper · Jupiter orbit insertion planned</span></div><a href="https://science.nasa.gov/mission/europa-clipper/mission-timeline/" target="_blank" rel="noreferrer">NASA timeline ↗</a></article>
+      <article><div><strong>July 2031</strong><span>JUICE · arrival at Jupiter planned</span></div><a href="https://www.esa.int/missions/about-us/directorates/science/juice" target="_blank" rel="noreferrer">ESA mission page ↗</a></article>
+      <article><div><strong>Late 2034</strong><span>Dragonfly · arrival at Titan planned</span></div><a href="https://science.nasa.gov/mission/dragonfly/" target="_blank" rel="noreferrer">NASA mission page ↗</a></article>
+    </div>
+    <p class="mission-schedule-note">BepiColombo's routine science phase is currently scheduled to begin on 6 April 2027. Europa Clipper's Jupiter orbit insertion is listed for 11 April 2030. Dates can change; use the agency mission pages for the latest schedule.</p>
+  </section>
   <section class="section container">
     <div class="mission-intro"><div class="card mission-stat"><span class="eyebrow">HOW SPACE EXPLORATION HAS CHANGED</span><strong>Flyby → Orbit → Land → Sample</strong><p>Exploration has moved from brief encounters to long-term orbital science, surface operations and the return of pristine extraterrestrial material.</p></div><div class="prose"><p>Mission dates below refer to launch years. They are arranged as a selected learning timeline, not a complete catalogue. Some missions are ongoing and mission status can change; follow the primary mission pages for current operations.</p></div></div>
     <div class="timeline">{missions.map((mission,i)=><article class="timeline-item"><div class="timeline-marker"><span>{mission.year}</span></div><div class="timeline-card"><span class="eyebrow">{mission.target}</span><h3>{mission.name}</h3><p>{mission.detail}</p></div></article>)}</div>
@@ -24,4 +45,14 @@ const missions = [
     <div class="source-panel"><div><span class="eyebrow">Mission databases</span><h3>MISSION SOURCES</h3><p>Mission science pages and agency mission catalogues are the best place for current details.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/solar-system/" target="_blank" rel="noreferrer">NASA — Solar System exploration ↗</a></li><li><a href="https://science.nasa.gov/mission/" target="_blank" rel="noreferrer">NASA — Mission directory ↗</a></li><li><a href="https://www.esa.int/Science_Exploration/Space_Science" target="_blank" rel="noreferrer">ESA — Space Science ↗</a></li><li><a href="https://www.jaxa.jp/projects/index_e.html" target="_blank" rel="noreferrer">JAXA — Space projects ↗</a></li></ul></div>
   </section>
   <style>.mission-intro{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;margin-bottom:50px}.mission-stat{padding:23px}.mission-stat strong{display:block;font:600 1.7rem "Space Grotesk",sans-serif;color:var(--gold-bright);margin:14px 0}.mission-stat p{font-size:.82rem;line-height:1.7;margin:0}.mission-intro .prose p{margin:0}.timeline{max-width:860px;margin-left:9px}.timeline-item{display:grid;grid-template-columns:85px 1fr;gap:24px;position:relative;padding-bottom:24px}.timeline-item:not(:last-child)::before{content:"";position:absolute;top:26px;bottom:-1px;left:24px;border-left:1px solid rgba(230,200,142,.3)}.timeline-marker{position:relative;z-index:1;display:flex;justify-content:center}.timeline-marker span{font:600 .86rem "Space Grotesk",sans-serif;color:var(--gold);background:var(--space);padding-top:8px}.timeline-card{padding:20px 22px;border:1px solid var(--line);border-radius:7px;background:rgba(16,27,45,.7)}.timeline-card h3{font:600 1.3rem "Space Grotesk",sans-serif;margin:7px 0}.timeline-card p{font-size:.84rem;line-height:1.7;margin:0}.callout{margin-top:28px}.source-panel{margin-top:38px}@media(max-width:700px){.mission-intro{grid-template-columns:1fr}.timeline-item{grid-template-columns:58px 1fr;gap:13px}.timeline-item:not(:last-child)::before{left:17px}.timeline-card{padding:16px}}</style>
+<style>
+    .mission-milestones{padding-top:32px}
+    .milestone-list{display:grid;gap:0;border-top:1px solid var(--line)}
+    .milestone-list article{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 2px;border-bottom:1px solid var(--line)}
+    .milestone-list article div{display:grid;gap:3px}
+    .milestone-list article strong{font-variant-numeric:tabular-nums}
+    .milestone-list article span{font-size:.88rem;color:var(--muted)}
+    .milestone-list article a{font-size:.78rem;white-space:nowrap}
+    .mission-schedule-note{font-size:.76rem;line-height:1.6;color:var(--quiet);margin-top:14px}
+  </style>
 </SiteLayout>
