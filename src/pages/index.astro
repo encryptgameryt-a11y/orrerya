@@ -537,4 +537,12 @@ const homeSummaries: Record<string, string> = {
       border-bottom-color: rgba(229,235,241,.22) !important;
     }
   </style>
+
+  <style>
+    /* Higher-specificity guard against legacy light-theme hero text overrides. */
+    body .home-hero.orrery-home-hero .orrery-brand-feature .eyebrow { color: #e2c58f !important; }
+    body .home-hero.orrery-home-hero .orrery-brand-tag { color: #e2c58f !important; }
+    body .home-hero.orrery-home-hero .orrery-hero-line { color: #fffaf0 !important; }
+    body .home-hero.orrery-home-hero .orrery-hero-description { color: #d7e0e7 !important; }
+  </style>
 </SiteLayout>
