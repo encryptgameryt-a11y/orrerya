@@ -86,6 +86,11 @@ import { planets } from "../../data/planets";
     <div class="source-panel"><div><span class="eyebrow">Calculation references</span><h3>Sources and constants</h3><p>Planetary gravity and orbital values are taken from NASA/JPL and NASA NSSDCA tables.</p></div><ul class="source-list"><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://www.iau.org/public/themes/measuring/" target="_blank" rel="noreferrer">International Astronomical Union — Measuring the Universe ↗</a></li></ul></div>
   </section>
   <script>
+    import {
+      meanAnomalyFromTrueAnomaly,
+      orbitalState,
+      trueAnomalyFromMeanAnomaly
+    } from "../../lib/orbital-mechanics.js";
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
     const massInput = document.querySelector<HTMLInputElement>("#mass-input");
     const gravitySelect = document.querySelector<HTMLSelectElement>("#gravity-world");
@@ -182,38 +187,11 @@ import { planets } from "../../data/planets";
     const orbitAphe = document.querySelector<HTMLElement>("#orbit-aphe");
     const orbitPlay = document.querySelector<HTMLButtonElement>("#orbit-play");
     const orbitPlayStatus = document.querySelector<HTMLElement>("#orbit-play-status");
-    const AU_KM = 149597870.7;
-    const SOLAR_MU = 1.32712440018e11;
     const ORBIT_CYCLE_MS = 24000;
     const orbitFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
     let orbitAnimationFrame = 0;
     let orbitAnimationStart: number | null = null;
     let startingMeanAnomaly = 0;
-
-    function meanAnomalyFromTrueAnomaly(trueAnomalyDegrees: number, eccentricity: number) {
-      const nu = trueAnomalyDegrees * Math.PI / 180;
-      const eccentricAnomaly = 2 * Math.atan2(
-        Math.sqrt(1 - eccentricity) * Math.sin(nu / 2),
-        Math.sqrt(1 + eccentricity) * Math.cos(nu / 2)
-      );
-      return eccentricAnomaly - eccentricity * Math.sin(eccentricAnomaly);
-    }
-
-    function trueAnomalyFromMeanAnomaly(meanAnomaly: number, eccentricity: number) {
-      const twoPi = 2 * Math.PI;
-      const M = ((meanAnomaly % twoPi) + twoPi) % twoPi;
-      let E = M;
-      for (let i = 0; i < 12; i++) {
-        const correction = (E - eccentricity * Math.sin(E) - M) / (1 - eccentricity * Math.cos(E));
-        E -= correction;
-        if (Math.abs(correction) < 1e-10) break;
-      }
-      const nu = 2 * Math.atan2(
-        Math.sqrt(1 + eccentricity) * Math.sin(E / 2),
-        Math.sqrt(1 - eccentricity) * Math.cos(E / 2)
-      );
-      return ((nu * 180 / Math.PI) % 360 + 360) % 360;
-    }
 
     function stopOrbitAnimation(announce = true) {
       if (orbitAnimationFrame) cancelAnimationFrame(orbitAnimationFrame);
@@ -233,15 +211,11 @@ import { planets } from "../../data/planets";
       const eccentricity = Number(option?.dataset.e);
       const degrees = Number(orbitAngle.value);
       if (!Number.isFinite(aAu) || aAu <= 0 || !Number.isFinite(eccentricity) || eccentricity < 0 || eccentricity >= 1 || !Number.isFinite(degrees)) return;
-      const nu = degrees * Math.PI / 180;
-      const denominator = 1 + eccentricity * Math.cos(nu);
-      const radiusRatio = (1 - eccentricity * eccentricity) / denominator;
-      const rAu = aAu * radiusRatio;
-      const rKm = rAu * AU_KM;
-      const aKm = aAu * AU_KM;
-      const velocity = Math.sqrt(SOLAR_MU * (2 / rKm - 1 / aKm));
-      const periAu = aAu * (1 - eccentricity);
-      const apheAu = aAu * (1 + eccentricity);
+      const state = orbitalState(aAu, eccentricity, degrees);
+      const rAu = state.distanceAu;
+      const rKm = state.distanceKm;
+      const periAu = state.perihelionAu;
+      const apheAu = state.aphelionAu;
       const scale = 140;
       const focusX = 120;
       const focusY = 150;
@@ -263,14 +237,14 @@ import { planets } from "../../data/planets";
       orbitPhaseLabel.textContent = "TRUE ANOMALY · " + degrees.toFixed(1) + "°";
       orbitDistance.textContent = orbitFormatter.format(rAu) + " AU";
       orbitDistanceKm.textContent = orbitFormatter.format(rKm / 1e6) + " million km";
-      orbitSpeed.textContent = orbitFormatter.format(velocity) + " km/s";
+      orbitSpeed.textContent = orbitFormatter.format(state.speedKmS) + " km/s";
       orbitSpeedNote.textContent = degrees <= 10 || degrees >= 350 ? "Near perihelion" : degrees >= 170 && degrees <= 190 ? "Near aphelion" : degrees < 180 ? "Moving toward aphelion" : "Moving toward perihelion";
       orbitPeri.textContent = orbitFormatter.format(periAu) + " AU";
       orbitAphe.textContent = orbitFormatter.format(apheAu) + " AU";
     }
 
     function animateOrbit(timestamp: number) {
-      if (!orbitAnimationStart) orbitAnimationStart = timestamp;
+      if (orbitAnimationStart === null) orbitAnimationStart = timestamp;
       const elapsed = (timestamp - orbitAnimationStart) % ORBIT_CYCLE_MS;
       const option = orbitSelect?.selectedOptions[0];
       const eccentricity = Number(option?.dataset.e);
