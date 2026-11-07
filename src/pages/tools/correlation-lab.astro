@@ -1,0 +1,277 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout title="Planetary correlation lab" description="Explore relationships among the eight planets by plotting orbital and physical properties, changing axes and scales, and examining correlation.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Planetary correlation lab</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">Tool 07 · Planetary data · Explore relationships</div>
+    <h1>Find the patterns.<br /><span class="heading-muted">Question the outliers.</span></h1>
+    <p class="lede">Choose two properties and plot all eight planets. Change the axes or scale to see how the same Solar System can reveal different relationships.</p>
+  </header>
+
+  <section class="section container data-lab">
+    <div class="data-controls card">
+      <div class="field"><label for="x-axis">Horizontal axis · X</label><select id="x-axis"><option value="distanceAu">Semi-major axis (AU)</option><option value="periodDays">Orbital period (Earth days)</option><option value="diameterKm">Equatorial diameter (km)</option><option value="massEarth">Mass (Earth masses)</option><option value="density">Mean density (g/cm³)</option><option value="gravity">Equatorial reference gravity (m/s²)</option><option value="eccentricity">Orbital eccentricity</option></select></div>
+      <div class="field"><label for="y-axis">Vertical axis · Y</label><select id="y-axis"><option value="distanceAu">Semi-major axis (AU)</option><option value="periodDays" selected>Orbital period (Earth days)</option><option value="diameterKm">Equatorial diameter (km)</option><option value="massEarth">Mass (Earth masses)</option><option value="density">Mean density (g/cm³)</option><option value="gravity">Equatorial reference gravity (m/s²)</option><option value="eccentricity">Orbital eccentricity</option></select></div>
+      <div class="field"><label for="axis-scale">Axis scaling</label><select id="axis-scale"><option value="log" selected>Logarithmic · both axes</option><option value="linear">Linear · both axes</option></select></div>
+      <div class="data-controls-note"><span class="eyebrow">Explore</span><p>Try semi-major axis against orbital period first. Then compare mass with diameter, or density with gravity. The same eight planets can tell very different stories depending on the variables.</p></div>
+    </div>
+
+    <div class="data-results">
+      <article class="card chart-card">
+        <div class="chart-heading"><div><span class="eyebrow">Eight planets · two variables</span><h2 id="chart-title">Orbital distance vs. orbital period</h2></div><span class="tag" id="chart-scale-label">Log–log view</span></div>
+        <svg id="planet-scatter" viewBox="0 0 680 450" role="img" aria-labelledby="scatter-title scatter-desc">
+          <title id="scatter-title">Scatter plot of planetary properties</title>
+          <desc id="scatter-desc">Eight data points, one for each planet, with a least-squares trend line. Choose different variables to redraw the plot.</desc>
+          <g id="scatter-grid"></g><g id="scatter-regression"></g><g id="scatter-points"></g><g id="scatter-axes"></g>
+        </svg>
+        <div class="planet-legend" id="planet-legend" aria-label="Planet colour key"></div>
+        <p class="chart-footnote">The dashed line is a least-squares fit in the currently selected coordinate scale. The coefficient describes linear association in that plotted space.</p>
+      </article>
+
+      <aside class="card correlation-card" aria-live="polite">
+        <span class="eyebrow">Live correlation</span><div class="correlation-value" id="correlation-value">+1.00</div><strong id="correlation-label">Strong positive relationship</strong><p id="correlation-note">The selected properties tend to increase together across these eight planets.</p>
+        <div class="correlation-meter"><span id="correlation-meter-fill"></span></div>
+        <dl class="correlation-facts"><div><dt>Planets plotted</dt><dd>8</dd></div><div><dt>Correlation coefficient · r</dt><dd id="correlation-exact">1.000</dd></div><div><dt>Scale used</dt><dd id="correlation-scale">Logarithmic</dd></div></dl>
+        <div class="interpretation-note"><strong>Interpret carefully.</strong><p>Eight planets are a very small, highly selected dataset. Correlation is descriptive; by itself it does not establish causation or explain the underlying physics.</p></div>
+      </aside>
+    </div>
+
+    <div class="card data-table-card">
+      <div class="section-head"><div><div class="eyebrow">The values behind the plot</div><h2>Inspect the data.</h2></div><p>Numbers are rounded reference values used by ORRERYA's planet profiles, not a new precision database.</p></div>
+      <div class="table-scroll"><table class="planet-data-table"><thead><tr><th scope="col">Planet</th><th scope="col" id="table-x-heading">Semi-major axis (AU)</th><th scope="col" id="table-y-heading">Orbital period (Earth days)</th></tr></thead><tbody id="planet-data-rows"></tbody></table></div>
+    </div>
+
+    <div class="data-method prose">
+      <span class="eyebrow">Dataset notes</span><h2>Choose comparable quantities.</h2>
+      <p>The lab deliberately uses seven physical or orbital properties that can be compared across all eight planets. It does not pair a rocky planet's surface pressure with a gas giant's cloud-level reference pressure: those are not equivalent measurement surfaces. Likewise, giant-planet gravity is a reference-level value, not gravity at a solid surface.</p>
+      <p>Mass is normalised to Earth's mass; density is mean density; gravity is the equatorial reference value; and orbital distance is the semi-major axis represented by the rounded mean-distance values in the profiles. Different rounding and physical definitions can affect the plotted coefficient.</p>
+      <p><strong>Reference sources:</strong> <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA Planetary Fact Sheet ↗</a> · <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL Planetary Physical Parameters ↗</a>.</p>
+    </div>
+  </section>
+
+  <script>
+    import { planets } from "../../data/planets";
+
+    const palette: Record<string, string> = {
+      mercury: "#aeb8c5", venus: "#e8bd91", earth: "#62a9d8", mars: "#d88368",
+      jupiter: "#d6a77b", saturn: "#d7c18e", uranus: "#82c9c6", neptune: "#658fe0"
+    };
+    const metrics: Record<string, { label: string; unit: string; value: (planet: typeof planets[number]) => number }> = {
+      distanceAu: { label: "Semi-major axis", unit: "AU", value: (p) => p.distanceAu },
+      periodDays: { label: "Orbital period", unit: "Earth days", value: (p) => p.orbitDays },
+      diameterKm: { label: "Equatorial diameter", unit: "km", value: (p) => p.diameterKm },
+      massEarth: { label: "Mass", unit: "Earth masses", value: (p) => p.mass1024 / 5.97217 },
+      density: { label: "Mean density", unit: "g/cm³", value: (p) => Number.parseFloat(p.density) },
+      gravity: { label: "Equatorial reference gravity", unit: "m/s²", value: (p) => p.gravityValue },
+      eccentricity: { label: "Orbital eccentricity", unit: "", value: (p) => Number.parseFloat(p.eccentricity) }
+    };
+    const records = planets.map((planet) => ({
+      slug: planet.slug, name: planet.name, color: palette[planet.slug],
+      values: Object.fromEntries(Object.entries(metrics).map(([key, metric]) => [key, metric.value(planet)])) as Record<string, number>
+    }));
+    const xSelect = document.querySelector<HTMLSelectElement>("#x-axis");
+    const ySelect = document.querySelector<HTMLSelectElement>("#y-axis");
+    const scaleSelect = document.querySelector<HTMLSelectElement>("#axis-scale");
+    const gridLayer = document.querySelector<SVGGElement>("#scatter-grid");
+    const regressionLayer = document.querySelector<SVGGElement>("#scatter-regression");
+    const pointsLayer = document.querySelector<SVGGElement>("#scatter-points");
+    const axesLayer = document.querySelector<SVGGElement>("#scatter-axes");
+    const ns = "http://www.w3.org/2000/svg";
+    const width = 680, height = 450;
+    const plot = { left: 86, right: 646, top: 28, bottom: 365 };
+    const plotWidth = plot.right - plot.left, plotHeight = plot.bottom - plot.top;
+
+    function svg(name: string, attrs: Record<string, string>, parent: SVGGElement) {
+      const node = document.createElementNS(ns, name);
+      Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+      parent.append(node);
+      return node;
+    }
+    function format(value: number) {
+      return new Intl.NumberFormat("en-US", { maximumSignificantDigits: 3 }).format(value);
+    }
+    function transform(value: number, mode: string) { return mode === "log" ? Math.log10(value) : value; }
+    function inverse(value: number, mode: string) { return mode === "log" ? Math.pow(10, value) : value; }
+    function mean(values: number[]) { return values.reduce((sum, value) => sum + value, 0) / values.length; }
+    function pearson(xs: number[], ys: number[]) {
+      const mx = mean(xs), my = mean(ys);
+      let numerator = 0, xSquares = 0, ySquares = 0;
+      xs.forEach((x, i) => { const dx = x - mx, dy = ys[i] - my; numerator += dx * dy; xSquares += dx * dx; ySquares += dy * dy; });
+      return xSquares === 0 || ySquares === 0 ? 0 : numerator / Math.sqrt(xSquares * ySquares);
+    }
+    function correlationDescription(r: number) {
+      const magnitude = Math.abs(r);
+      const strength = magnitude >= .8 ? "Strong" : magnitude >= .5 ? "Moderate" : magnitude >= .25 ? "Weak" : "Very weak";
+      if (magnitude < .25) return "Very weak linear relationship";
+      return strength + (r > 0 ? " positive relationship" : " negative relationship");
+    }
+    function clearLayers() {
+      [gridLayer, regressionLayer, pointsLayer, axesLayer].forEach((layer) => layer?.replaceChildren());
+    }
+    function update() {
+      if (!xSelect || !ySelect || !scaleSelect || !gridLayer || !regressionLayer || !pointsLayer || !axesLayer) return;
+      const xKey = xSelect.value, yKey = ySelect.value, mode = scaleSelect.value;
+      const xMetric = metrics[xKey], yMetric = metrics[yKey];
+      const title = document.querySelector<HTMLElement>("#chart-title");
+      const scaleLabel = document.querySelector<HTMLElement>("#chart-scale-label");
+      const desc = document.querySelector<SVGDescElement>("#scatter-desc");
+      const xHeading = document.querySelector<HTMLElement>("#table-x-heading");
+      const yHeading = document.querySelector<HTMLElement>("#table-y-heading");
+      const exact = document.querySelector<HTMLElement>("#correlation-exact");
+      const value = document.querySelector<HTMLElement>("#correlation-value");
+      const label = document.querySelector<HTMLElement>("#correlation-label");
+      const note = document.querySelector<HTMLElement>("#correlation-note");
+      const scaleOut = document.querySelector<HTMLElement>("#correlation-scale");
+      const meter = document.querySelector<HTMLElement>("#correlation-meter-fill");
+      const tbody = document.querySelector<HTMLTableSectionElement>("#planet-data-rows");
+      if (!title || !scaleLabel || !desc || !xHeading || !yHeading || !exact || !value || !label || !note || !scaleOut || !meter || !tbody) return;
+
+      if (xKey === yKey) {
+        clearLayers();
+        title.textContent = "Choose two different properties";
+        desc.textContent = "The horizontal and vertical axes must represent different properties.";
+        value.textContent = "—"; exact.textContent = "—";
+        label.textContent = "Select distinct axes";
+        note.textContent = "Comparing a property with itself always produces a trivial result.";
+        meter.style.width = "0%";
+        tbody.replaceChildren();
+        return;
+      }
+
+      const raw = records.map((record) => ({ ...record, x: record.values[xKey], y: record.values[yKey] }));
+      const points = raw.map((record) => ({ ...record, tx: transform(record.x, mode), ty: transform(record.y, mode) }));
+      const xs = points.map((p) => p.tx), ys = points.map((p) => p.ty);
+      const r = pearson(xs, ys);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const padX = (maxX - minX || 1) * .1, padY = (maxY - minY || 1) * .1;
+      const x0 = minX - padX, x1 = maxX + padX, y0 = minY - padY, y1 = maxY + padY;
+      const mapX = (v: number) => plot.left + (v - x0) / (x1 - x0) * plotWidth;
+      const mapY = (v: number) => plot.bottom - (v - y0) / (y1 - y0) * plotHeight;
+
+      clearLayers();
+      for (let i = 0; i <= 4; i++) {
+        const tx = x0 + (x1 - x0) * i / 4;
+        const ty = y0 + (y1 - y0) * i / 4;
+        const gx = mapX(tx), gy = mapY(ty);
+        svg("line", { x1: String(gx), y1: String(plot.top), x2: String(gx), y2: String(plot.bottom), stroke: "rgba(151,184,220,.13)", "stroke-width": "1" }, gridLayer);
+        svg("line", { x1: String(plot.left), y1: String(gy), x2: String(plot.right), y2: String(gy), stroke: "rgba(151,184,220,.13)", "stroke-width": "1" }, gridLayer);
+        const xt = svg("text", { x: String(gx), y: String(plot.bottom + 22), "text-anchor": "middle", fill: "#9aa9bd", "font-size": "10" }, axesLayer);
+        xt.textContent = format(inverse(tx, mode));
+        const yt = svg("text", { x: String(plot.left - 11), y: String(gy + 3.5), "text-anchor": "end", fill: "#9aa9bd", "font-size": "10" }, axesLayer);
+        yt.textContent = format(inverse(ty, mode));
+      }
+      svg("line", { x1: String(plot.left), y1: String(plot.top), x2: String(plot.left), y2: String(plot.bottom), stroke: "rgba(196,213,239,.55)", "stroke-width": "1.2" }, axesLayer);
+      svg("line", { x1: String(plot.left), y1: String(plot.bottom), x2: String(plot.right), y2: String(plot.bottom), stroke: "rgba(196,213,239,.55)", "stroke-width": "1.2" }, axesLayer);
+      const xLabel = svg("text", { x: String((plot.left + plot.right) / 2), y: "425", "text-anchor": "middle", fill: "#d8e0eb", "font-size": "12" }, axesLayer);
+      xLabel.textContent = xMetric.label + (xMetric.unit ? " (" + xMetric.unit + ")" : "");
+      const yLabel = svg("text", { x: "19", y: String((plot.top + plot.bottom) / 2), transform: "rotate(-90 19 " + ((plot.top + plot.bottom) / 2) + ")", "text-anchor": "middle", fill: "#d8e0eb", "font-size": "12" }, axesLayer);
+      yLabel.textContent = yMetric.label + (yMetric.unit ? " (" + yMetric.unit + ")" : "");
+
+      const mx = mean(xs), my = mean(ys);
+      let covariance = 0, variance = 0;
+      xs.forEach((x, i) => { covariance += (x - mx) * (ys[i] - my); variance += (x - mx) ** 2; });
+      const slope = variance === 0 ? 0 : covariance / variance;
+      const intercept = my - slope * mx;
+      svg("line", {
+        x1: String(mapX(x0)), y1: String(mapY(slope * x0 + intercept)),
+        x2: String(mapX(x1)), y2: String(mapY(slope * x1 + intercept)),
+        stroke: "#f0d8a8", "stroke-width": "2", "stroke-dasharray": "7 6", "stroke-opacity": ".85"
+      }, regressionLayer);
+
+      points.forEach((point) => {
+        const circle = svg("circle", { cx: String(mapX(point.tx)), cy: String(mapY(point.ty)), r: "6.5", fill: point.color, stroke: "#f3f1eb", "stroke-width": "1.3" }, pointsLayer);
+        const tip = document.createElementNS(ns, "title");
+        tip.textContent = point.name + " · " + xMetric.label + ": " + format(point.x) + (xMetric.unit ? " " + xMetric.unit : "") + " · " + yMetric.label + ": " + format(point.y) + (yMetric.unit ? " " + yMetric.unit : "");
+        circle.append(tip);
+      });
+
+      title.textContent = xMetric.label + " vs. " + yMetric.label;
+      scaleLabel.textContent = mode === "log" ? "Log–log view" : "Linear view";
+      desc.textContent = "Scatter plot of " + xMetric.label + " against " + yMetric.label + " for all eight planets, with a least-squares trend line. Axis scaling is " + mode + ".";
+      xHeading.textContent = xMetric.label + (xMetric.unit ? " (" + xMetric.unit + ")" : "");
+      yHeading.textContent = yMetric.label + (yMetric.unit ? " (" + yMetric.unit + ")" : "");
+      exact.textContent = r.toFixed(3);
+      value.textContent = (r >= 0 ? "+" : "") + r.toFixed(2);
+      label.textContent = correlationDescription(r);
+      note.textContent = r > .25 ? "The selected properties tend to increase together across these eight planets." : r < -.25 ? "Higher values on one axis tend to accompany lower values on the other in this small dataset." : "There is little linear association between these selected properties across the eight planets.";
+      scaleOut.textContent = mode === "log" ? "Logarithmic" : "Linear";
+      meter.style.width = Math.max(0, Math.min(100, Math.abs(r) * 100)) + "%";
+
+      tbody.replaceChildren();
+      points.forEach((point) => {
+        const row = document.createElement("tr");
+        const name = document.createElement("th");
+        name.scope = "row";
+        const swatch = document.createElement("span");
+        swatch.className = "planet-swatch";
+        swatch.style.setProperty("--planet", point.color);
+        name.append(swatch, document.createTextNode(point.name));
+        const xCell = document.createElement("td"); xCell.textContent = format(point.x) + (xMetric.unit ? " " + xMetric.unit : "");
+        const yCell = document.createElement("td"); yCell.textContent = format(point.y) + (yMetric.unit ? " " + yMetric.unit : "");
+        row.append(name, xCell, yCell);
+        tbody.append(row);
+      });
+    }
+
+    const legend = document.querySelector<HTMLElement>("#planet-legend");
+    if (legend) records.forEach((planet) => {
+      const item = document.createElement("span");
+      const swatch = document.createElement("i");
+      swatch.style.background = planet.color;
+      item.append(swatch, document.createTextNode(planet.name));
+      legend.append(item);
+    });
+    [xSelect, ySelect, scaleSelect].forEach((control) => control?.addEventListener("change", update));
+    update();
+  </script>
+
+  <style>
+    .heading-muted{color:#8796ad}
+    .data-lab{padding-top:44px}
+    .data-controls{display:grid;grid-template-columns:1fr 1fr .8fr 1.45fr;gap:18px;align-items:end;padding:22px;margin-bottom:17px}
+    .data-controls .field{margin:0}
+    .data-controls label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:7px}
+    .data-controls select{width:100%;min-height:44px;padding:9px 11px;border-radius:5px;border:1px solid var(--line-strong);background:#0a1220;color:var(--text);font-size:.79rem}
+    .data-controls-note{border-left:1px solid var(--line);padding-left:18px}
+    .data-controls-note p{font-size:.7rem;line-height:1.55;margin:7px 0 0}
+    .data-results{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;align-items:stretch}
+    .chart-card{padding:23px;min-width:0}
+    .chart-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .chart-heading h2{font-size:1.45rem;margin:8px 0 10px}
+    .chart-card svg{display:block;width:100%;height:auto;overflow:visible}
+    .planet-legend{display:flex;gap:12px 16px;flex-wrap:wrap;margin:2px 0 0;color:var(--quiet);font-size:.68rem}
+    .planet-legend span{display:flex;align-items:center;gap:6px}
+    .planet-legend i,.planet-swatch{display:inline-block;width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+    .chart-footnote{font-size:.67rem;color:var(--quiet);line-height:1.55;margin:14px 0 0}
+    .correlation-card{padding:25px;display:flex;flex-direction:column}
+    .correlation-value{font:600 clamp(2.7rem,5vw,4.2rem)/1 "Space Grotesk",sans-serif;letter-spacing:-.06em;color:var(--gold-bright);margin:21px 0 9px;font-variant-numeric:tabular-nums}
+    .correlation-card>strong{font-size:.92rem}
+    .correlation-card>p{font-size:.78rem;line-height:1.65;margin:10px 0 18px}
+    .correlation-meter{height:6px;border-radius:20px;background:#23334a;overflow:hidden}
+    .correlation-meter span{display:block;width:100%;height:100%;background:linear-gradient(90deg,#82c9c6,#e6c88e);transition:width .2s}
+    .correlation-facts{margin:21px 0}
+    .correlation-facts div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.73rem}
+    .correlation-facts dt{color:var(--quiet)}.correlation-facts dd{margin:0;color:var(--text);font-variant-numeric:tabular-nums}
+    .interpretation-note{margin-top:auto;padding:15px;border:1px solid var(--line);border-radius:5px;background:rgba(9,18,31,.55)}
+    .interpretation-note strong{font-size:.76rem;color:var(--gold)}
+    .interpretation-note p{font-size:.7rem;line-height:1.6;margin:6px 0 0}
+    .data-table-card{padding:25px;margin-top:17px}
+    .data-table-card .section-head{margin-bottom:14px}
+    .data-table-card .section-head p{font-size:.75rem}
+    .planet-data-table{width:100%;border-collapse:collapse;min-width:500px;font-size:.79rem}
+    .planet-data-table th,.planet-data-table td{padding:12px;border-bottom:1px solid var(--line);text-align:right}
+    .planet-data-table th:first-child,.planet-data-table td:first-child{text-align:left}
+    .planet-data-table thead th{font-size:.68rem;letter-spacing:.06em;color:var(--quiet)}
+    .planet-data-table tbody th{font-weight:600}
+    .planet-data-table .planet-swatch{margin-right:9px;vertical-align:middle}
+    .table-scroll{overflow-x:auto}
+    .data-method{max-width:850px;margin:45px auto 0}
+    .data-method h2{font-size:1.9rem;margin:11px 0}
+    .data-method p{font-size:.84rem;line-height:1.8}
+    .data-method a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:1000px){.data-controls{grid-template-columns:1fr 1fr}.data-controls-note{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:15px 0 0}.data-results{grid-template-columns:1fr}.correlation-card{display:grid;grid-template-columns:1fr 1fr;column-gap:20px}.correlation-card .correlation-value{grid-row:2}.correlation-card>strong,.correlation-card>p{grid-column:1/-1}.correlation-facts,.interpretation-note{grid-column:1/-1}}
+    @media(max-width:620px){.data-controls{grid-template-columns:1fr;padding:17px}.data-controls-note{grid-column:auto}.chart-card,.correlation-card,.data-table-card{padding:17px}.chart-heading{flex-direction:column}.chart-heading h2{font-size:1.3rem}.correlation-card{display:flex}.data-method h2{font-size:1.6rem}}
+  </style>
+</SiteLayout>
