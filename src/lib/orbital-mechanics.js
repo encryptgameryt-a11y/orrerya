@@ -2,8 +2,15 @@
  * Two-body orbital mechanics helpers used by the interactive orbit model.
  * Distances are in AU or km as named; speeds are in km/s.
  */
-export const ASTRONOMICAL_UNIT_KM = 149597870.7;
-export const SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2 = 1.32712440018e11;
+import {
+  ASTRONOMICAL_UNIT_KM,
+  SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2
+} from "./scientific-constants.js";
+
+export {
+  ASTRONOMICAL_UNIT_KM,
+  SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2
+};
 
 const TWO_PI = 2 * Math.PI;
 
