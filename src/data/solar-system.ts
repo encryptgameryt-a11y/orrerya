@@ -53,6 +53,28 @@ export const planetPhysics: SolarBodyPhysical[] = [
   {name:"Neptune",type:"Ice giant",massKg:1.024092e26,meanRadiusKm:24622,densityGcm3:1.638,equatorialGravityMS2:11.15,escapeVelocityKmS:23.56,meanDistanceAU:30.07,orbitDays:60182,siderealRotationDays:0.67125}
 ];
 
+/**
+ * Mass-share figures with explicit denominators.
+ * Planetary masses are JPL values; the Sun mass is the NASA NSSDC fact-sheet value.
+ * The first percentage deliberately excludes moons and minor bodies.
+ */
+const combinedMassOfSunAndEightPlanetsKg =
+  sunFacts.massKg + planetPhysics.reduce((total, planet) => total + planet.massKg, 0);
+
+export const solarMassDistribution = {
+  sunMassKg: sunFacts.massKg,
+  eightPlanetMassKg: planetPhysics.reduce((total, planet) => total + planet.massKg, 0),
+  sunShareOfSunPlusEightPlanetsPercent:
+    (sunFacts.massKg / combinedMassOfSunAndEightPlanetsKg) * 100,
+  nasaWholeSolarSystemEstimate: {
+    sunPercent: 99.85,
+    eightClassicalPlanetsPercent: 0.135,
+    remainingInventoryPercent: 0.015,
+    isApproximate: true,
+    sourceUrl: "https://science.nasa.gov/learn/basics-of-space-flight/chapter1-1/"
+  }
+} as const;
+
 export const dwarfPlanets: SolarBodyPhysical[] = [
   {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five IAU-recognized dwarf planets; largest object in the main asteroid belt."},
   {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent."},
