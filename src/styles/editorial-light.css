@@ -488,7 +488,7 @@ a:hover { color: var(--accent); }
 .feature-row p { color: #5b7084 !important; }
 .feature-orb { border-color: rgba(25, 47, 70, .12) !important; box-shadow: 0 14px 30px rgba(25, 47, 70, .09) !important; }
 
-@media (max-width: 700px) {
+@media (max-width: 820px) {
   .primary-nav {
     background: rgba(255, 255, 255, .98) !important;
     border-bottom-color: var(--line) !important;
