@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import { dwarfPlanets } from "../../data/solar-system";
 const dwarfs = [
   { name:"Ceres", region:"Main asteroid belt", fact:"The only dwarf planet in the inner Solar System. NASA's Dawn spacecraft found bright deposits, evidence of past and possibly present brine-related activity, and a complex icy-rocky history." },
   { name:"Pluto", region:"Kuiper Belt", fact:"A complex icy world with mountains, glaciers, a thin nitrogen-rich atmosphere and five known moons. New Horizons revealed a world far more geologically diverse than expected." },
@@ -15,6 +16,20 @@ const dwarfs = [
     <div class="definition-panel card"><div><span class="eyebrow">The 2006 IAU definition</span><h2>What makes a dwarf planet?</h2><p>A dwarf planet orbits the Sun, has enough self-gravity to become nearly round, has not cleared its orbital neighbourhood, and is not a satellite.</p></div><div class="criteria-list"><div><span>01</span><strong>Orbits the Sun</strong></div><div><span>02</span><strong>Nearly round from self-gravity</strong></div><div><span>03</span><strong>Has not cleared its orbital zone</strong></div><div><span>04</span><strong>Is not a moon</strong></div></div></div>
     <div class="section-head dwarf-head"><div><div class="eyebrow">Five widely recognised dwarf planets</div><h2>Meet the small worlds.</h2></div><p>These five are commonly recognised as dwarf planets in our Solar System. Many additional trans-Neptunian objects are candidates, but their classification is not settled.</p></div>
     <div class="dwarf-grid">{dwarfs.map((item,i)=><article class="card dwarf-card"><span class="dwarf-symbol">{["◉","●","⬭","◌","✧"][i]}</span><span class="eyebrow">{item.region}</span><h3>{item.name}</h3><p>{item.fact}</p></article>)}</div>
+
+    <div class="dwarf-physical-reference">
+      <div class="section-head"><div><span class="eyebrow">MEASURED PHYSICAL PROPERTIES</span><h2>How small are they?</h2></div><p>These values use JPL's mean radius, bulk density, equatorial surface gravity and escape velocity. The mass and dimensions of distant bodies can carry larger uncertainties.</p></div>
+      <div class="table-wrap"><table class="dwarf-physical-table">
+        <thead><tr><th>Object</th><th>Mass (kg)</th><th>Mean radius</th><th>Density</th><th>Equatorial gravity</th><th>Escape velocity</th><th>Rotation</th></tr></thead>
+        <tbody>{dwarfPlanets.map((d) => <tr><th>{d.name}</th><td>{d.massKg.toExponential(3)} kg</td><td>{d.meanRadiusKm.toLocaleString("en-US")} km</td><td>{d.densityGcm3} g/cm³</td><td>{d.equatorialGravityMS2} m/s²</td><td>{d.escapeVelocityKmS} km/s</td><td>{d.siderealRotationDays} days</td></tr>)}</tbody>
+      </table></div>
+      <p class="dwarf-data-note">The JPL table reports an equivalent-volume mean radius. Haumea is markedly elongated; its mean radius is not the length of its longest axis. Values are rounded for display. <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">JPL source table ↗</a></p>
+    </div>
+    <div class="dwarf-real-images">
+      <figure><img src="https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA22485.width-1024.jpg" alt="NASA Dawn spacecraft view of Ceres's Occator Crater and bright salt deposits." loading="lazy"/><figcaption>Ceres · NASA Dawn · Occator Crater and bright deposits</figcaption></figure>
+      <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia19/pia19952/PIA19952.jpg?w=1536&h=1536&fit=clip&crop=faces%2Cfocalpoint" alt="Enhanced-colour New Horizons image of Pluto showing its varied surface." loading="lazy"/><figcaption>Pluto · NASA New Horizons · Enhanced colour, not natural colour</figcaption></figure>
+    </div>
+    <p class="dwarf-image-note">Ceres and Pluto have been visited by spacecraft, so their photographs resolve surface features. Haumea, Makemake and Eris have not been visited; telescope observations generally do not resolve their surfaces into detailed photographs. Their sizes, shapes and compositions are inferred from other measurements.</p>
     <div class="prose dwarf-prose">
       <h2>Why did Pluto's classification change?</h2>
       <p>As astronomers discovered more objects in the outer Solar System, it became clear that Pluto belongs to a wider population of icy bodies beyond Neptune. In 2006, the International Astronomical Union adopted a formal definition for planets in the Solar System. Under that definition, Pluto is a dwarf planet because it has not cleared its orbital neighbourhood.</p>
@@ -26,4 +41,18 @@ const dwarfs = [
     <div class="source-panel"><div><span class="eyebrow">Classification sources</span><h3>Definition before labels</h3><p>Use the original resolution and NASA's current overview for the classification context.</p></div><ul class="source-list"><li><a href="https://www.iau.org/static/resolutions/Resolution_GA26-5-6.pdf" target="_blank" rel="noreferrer">International Astronomical Union — Resolution B5: Definition of a Planet in the Solar System (2006) ↗</a></li><li><a href="https://science.nasa.gov/dwarf-planets/" target="_blank" rel="noreferrer">NASA — Dwarf Planets ↗</a></li><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li></ul></div>
   </section>
   <style>.definition-panel{display:grid;grid-template-columns:1fr .9fr;gap:30px;padding:30px}.definition-panel h2{font-size:2rem;margin:10px 0}.definition-panel p{line-height:1.8;max-width:600px}.criteria-list{display:grid;gap:7px}.criteria-list div{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid var(--line);border-radius:5px;background:rgba(8,13,24,.45)}.criteria-list span{color:var(--gold);font-size:.72rem}.criteria-list strong{font-size:.82rem}.dwarf-head{margin-top:75px}.dwarf-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.dwarf-card{padding:19px}.dwarf-symbol{display:block;font-size:2.1rem;color:var(--gold);margin-bottom:22px}.dwarf-card h3{font:600 1.25rem "Space Grotesk",sans-serif;margin:9px 0}.dwarf-card p{font-size:.8rem;line-height:1.7;margin:0}.dwarf-prose{margin-top:55px}.source-panel{margin-top:40px}@media(max-width:980px){.dwarf-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:720px){.definition-panel{grid-template-columns:1fr}.dwarf-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:460px){.dwarf-grid{grid-template-columns:1fr}}</style>
+
+  <style>
+    .dwarf-physical-reference{margin:48px 0}
+    .dwarf-physical-table{width:100%;min-width:940px;border-collapse:collapse;background:#fff}
+    .dwarf-physical-table th,.dwarf-physical-table td{padding:12px;text-align:left;border-bottom:1px solid #e1e8ed;font-size:.76rem;font-variant-numeric:tabular-nums}
+    .dwarf-physical-table thead th{background:#edf2f5;color:#51677b;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+    .dwarf-physical-table tbody th{color:#173b55}.dwarf-physical-table tbody td{color:#52687b}
+    .dwarf-data-note,.dwarf-image-note{font-size:.74rem;line-height:1.7;color:#62798b;margin:12px 0}.dwarf-data-note a{color:#1b5d82}
+    .dwarf-real-images{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+    .dwarf-real-images figure{margin:0;border-radius:8px;overflow:hidden;background:#0b1928}
+    .dwarf-real-images img{width:100%;height:270px;object-fit:contain;display:block}
+    .dwarf-real-images figcaption{padding:10px 12px;color:#c8d3dc;font-size:.7rem}
+    @media(max-width:600px){.dwarf-real-images{grid-template-columns:1fr}.dwarf-real-images img{height:230px}}
+  </style>
 </SiteLayout>
