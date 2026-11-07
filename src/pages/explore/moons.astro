@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import { satellitePhysical, satelliteDerived } from "../../data/solar-system";
 const moons = [
   { name:"The Moon", host:"Earth", role:"Our nearest natural satellite", detail:"A differentiated rocky world whose formation is strongly linked to a giant impact early in Earth's history. Its gravity raises ocean tides and its surface preserves an ancient impact record." },
   { name:"Phobos", host:"Mars", role:"A tiny, close-orbiting moon", detail:"An irregular body that orbits Mars very close to the planet. Tidal forces are slowly changing its orbit, and it may eventually break up or impact Mars." },
@@ -20,6 +21,16 @@ const moons = [
   <section class="section container">
     <div class="section-head"><div><div class="eyebrow">Selected natural satellites</div><h2>Meet the remarkable moons.</h2></div><p>This is a curated starting set, not a complete moon catalogue. Confirmed moon totals change as new discoveries are announced and objects are re-observed.</p></div>
     <div class="moon-grid">{moons.map((moon, i) => <article class="card moon-card"><div class="moon-index">{String(i+1).padStart(2,"0")} <span>ORBITING {moon.host.toUpperCase()}</span></div><h3>{moon.name}</h3><span class="tag">{moon.role}</span><p>{moon.detail}</p></article>)}</div>
+
+    <section class="moon-reference">
+      <div class="section-head"><div><span class="eyebrow">JPL PHYSICAL PARAMETERS</span><h2>Measured properties of selected moons.</h2></div><p>Mass, surface gravity and escape speed below are derived from JPL's gravitational parameter (GM) and mean radius. The displayed values are rounded.</p></div>
+      <div class="table-wrap"><table class="moon-physical-table">
+        <thead><tr><th>Moon</th><th>Orbits</th><th>Mean radius</th><th>Mass (derived)</th><th>Mean density</th><th>Surface gravity (derived)</th><th>Escape speed (derived)</th></tr></thead>
+        <tbody>{satellitePhysical.map((m) => { const d = satelliteDerived(m); return <tr><th>{m.name}</th><td>{m.host}</td><td>{m.meanRadiusKm.toLocaleString("en-US")} km</td><td>{d.massKg.toExponential(3)} kg</td><td>{m.densityGcm3.toFixed(3)} g/cm³</td><td>{d.gravityMS2.toFixed(3)} m/s²</td><td>{d.escapeVelocityKmS.toFixed(3)} km/s</td></tr>; })}</tbody>
+      </table></div>
+      <p class="moon-reference-note">Derived values use G = 6.67430 × 10⁻²⁰ km³ kg⁻¹ s⁻² and the source GM and mean-radius values. Density and radius conventions follow the JPL database. The list is a selected major-moon sample, not every known natural satellite. <a href="https://ssd.jpl.nasa.gov/sats/phys_par/" target="_blank" rel="noreferrer">Open JPL's satellite parameter database ↗</a></p>
+      <figure class="moon-feature-photo"><img src="https://photojournal.jpl.nasa.gov/jpeg/PIA24681.jpg" alt="JunoCam image of Jupiter's moon Ganymede acquired during the June 2021 close flyby." loading="lazy"/><figcaption>Ganymede · NASA JunoCam · June 7, 2021. This preliminary view was acquired through the green filter; it is not a complete natural-colour image.</figcaption></figure>
+    </section>
     <div class="prose moon-prose">
       <h2>How do moons form?</h2>
       <p>Natural satellites have several possible origins. Some formed from discs of material around their host planet while it was assembling. Others may be fragments from giant impacts, captured objects that passed too close, or bodies altered by later collisions. A moon's orbit, composition and geology provide clues to its history.</p>
@@ -32,4 +43,16 @@ const moons = [
     <div class="source-panel"><div><span class="eyebrow">Further reading</span><h3>Explore the primary science sources</h3><p>NASA's mission records and planetary science pages are good starting points for moon and ring research.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/solar-system/moons/" target="_blank" rel="noreferrer">NASA — Moons of the Solar System ↗</a></li><li><a href="https://science.nasa.gov/jupiter/moons/" target="_blank" rel="noreferrer">NASA — Jupiter's moons ↗</a></li><li><a href="https://science.nasa.gov/saturn/moons/" target="_blank" rel="noreferrer">NASA — Saturn's moons ↗</a></li><li><a href="https://science.nasa.gov/solar-system/rings/" target="_blank" rel="noreferrer">NASA — Planetary rings ↗</a></li></ul></div>
   </section>
   <style>.moon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.moon-card{padding:21px}.moon-index{color:var(--gold);font-size:.69rem;letter-spacing:.12em}.moon-index span{color:var(--quiet);margin-left:8px}.moon-card h3{font:600 1.4rem "Space Grotesk",sans-serif;margin:13px 0 10px}.moon-card p{font-size:.83rem;line-height:1.75;margin:13px 0 0}.moon-prose{margin-top:60px}.source-panel{margin-top:40px}@media(max-width:850px){.moon-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.moon-grid{grid-template-columns:1fr}}</style>
+
+  <style>
+    .moon-reference{margin:52px 0}
+    .moon-physical-table{width:100%;min-width:1050px;border-collapse:collapse;background:#fff;font-variant-numeric:tabular-nums}
+    .moon-physical-table th,.moon-physical-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #e3e9ed;font-size:.73rem}
+    .moon-physical-table thead th{background:#edf2f5;color:#51677b;text-transform:uppercase;font-size:.65rem;letter-spacing:.06em}
+    .moon-physical-table tbody th{color:#173b55}.moon-physical-table tbody td{color:#536a7e}
+    .moon-reference-note{font-size:.73rem;color:#60778a;line-height:1.7;margin:12px 0}.moon-reference-note a{color:#1b5d82}
+    .moon-feature-photo{margin:24px 0 0;background:#0a1725;border-radius:9px;overflow:hidden}
+    .moon-feature-photo img{width:100%;max-height:440px;object-fit:contain;display:block}
+    .moon-feature-photo figcaption{padding:10px 14px;color:#c5d0da;font-size:.7rem}
+  </style>
 </SiteLayout>
