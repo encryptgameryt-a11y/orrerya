@@ -1,3 +1,9 @@
+import {
+  escapeSpeedFromGM,
+  massFromGM,
+  massSharePercent,
+  surfaceGravityFromGM
+} from "../src/lib/physical-mechanics.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -110,4 +116,37 @@ test("Earth-like J2000 orbit gives the expected sidereal-year scale", () => {
   // This is a Sun-only two-body estimate; the Earth–Moon mass and N-body
   // perturbations account for the small difference from the JPL sidereal period.
   assert.ok(Math.abs(periodDays - EARTH_SIDEREAL_YEAR_DAYS) < 0.001);
+});
+
+test("satellite physical calculations preserve units and match lunar reference scales", () => {
+  const moonGM = 4902.800; // JPL DE440, km^3 s^-2
+  const moonMeanRadiusKm = 1737.4; // JPL equivalent-volume mean radius
+  const moonMassKg = massFromGM(moonGM, GRAVITATIONAL_CONSTANT_KM3_KG_S2);
+  const moonGravityMS2 = surfaceGravityFromGM(moonGM, moonMeanRadiusKm);
+  const moonEscapeSpeedKmS = escapeSpeedFromGM(moonGM, moonMeanRadiusKm);
+
+  assert.ok(moonMassKg > 7.34e22 && moonMassKg < 7.35e22);
+  assert.ok(moonGravityMS2 > 1.62 && moonGravityMS2 < 1.63);
+  assert.ok(moonEscapeSpeedKmS > 2.37 && moonEscapeSpeedKmS < 2.38);
+});
+
+test("Sun mass share uses the explicitly supplied denominator", () => {
+  const sunMassKg = 1.9884e30; // NASA NSSDCA Sun Fact Sheet
+  const planetMassesKg = [
+    3.30103e23, 4.86731e24, 5.97217e24, 6.41691e23,
+    1.898125e27, 5.68317e26, 8.68099e25, 1.024092e26
+  ];
+  const sunPlusPlanets = massSharePercent(sunMassKg, planetMassesKg);
+  const sunOnly = massSharePercent(sunMassKg, []);
+
+  assert.ok(sunPlusPlanets > 99.86 && sunPlusPlanets < 99.87);
+  assert.equal(sunOnly, 100);
+});
+
+test("physical calculation helpers reject invalid values", () => {
+  assert.throws(() => massFromGM(0, GRAVITATIONAL_CONSTANT_KM3_KG_S2), RangeError);
+  assert.throws(() => massFromGM(1, 0), RangeError);
+  assert.throws(() => surfaceGravityFromGM(1, -1), RangeError);
+  assert.throws(() => escapeSpeedFromGM(Number.NaN, 1), RangeError);
+  assert.throws(() => massSharePercent(1, [2, -1]), RangeError);
 });
