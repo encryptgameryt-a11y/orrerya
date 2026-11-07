@@ -6,14 +6,14 @@ const outer = planets.slice(4);
 ---
 <SiteLayout title="The eight planets" description="Explore Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune with NASA imagery, physical data and clear explanations.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Planets</span></div>
-  <header class="page-intro container"><div class="eyebrow">The planetary neighbourhood · 01—08</div><h1>Meet the eight planets.</h1><p class="lede">Eight very different worlds orbit one star. Four are rocky. Two are gas giants. Two are ice giants. Together, they reveal how diverse a planetary system can be.</p></header>
+  <header class="page-intro container"><div class="eyebrow">THE EIGHT PLANETS</div><h1>Meet the eight planets.</h1><p class="lede">Four rocky planets orbit close to the Sun. Farther out are two gas giants and two ice giants. All eight follow the same laws of gravity, but their sizes, atmospheres and surfaces differ.</p></header>
   <section class="section container">
     <div class="directory-tools"><div class="field"><label for="planet-search">Find a planet</label><input id="planet-search" type="search" placeholder="Search by name or type…" autocomplete="off" /></div><span id="planet-count" aria-live="polite">8 worlds</span></div>
-    <div class="directory-heading"><span class="eyebrow">The inner Solar System</span><h2>Rocky worlds</h2><p>Small, dense planets with solid surfaces, relatively high densities and metal-silicate interiors.</p></div>
+    <div class="directory-heading"><span class="eyebrow">INNER PLANETS</span><h2>Rocky worlds</h2><p>Small, dense planets with solid surfaces, relatively high densities and metal-silicate interiors.</p></div>
     <div class="planet-directory" id="inner-planets">
       {inner.map((planet) => <a class="planet-card directory-card" data-planet={planet.name.toLowerCase()} data-type={planet.className.toLowerCase()} href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">{planet.order.toString().padStart(2, "0")} / 08 · {planet.className}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Open profile ↗</span></div></a>)}
     </div>
-    <div class="directory-heading" id="outer-planets"><span class="eyebrow">The outer Solar System</span><h2>Giant worlds</h2><p>Vast planets with deep atmospheres, complex internal structures, rings and extensive moon systems.</p></div>
+    <div class="directory-heading" id="outer-planets"><span class="eyebrow">OUTER PLANETS</span><h2>Giant worlds</h2><p>Vast planets with deep atmospheres, complex internal structures, rings and extensive moon systems.</p></div>
     <div class="planet-directory">
       {outer.map((planet) => <a class="planet-card directory-card" data-planet={planet.name.toLowerCase()} data-type={planet.className.toLowerCase()} href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">{planet.order.toString().padStart(2, "0")} / 08 · {planet.className}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Open profile ↗</span></div></a>)}
     </div>
