@@ -13,20 +13,20 @@ const bodies = [
 ---
 <SiteLayout title="Asteroids, comets and the outer frontier" description="Explore asteroids, comets, meteoroids, Trojans, the Kuiper Belt, scattered disc, detached objects and the hypothesised Oort Cloud.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/explore/">Explore</a><span aria-hidden="true">/</span><span>Small bodies & frontier</span></div>
-  <header class="page-intro container"><div class="eyebrow">Small Solar System bodies · Beyond Neptune</div><h1>The leftovers are<br />part of the story.</h1><p class="lede">Asteroids, comets and distant icy objects are not debris without purpose. They preserve clues to how the Solar System formed and how its planets migrated and evolved.</p></header>
+  <header class="page-intro container"><div class="eyebrow">ASTEROIDS, COMETS AND SMALL BODIES</div><h1>Asteroids, comets<br />and other small bodies.</h1><p class="lede">Asteroids, comets and distant icy objects preserve material left over from the Solar System's formation. Their surfaces and orbits also record later collisions and gravitational changes.</p></header>
   <section class="section container">
-    <div class="region-banner"><div class="region-sun"></div><div class="region-orbit"></div><div class="region-copy"><span class="eyebrow">A system of populations</span><h2>Not one belt.<br />Many orbital families.</h2><p>Small bodies occupy different orbital regions and dynamical populations. Their paths can be shaped by planets, resonances, collisions and the Sun's gravity.</p><span class="region-caption">Conceptual illustration · Not to scale</span></div></div>
+    <div class="region-banner"><div class="region-sun"></div><div class="region-orbit"></div><div class="region-copy"><span class="eyebrow">ORBITAL GROUPS</span><h2>Different objects.<br />Different orbits.</h2><p>Small bodies occupy different orbital regions and dynamical populations. Their paths can be shaped by planets, resonances, collisions and the Sun's gravity.</p><span class="region-caption">Conceptual illustration · Not to scale</span></div></div>
     <div class="body-grid">{bodies.map((body,i)=><article class="card body-card"><span class="body-index">{String(i+1).padStart(2,"0")}</span><h3>{body.name}</h3><span class="body-where">{body.where}</span><p>{body.detail}</p></article>)}</div>
 
     <section class="asteroid-reference">
-      <div class="section-head"><div><span class="eyebrow">ASTEROIDS / ROCKY AND METALLIC REMNANTS</span><h2>The asteroid belt is not a packed ring.</h2></div><p>Most asteroids orbit the Sun in the main belt between Mars and Jupiter. The region is vast and sparse: spacecraft can pass through without dodging rocks.</p></div>
+      <div class="section-head"><div><span class="eyebrow">ASTEROIDS / ROCKY AND METALLIC REMNANTS</span><h2>The main asteroid belt is mostly empty space.</h2></div><p>Most asteroids orbit the Sun in the main belt between Mars and Jupiter. The region is vast and sparse: spacecraft can pass through without dodging rocks.</p></div>
       <div class="asteroid-image-grid">
         <figure><img src="https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA22485.width-1024.jpg" alt="NASA Dawn spacecraft close view of the bright deposits in Ceres's Occator Crater." loading="lazy"/><figcaption>Ceres · NASA Dawn · Bright salt deposits in Occator Crater</figcaption></figure>
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15678/PIA15678.jpg?w=1200" alt="Global view of asteroid Vesta made from images acquired by NASA's Dawn spacecraft." loading="lazy"/><figcaption>Vesta · NASA Dawn · Global image mosaic</figcaption></figure>
         <figure><img src="https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536" alt="NASA OSIRIS-REx image of asteroid Bennu." loading="lazy"/><figcaption>Bennu · NASA OSIRIS-REx · Asteroid surface</figcaption></figure>
       </div>
       <div class="asteroid-size-card">
-        <div><span class="eyebrow">LARGEST MAIN-BELT BODIES</span><h3>There is a big range in size.</h3><p>Ceres is the largest body in the belt, with an equivalent-volume diameter of about 939 km. It is also classified as a dwarf planet. Vesta is about 525 km in mean diameter and Pallas about 511 km; these are large, differentiated or partly differentiated worlds compared with typical asteroids.</p></div>
+        <div><span class="eyebrow">LARGEST MAIN-BELT BODIES</span><h3>Asteroids vary greatly in size.</h3><p>Ceres is the largest body in the belt, with an equivalent-volume diameter of about 939 km. It is also classified as a dwarf planet. Vesta is about 525 km in mean diameter and Pallas about 511 km; these are large, differentiated or partly differentiated worlds compared with typical asteroids.</p></div>
         <ul>
           <li><b>Ceres</b><span>~939 km · dwarf planet</span></li>
           <li><b>Vesta</b><span>~525 km · differentiated rocky body</span></li>
@@ -47,7 +47,7 @@ const bodies = [
     </section>
 
     <section class="comet-reference">
-      <div class="section-head"><div><span class="eyebrow">COMETS / ICY BODIES</span><h2>Dirty icebergs with changing tails.</h2></div><p>Comets contain volatile ices, dust, rocky material and carbon-bearing compounds. They preserve material from cold regions of the early Solar System.</p></div>
+      <div class="section-head"><div><span class="eyebrow">COMETS / ICY BODIES</span><h2>Icy bodies that form comas and tails near the Sun.</h2></div><p>Comets contain volatile ices, dust, rocky material and carbon-bearing compounds. They preserve material from cold regions of the early Solar System.</p></div>
       <div class="comet-image-grid">
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia17/pia17485/PIA17485.jpg?w=1536&h=804&fit=clip&crop=faces%2Cfocalpoint" alt="Enhanced image of the dark potato-shaped nucleus of Comet Halley taken by ESA's Giotto spacecraft." loading="lazy"/><figcaption>1P/Halley · ESA Giotto · Enhanced image of the nucleus, about 15 km long</figcaption></figure>
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia18/pia18423/PIA18423.jpg?w=726&h=523&fit=clip&crop=faces%2Cfocalpoint" alt="Rosetta spacecraft view of Comet 67P/Churyumov–Gerasimenko." loading="lazy"/><figcaption>67P/Churyumov–Gerasimenko · ESA Rosetta</figcaption></figure>
@@ -62,7 +62,7 @@ const bodies = [
     </section>
 
     <section class="meteor-reference">
-      <div class="section-head"><div><span class="eyebrow">METEOROIDS / METEORS / METEORITES</span><h2>Three names, three stages.</h2></div><p>Small fragments can come from asteroids, comets, the Moon and even Mars. Their name depends on where they are and what happens to them.</p></div>
+      <div class="section-head"><div><span class="eyebrow">METEOROIDS / METEORS / METEORITES</span><h2>Meteoroid, meteor and meteorite.</h2></div><p>Small fragments can come from asteroids, comets, the Moon and even Mars. Their name depends on where they are and what happens to them.</p></div>
       <div class="meteor-stage-row">
         <div><span>01</span><h3>Meteoroid</h3><p>A small natural object travelling through interplanetary space.</p></div>
         <div><span>02</span><h3>Meteor</h3><p>The bright atmospheric phenomenon produced when a meteoroid enters a planet's atmosphere.</p></div>
@@ -75,7 +75,7 @@ const bodies = [
       </div>
     </section>
     <div class="prose body-prose">
-      <h2>Three words that are easy to mix up</h2>
+      <h2>The terms describe different stages.</h2>
       <p><strong>Meteoroid:</strong> the small natural object while it is travelling through space. <strong>Meteor:</strong> the streak of light and associated atmospheric phenomenon created when it enters an atmosphere. <strong>Meteorite:</strong> a piece that survives the journey and reaches the ground.</p>
       <h2>What are comet tails?</h2>
       <p>As a comet approaches the Sun, volatile ices near its surface can turn directly into gas. Escaping gas carries dust away, creating a coma and often more than one tail. The ion tail is shaped strongly by the solar wind and magnetic field; the dust tail is influenced by sunlight pressure and the comet's orbital motion. A comet's tails generally point away from the Sun, not necessarily behind its direction of travel.</p>
@@ -85,7 +85,7 @@ const bodies = [
       <h2>Where does the heliosphere fit?</h2>
       <p>The heliosphere is the vast bubble-like region shaped by the solar wind as it interacts with interstellar space. It is not a belt of asteroids or a gravitational wall. The Sun's gravity can bind distant objects well beyond the heliosphere.</p>
     </div>
-    <div class="source-panel"><div><span class="eyebrow">Further reading</span><h3>Explore NASA's small-body science</h3><p>Mission data and population descriptions can change as new objects are discovered.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/asteroids-comets-meteors/" target="_blank" rel="noreferrer">NASA — Asteroids, Comets & Meteors ↗</a></li><li><a href="https://science.nasa.gov/solar-system/kuiper-belt/" target="_blank" rel="noreferrer">NASA — Kuiper Belt ↗</a></li><li><a href="https://science.nasa.gov/solar-system/oort-cloud/" target="_blank" rel="noreferrer">NASA — Oort Cloud ↗</a></li><li><a href="https://science.nasa.gov/solar-system/heliosphere/" target="_blank" rel="noreferrer">NASA — Heliosphere ↗</a></li></ul></div>
+    <div class="source-panel"><div><span class="eyebrow">Further reading</span><h3>FURTHER READING</h3><p>Mission data and population descriptions can change as new objects are discovered.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/asteroids-comets-meteors/" target="_blank" rel="noreferrer">NASA — Asteroids, Comets & Meteors ↗</a></li><li><a href="https://science.nasa.gov/solar-system/kuiper-belt/" target="_blank" rel="noreferrer">NASA — Kuiper Belt ↗</a></li><li><a href="https://science.nasa.gov/solar-system/oort-cloud/" target="_blank" rel="noreferrer">NASA — Oort Cloud ↗</a></li><li><a href="https://science.nasa.gov/solar-system/heliosphere/" target="_blank" rel="noreferrer">NASA — Heliosphere ↗</a></li></ul></div>
   </section>
   <style>.region-banner{min-height:310px;position:relative;display:flex;align-items:center;padding:32px 42px;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:radial-gradient(ellipse at 85% 50%,rgba(42,75,117,.34),transparent 48%),#0a1220}.region-sun{position:absolute;width:85px;height:85px;left:72%;top:46%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 30% 28%,#fff1b8,#e5a451 60%,#8c482e);box-shadow:0 0 40px #e8a85288}.region-orbit{position:absolute;width:460px;height:240px;left:72%;top:46%;border:1px solid rgba(196,213,239,.2);border-radius:50%;transform:translate(-50%,-50%) rotate(-24deg);box-shadow:0 0 0 45px rgba(196,213,239,.025),0 0 0 110px rgba(196,213,239,.025)}.region-copy{max-width:470px;position:relative;z-index:1}.region-copy h2{font-size:2.7rem;margin:10px 0}.region-copy p{max-width:390px;font-size:.86rem;line-height:1.7}.region-caption{display:block;color:var(--quiet);font-size:.68rem;margin-top:22px}.body-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:20px}.body-card{padding:19px;position:relative}.body-index{font-size:.68rem;color:var(--gold)}.body-card h3{margin:14px 0 8px;font:600 1.15rem "Space Grotesk",sans-serif}.body-where{display:block;color:var(--cyan);font-size:.7rem;line-height:1.5}.body-card p{font-size:.79rem;line-height:1.7;margin:12px 0 0}.body-prose{margin-top:55px}.source-panel{margin-top:40px}@media(max-width:900px){.body-grid{grid-template-columns:repeat(2,1fr)}.region-sun{left:86%}.region-orbit{left:86%}}@media(max-width:550px){.body-grid{grid-template-columns:1fr}.region-banner{padding:25px 20px;min-height:340px}.region-sun{left:100%;opacity:.55}.region-orbit{left:100%;opacity:.5}.region-copy h2{font-size:2.2rem}}</style>
 
