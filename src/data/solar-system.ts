@@ -2,6 +2,12 @@ import {
   GRAVITATIONAL_CONSTANT_KM3_KG_S2,
   SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2
 } from "../lib/scientific-constants.js";
+import {
+  escapeSpeedFromGM,
+  massFromGM,
+  massSharePercent,
+  surfaceGravityFromGM
+} from "../lib/physical-mechanics.js";
 
 export const solarSystemSources = {
   sun: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html",
@@ -66,14 +72,15 @@ export const planetPhysics: SolarBodyPhysical[] = [
  * Planetary masses are JPL values; the Sun mass is the NASA NSSDC fact-sheet value.
  * The first percentage deliberately excludes moons and minor bodies.
  */
-const combinedMassOfSunAndEightPlanetsKg =
-  sunFacts.massKg + planetPhysics.reduce((total, planet) => total + planet.massKg, 0);
+const eightPlanetMassKg = planetPhysics.reduce((total, planet) => total + planet.massKg, 0);
 
 export const solarMassDistribution = {
   sunMassKg: sunFacts.massKg,
-  eightPlanetMassKg: planetPhysics.reduce((total, planet) => total + planet.massKg, 0),
-  sunShareOfSunPlusEightPlanetsPercent:
-    (sunFacts.massKg / combinedMassOfSunAndEightPlanetsKg) * 100,
+  eightPlanetMassKg,
+  sunShareOfSunPlusEightPlanetsPercent: massSharePercent(
+    sunFacts.massKg,
+    planetPhysics.map((planet) => planet.massKg)
+  ),
   nasaWholeSolarSystemEstimate: {
     sunPercent: 99.85,
     eightClassicalPlanetsPercent: 0.135,
@@ -128,8 +135,8 @@ export const satellitePhysical: SatellitePhysical[] = [
 const G_KM3_KG_S2 = GRAVITATIONAL_CONSTANT_KM3_KG_S2;
 
 export function satelliteDerived(body: SatellitePhysical) {
-  const massKg = body.gmKm3S2 / G_KM3_KG_S2;
-  const gravityMS2 = (body.gmKm3S2 / (body.meanRadiusKm * body.meanRadiusKm)) * 1000;
-  const escapeVelocityKmS = Math.sqrt((2 * body.gmKm3S2) / body.meanRadiusKm);
+  const massKg = massFromGM(body.gmKm3S2, G_KM3_KG_S2);
+  const gravityMS2 = surfaceGravityFromGM(body.gmKm3S2, body.meanRadiusKm);
+  const escapeVelocityKmS = escapeSpeedFromGM(body.gmKm3S2, body.meanRadiusKm);
   return { massKg, gravityMS2, escapeVelocityKmS };
 }
