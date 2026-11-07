@@ -91,6 +91,10 @@ import { planets } from "../../data/planets";
       orbitalState,
       trueAnomalyFromMeanAnomaly
     } from "../../lib/orbital-mechanics.js";
+    import {
+      ASTRONOMICAL_UNIT_KM,
+      SPEED_OF_LIGHT_KM_S
+    } from "../../lib/scientific-constants.js";
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
     const massInput = document.querySelector<HTMLInputElement>("#mass-input");
     const gravitySelect = document.querySelector<HTMLSelectElement>("#gravity-world");
@@ -124,8 +128,8 @@ import { planets } from "../../data/planets";
         lightResult.textContent = "Use a non-negative number of AU.";
         return;
       }
-      const km = au * 149597870.7;
-      const seconds = km / 299792.458;
+      const km = au * ASTRONOMICAL_UNIT_KM;
+      const seconds = km / SPEED_OF_LIGHT_KM_S;
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
       const remain = Math.round(seconds % 60);
