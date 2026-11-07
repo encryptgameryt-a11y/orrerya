@@ -1,11 +1,13 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { planets, planetDataSources } from "../../data/planets";
+import { planetPhysics } from "../../data/solar-system";
 
 export function getStaticPaths() {
   return planets.map((planet) => ({ params: { slug: planet.slug }, props: { planet } }));
 }
 const { planet } = Astro.props;
+const physical = planetPhysics.find((body) => body.name.toLowerCase() === planet.slug);
 const previous = planets[planet.order - 2];
 const next = planets[planet.order];
 ---
@@ -63,8 +65,9 @@ const next = planets[planet.order];
           <span class="eyebrow">Physical profile</span>
           <h3>By the numbers</h3>
           <dl class="fact-list">
-            <div><dt>Equatorial diameter</dt><dd>{planet.diameter}</dd></div>
-            <div><dt>Mass</dt><dd>{planet.mass}</dd></div>
+            <div><dt>Equatorial diameter · NASA</dt><dd>{planet.diameter}</dd></div>
+            <div><dt>Mean radius · JPL</dt><dd>{physical ? physical.meanRadiusKm.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " km" : "—"}</dd></div>
+            <div><dt>Mass · JPL</dt><dd>{planet.mass}</dd></div>
             <div><dt>Mean density</dt><dd>{planet.density}</dd></div>
             <div><dt>Equatorial gravity</dt><dd>{planet.gravity}</dd></div>
             <div><dt>Escape velocity</dt><dd>{planet.escapeVelocity}</dd></div>
