@@ -6,3 +6,10 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   X-Permitted-Cross-Domain-Policies: none
   Strict-Transport-Security: max-age=31536000
+
+/
+  Cache-Control: no-store, max-age=0, must-revalidate
+  CDN-Cache-Control: no-store
+/index.html
+  Cache-Control: no-store, max-age=0, must-revalidate
+  CDN-Cache-Control: no-store
