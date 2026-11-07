@@ -49,7 +49,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString(
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
   </head>
-  <body>
+  <body class:list={{ "home-nebula": currentPath === "/" }}>
     <a class="skip-link" href="#main">Skip to content</a>
     <SiteHeader currentPath={currentPath} />
     <main id="main"><slot /></main>
