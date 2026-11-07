@@ -1,4 +1,5 @@
 import {
+  bulkDensityFromGMAndRadius,
   escapeSpeedFromGM,
   massFromGM,
   massSharePercent,
@@ -128,6 +129,21 @@ test("satellite physical calculations preserve units and match lunar reference s
   assert.ok(moonMassKg > 7.34e22 && moonMassKg < 7.35e22);
   assert.ok(moonGravityMS2 > 1.62 && moonGravityMS2 < 1.63);
   assert.ok(moonEscapeSpeedKmS > 2.37 && moonEscapeSpeedKmS < 2.38);
+});
+
+test("satellite bulk density is derived from GM and equivalent-volume radius", () => {
+  const moonDensity = bulkDensityFromGMAndRadius(
+    4902.800,
+    1737.4,
+    GRAVITATIONAL_CONSTANT_KM3_KG_S2
+  );
+  const charonDensity = bulkDensityFromGMAndRadius(
+    106.1,
+    606.0,
+    GRAVITATIONAL_CONSTANT_KM3_KG_S2
+  );
+  assert.ok(moonDensity > 3.343 && moonDensity < 3.345);
+  assert.ok(charonDensity > 1.704 && charonDensity < 1.707);
 });
 
 test("Sun mass share uses the explicitly supplied denominator", () => {
