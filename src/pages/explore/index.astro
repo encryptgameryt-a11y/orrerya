@@ -9,7 +9,7 @@ const first = planets[2];
   <section class="section container">
     <div class="explore-navigator card">
       <div class="navigator-copy"><span class="eyebrow">Interactive field guide</span><h2>Choose a world.</h2><p>Select a planet to see its place in the sequence and open its full profile. The order is real; this graphic is intentionally not a scale model.</p>
-        <div class="navigator-buttons">{planets.map((planet) => <button type="button" class:list={{ selected: planet.slug === first.slug }} data-world={planet.slug} data-name={planet.name} data-type={planet.className} data-distance={planet.distance} data-orbit={planet.orbit} data-summary={planet.short}>{planet.order.toString().padStart(2, "0")} <span>{planet.name}</span></button>)}</div>
+        <div class="navigator-buttons">{planets.map((planet) => <button type="button" class:list={{ selected: planet.slug === first.slug }} data-world={planet.slug} data-name={planet.name} data-type={planet.className} data-distance={planet.distance} data-orbit={planet.orbit} data-summary={planet.short} aria-pressed={planet.slug === first.slug ? "true" : "false"}>{planet.order.toString().padStart(2, "0")} <span>{planet.name}</span></button>)}</div>
       </div>
       <div class="navigator-visual">
         <div class="navigator-sun"></div><div class="navigator-line"></div>
@@ -34,23 +34,5 @@ const first = planets[2];
     @media(max-width:800px){.explore-navigator{grid-template-columns:1fr}.navigator-visual{min-height:280px}.feature-row,.feature-row.reverse{grid-template-columns:1fr;gap:18px}.feature-row.reverse .feature-orb{order:0}.feature-orb{height:150px}}
     @media(max-width:500px){.explore-navigator{padding:18px}.navigator-buttons{grid-template-columns:1fr 1fr}.navigator-visual{padding:24px 15px 24px 48px}.navigator-info h3{font-size:2.3rem}.navigator-info dl div{align-items:start;flex-direction:column}.navigator-info dd{text-align:left}}
   </style>
-  <script>
-    const worldButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-world]"));
-    const nameEl = document.querySelector<HTMLElement>("[data-selected-name]");
-    const typeEl = document.querySelector<HTMLElement>("[data-selected-type]");
-    const summaryEl = document.querySelector<HTMLElement>("[data-selected-summary]");
-    const distanceEl = document.querySelector<HTMLElement>("[data-selected-distance]");
-    const orbitEl = document.querySelector<HTMLElement>("[data-selected-orbit]");
-    const linkEl = document.querySelector<HTMLAnchorElement>("[data-selected-link]");
-    worldButtons.forEach((button) => button.addEventListener("click", () => {
-      worldButtons.forEach((item) => item.classList.remove("selected"));
-      button.classList.add("selected");
-      if (nameEl) nameEl.textContent = button.dataset.name || "";
-      if (typeEl) typeEl.textContent = button.dataset.type || "";
-      if (summaryEl) summaryEl.textContent = button.dataset.summary || "";
-      if (distanceEl) distanceEl.textContent = button.dataset.distance || "";
-      if (orbitEl) orbitEl.textContent = button.dataset.orbit || "";
-      if (linkEl) linkEl.href = "/planets/" + button.dataset.world + "/";
-    }));
-  </script>
+  <script is:inline src="/scripts/explore-navigator.js"></script>
 </SiteLayout>
