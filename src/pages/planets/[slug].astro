@@ -23,7 +23,7 @@ const next = planets[planet.order];
       <figure class="image-figure planet-feature-image"><div class="hero-image"><img src={planet.image} alt={planet.imageAlt} fetchpriority="high" /><span class="image-credit">Image: NASA · <a href={planet.imageSource} target="_blank" rel="noreferrer">image source ↗</a></span></div><figcaption>NASA imagery is presented for educational context. Processing and colour may vary by mission and instrument.</figcaption></figure>
     </section>
     <div class="stat-grid planet-stat-grid">
-      <div class="stat"><span class="label">Mean diameter</span><strong>{planet.diameter}</strong><small>Planetary size</small></div>
+      <div class="stat"><span class="label">Equatorial diameter</span><strong>{planet.diameter}</strong><small>Planetary size</small></div>
       <div class="stat"><span class="label">Mass</span><strong>{planet.mass}</strong><small>Total mass</small></div>
       <div class="stat"><span class="label">Equatorial gravity</span><strong>{planet.gravity}</strong><small>Acceleration</small></div>
       <div class="stat"><span class="label">Year length</span><strong>{planet.orbit}</strong><small>One orbit around the Sun</small></div>
@@ -46,14 +46,14 @@ const next = planets[planet.order];
           <span class="eyebrow">Orbit & rotation</span>
           <h3>The rhythm of {planet.name}</h3>
           <dl class="fact-list">
-            <div><dt>Average distance from Sun</dt><dd>{planet.distance}</dd></div>
+            <div><dt>Semi-major axis · mean distance</dt><dd>{planet.distance}</dd></div>
             <div><dt>Orbital period</dt><dd>{planet.orbit}</dd></div>
             <div><dt>Sidereal rotation</dt><dd>{planet.rotation}</dd></div>
             <div><dt>Solar day</dt><dd>{planet.solarDay}</dd></div>
             <div><dt>Perihelion · closest</dt><dd>{planet.perihelion}</dd></div>
             <div><dt>Aphelion · farthest</dt><dd>{planet.aphelion}</dd></div>
             <div><dt>Orbital eccentricity</dt><dd>{planet.eccentricity}</dd></div>
-            <div><dt>Orbital inclination</dt><dd>{planet.inclination}</dd></div>
+            <div><dt>Inclination to ecliptic</dt><dd>{planet.inclination}</dd></div>
             <div><dt>Axial tilt</dt><dd>{planet.tilt}</dd></div>
             <div><dt>Mean temperature</dt><dd>{planet.temperature}</dd></div>
           </dl>
@@ -62,7 +62,7 @@ const next = planets[planet.order];
           <span class="eyebrow">Physical profile</span>
           <h3>By the numbers</h3>
           <dl class="fact-list">
-            <div><dt>Mean diameter</dt><dd>{planet.diameter}</dd></div>
+            <div><dt>Equatorial diameter</dt><dd>{planet.diameter}</dd></div>
             <div><dt>Mass</dt><dd>{planet.mass}</dd></div>
             <div><dt>Mean density</dt><dd>{planet.density}</dd></div>
             <div><dt>Equatorial gravity</dt><dd>{planet.gravity}</dd></div>
@@ -73,7 +73,7 @@ const next = planets[planet.order];
       </aside>
     </div>
     <div class="source-panel">
-      <div><span class="eyebrow">Evidence & attribution</span><h3>Where these facts come from</h3><p>Values are rounded for readability. Definitions and measurement conventions matter; see the source notes before comparing different datasets.</p></div>
+      <div><span class="eyebrow">Evidence & attribution</span><h3>Where these facts come from</h3><p>Values are rounded for readability. Perihelion and aphelion distances are rounded to 0.1 million km; orbital inclination is measured relative to the ecliptic plane. Definitions and reference epochs matter when comparing datasets.</p></div>
       <ul class="source-list">
         <li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Planetary Physical Parameters ↗</a></li>
         <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA Space Science Data Coordinated Archive — Planetary Fact Sheet ↗</a></li>

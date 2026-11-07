@@ -207,7 +207,7 @@ import { planets } from "../../data/planets";
       orbitDistance.textContent = orbitFormatter.format(rAu) + " AU";
       orbitDistanceKm.textContent = orbitFormatter.format(rKm / 1e6) + " million km";
       orbitSpeed.textContent = orbitFormatter.format(velocity) + " km/s";
-      orbitSpeedNote.textContent = degrees <= 90 || degrees >= 270 ? "Moving toward / near perihelion" : degrees >= 135 && degrees <= 225 ? "Moving toward / near aphelion" : "Speed changes continuously along the orbit";
+      orbitSpeedNote.textContent = degrees <= 10 || degrees >= 350 ? "Near perihelion" : degrees >= 170 && degrees <= 190 ? "Near aphelion" : degrees < 180 ? "Moving toward aphelion" : "Moving toward perihelion";
       orbitPeri.textContent = orbitFormatter.format(periAu) + " AU";
       orbitAphe.textContent = orbitFormatter.format(apheAu) + " AU";
     }
