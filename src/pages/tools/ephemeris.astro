@@ -44,7 +44,7 @@ import { ephemerisElements } from "../../data/ephemeris";
       <div class="section-head"><div><div class="eyebrow">Computed coordinates</div><h2>Planet by planet.</h2></div><p>Earth distances are geometric, not light-time corrected apparent positions. “Light time” is a simple one-way vacuum estimate.</p></div>
       <div class="table-scroll">
         <table class="ephem-table">
-          <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">Earth distance</th><th scope="col">Direction from Earth</th><th scope="col">Light time</th></tr></thead>
+          <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">Earth distance</th><th scope="col">Geocentric ecliptic longitude</th><th scope="col">Light time</th></tr></thead>
           <tbody>
             {ephemerisElements.map((planet) => <tr data-planet={planet.slug}><th scope="row"><span class="planet-swatch" style={"--planet:" + planet.color}></span>{planet.name}{planet.slug === "earth" ? "*" : ""}</th><td data-value="sun-distance">—</td><td data-value="earth-distance">—</td><td data-value="direction">—</td><td data-value="light-time">—</td></tr>)}
           </tbody>
