@@ -1,4 +1,5 @@
 import {
+  EARTH_GRAVITATIONAL_PARAMETER_KM3_S2,
   GRAVITATIONAL_CONSTANT_KM3_KG_S2,
   SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2
 } from "../lib/scientific-constants.js";
@@ -30,7 +31,7 @@ export const solarSystemSources = {
 export const sunFacts = {
   massKg: 1.9884e30,
   gravitationalParameterKm3S2: SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2,
-  earthMasses: 332900,
+  earthMasses: SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2 / EARTH_GRAVITATIONAL_PARAMETER_KM3_S2,
   meanRadiusKm: 695700,
   meanDiameterKm: 1391400,
   meanDensityKgM3: 1408,
