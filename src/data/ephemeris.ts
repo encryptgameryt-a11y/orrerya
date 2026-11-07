@@ -1,0 +1,17 @@
+/**
+ * Approximate planetary Keplerian elements and secular rates.
+ * Source: NASA/JPL Solar System Dynamics, "Approximate Positions of the Planets",
+ * Table 1. Values are fitted for 1800–2050 and referenced to the J2000 mean
+ * ecliptic/equinox. Earth uses the Earth–Moon barycentre elements supplied by JPL.
+ * Each elements object stores value at J2000 and its rate per Julian century.
+ */
+export const ephemerisElements = [
+  { slug: "mercury", name: "Mercury", color: "#aeb8c5", a: 0.38709927, aRate: 0.00000037, e: 0.20563593, eRate: 0.00001906, inclination: 7.00497902, inclinationRate: -0.00594749, meanLongitude: 252.25032350, meanLongitudeRate: 149472.67411175, longitudePerihelion: 77.45779628, longitudePerihelionRate: 0.16047689, longitudeNode: 48.33076593, longitudeNodeRate: -0.12534081 },
+  { slug: "venus", name: "Venus", color: "#e8bd91", a: 0.72333566, aRate: 0.00000390, e: 0.00677672, eRate: -0.00004107, inclination: 3.39467605, inclinationRate: -0.00078890, meanLongitude: 181.97909950, meanLongitudeRate: 58517.81538729, longitudePerihelion: 131.60246718, longitudePerihelionRate: 0.00268329, longitudeNode: 76.67984255, longitudeNodeRate: -0.27769418 },
+  { slug: "earth", name: "Earth", color: "#62a9d8", a: 1.00000261, aRate: 0.00000562, e: 0.01671123, eRate: -0.00004392, inclination: -0.00001531, inclinationRate: -0.01294668, meanLongitude: 100.46457166, meanLongitudeRate: 35999.37244981, longitudePerihelion: 102.93768193, longitudePerihelionRate: 0.32327364, longitudeNode: 0.0, longitudeNodeRate: 0.0 },
+  { slug: "mars", name: "Mars", color: "#d88368", a: 1.52371034, aRate: 0.00001847, e: 0.09339410, eRate: 0.00007882, inclination: 1.84969142, inclinationRate: -0.00813131, meanLongitude: -4.55343205, meanLongitudeRate: 19140.30268499, longitudePerihelion: -23.94362959, longitudePerihelionRate: 0.44441088, longitudeNode: 49.55953891, longitudeNodeRate: -0.29257343 },
+  { slug: "jupiter", name: "Jupiter", color: "#d6a77b", a: 5.20288700, aRate: -0.00011607, e: 0.04838624, eRate: -0.00013253, inclination: 1.30439695, inclinationRate: -0.00183714, meanLongitude: 34.39644051, meanLongitudeRate: 3034.74612775, longitudePerihelion: 14.72847983, longitudePerihelionRate: 0.21252668, longitudeNode: 100.47390909, longitudeNodeRate: 0.20469106 },
+  { slug: "saturn", name: "Saturn", color: "#d7c18e", a: 9.53667594, aRate: -0.00125060, e: 0.05386179, eRate: -0.00050991, inclination: 2.48599187, inclinationRate: 0.00193609, meanLongitude: 49.95424423, meanLongitudeRate: 1222.49362201, longitudePerihelion: 92.59887831, longitudePerihelionRate: -0.41897216, longitudeNode: 113.66242448, longitudeNodeRate: -0.28867794 },
+  { slug: "uranus", name: "Uranus", color: "#82c9c6", a: 19.18916464, aRate: -0.00196176, e: 0.04725744, eRate: -0.00004397, inclination: 0.77263783, inclinationRate: -0.00242939, meanLongitude: 313.23810451, meanLongitudeRate: 428.48202785, longitudePerihelion: 170.95427630, longitudePerihelionRate: 0.40805281, longitudeNode: 74.01692503, longitudeNodeRate: 0.04240589 },
+  { slug: "neptune", name: "Neptune", color: "#658fe0", a: 30.06992276, aRate: 0.00026291, e: 0.00859048, eRate: 0.00005105, inclination: 1.77004347, inclinationRate: 0.00035372, meanLongitude: -55.12002969, meanLongitudeRate: 218.45945325, longitudePerihelion: 44.96476227, longitudePerihelionRate: -0.32241464, longitudeNode: 131.78422574, longitudeNodeRate: -0.00508664 }
+] as const;
