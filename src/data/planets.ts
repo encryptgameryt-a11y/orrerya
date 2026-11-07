@@ -57,13 +57,13 @@ export const planetDataSources = {
   physicalParameters: {
     name: "NASA/JPL Solar System Dynamics — Planetary Physical Parameters",
     url: "https://ssd.jpl.nasa.gov/planets/phys_par.html",
-    fields: ["mass", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"],
+    fields: ["mass", "equatorial radius", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"],
     periodConversion: "Sidereal orbital periods are converted from Julian years using 365.25 days per Julian year."
   },
   factSheet: {
     name: "NASA NSSDCA — Planetary Fact Sheet",
     url: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
-    fields: ["equatorial diameter", "mean Sun distance", "perihelion", "aphelion"]
+    fields: ["mean Sun distance", "perihelion", "aphelion"]
   },
   orbitalElements: {
     name: "NASA/JPL Solar System Dynamics — Approximate Positions of the Planets, Tables 2a and 2b",
@@ -83,7 +83,7 @@ export const planets: Planet[] = [
     image: "https://science.nasa.gov/wp-content/uploads/2023/11/mercury-messenger-globe-pia15162.jpg",
     imageAlt: "Global mosaic of Mercury showing its heavily cratered grey surface.",
     imageSource: "https://science.nasa.gov/mercury/",
-    mass: "3.30 × 10²³ kg", mass1024: 0.330103, diameter: "4,879 km", diameterKm: 4879,
+    mass: "3.30 × 10²³ kg", mass1024: 0.330103, diameter: "4,881 km", diameterKm: 4881.06,
     density: "5.43 g/cm³", gravity: "3.70 m/s²", gravityValue: 3.70, escapeVelocity: "4.25 km/s",
     distance: "0.387 AU · 57.9 million km", distanceAu: 0.3871, semiMajorAxisAu: jplOrbitElement("mercury").a, eccentricityValue: jplOrbitElement("mercury").e, perihelion: "46.0 million km", aphelion: "69.8 million km", eccentricity: "0.206", inclination: "7.0°", orbit: "88.0 Earth days", orbitDays: 87.969257175,
     rotation: "58.65 Earth days", solarDay: "176 Earth days", solarDayHours: 4222.6, tilt: "0.03°",
