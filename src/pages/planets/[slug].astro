@@ -65,19 +65,19 @@ const next = planets[planet.order];
           <span class="eyebrow">Physical profile</span>
           <h3>By the numbers</h3>
           <dl class="fact-list">
-            <div><dt>Equatorial diameter · NASA</dt><dd>{planet.diameter}</dd></div>
+            <div><dt>Equatorial diameter · JPL</dt><dd>{planet.diameter}</dd></div>
             <div><dt>Mean radius · JPL</dt><dd>{physical ? physical.meanRadiusKm.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " km" : "—"}</dd></div>
             <div><dt>Mass · JPL</dt><dd>{planet.mass}</dd></div>
             <div><dt>Mean density</dt><dd>{planet.density}</dd></div>
-            <div><dt>{planet.order > 4 ? "Equatorial gravity · 1-bar reference level" : "Equatorial surface gravity"}</dt><dd>{planet.gravity}</dd></div>
-            <div><dt>{planet.order > 4 ? "Escape speed · reference radius" : "Escape velocity"}</dt><dd>{planet.escapeVelocity}</dd></div>
+            <div><dt>{planet.order > 4 ? "Equatorial gravity · 1-bar level" : "Equatorial surface gravity"}</dt><dd>{planet.gravity}</dd></div>
+            <div><dt>{planet.order > 4 ? "Escape velocity · 1-bar level" : "Escape velocity"}</dt><dd>{planet.escapeVelocity}</dd></div>
           </dl>
         </div>
-        <div class="callout"><strong>Reference levels matter</strong><p>For Mercury, Venus, Earth and Mars, the quoted temperature is a surface reference. For Jupiter, Saturn, Uranus and Neptune, there is no solid surface: temperature, equatorial gravity, diameter and escape speed refer to a conventional atmospheric reference level (commonly the 1-bar level), not a place where a person could stand. Values vary with latitude, altitude and the convention used.</p></div>
+        <div class="callout"><strong>Reference levels matter</strong><p>For Mercury, Venus, Earth and Mars, the temperature is a surface reference. For Jupiter, Saturn, Uranus and Neptune, there is no solid surface. NASA's fact-sheet convention places the quoted gravity and escape velocity at the 1-bar pressure level in the atmosphere; the temperature values are representative atmospheric levels. These are reference quantities, not conditions on solid ground. Values also depend on latitude, altitude and the reference figure used.</p><p><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/planetfact_ratio_notes.html" target="_blank" rel="noreferrer">NASA NSSDCA — definitions of planetary fact-sheet quantities ↗</a></p></div>
       </aside>
     </div>
     <div class="source-panel">
-      <div><span class="eyebrow">Evidence & attribution</span><h3>Sources and data notes</h3><p>Mass, mean radius, bulk density, sidereal rotation and orbital periods, equatorial gravity and escape velocity use the JPL physical-parameters table. Equatorial diameter, mean distance from the Sun, perihelion and aphelion use the NASA NSSDCA fact sheet. Semi-major axis, eccentricity and inclination are JPL Table 2a elements referred to the J2000 mean ecliptic and equinox; Earth’s row is the Earth–Moon barycentre, a close proxy for Earth’s orbit. Values shown here are rounded, and the reference epoch and definition are stated because they matter when comparing datasets.</p></div>
+      <div><span class="eyebrow">Evidence & attribution</span><h3>Sources and data notes</h3><p>Mass, equatorial and mean radii, bulk density, sidereal rotation and orbital periods, equatorial gravity and escape velocity use the JPL physical-parameters table. Mean distance from the Sun, perihelion and aphelion use the NASA NSSDCA fact sheet. Semi-major axis, eccentricity and inclination are JPL Table 2a elements referred to the J2000 mean ecliptic and equinox; Earth’s row is the Earth–Moon barycentre, a close proxy for Earth’s orbit. Values shown here are rounded, and the reference epoch and definition are stated because they matter when comparing datasets.</p></div>
       <ul class="source-list">
         <li><a href={planetDataSources.physicalParameters.url} target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Planetary Physical Parameters ↗</a></li>
         <li><a href={planetDataSources.factSheet.url} target="_blank" rel="noreferrer">NASA Space Science Data Coordinated Archive — Planetary Fact Sheet ↗</a></li>
