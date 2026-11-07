@@ -1,0 +1,40 @@
+---
+type IconName = "sun" | "moon" | "planet" | "comet" | "orbit" | "scale" | "ruler" | "calendar" | "compass";
+interface Props { name: IconName; size?: number; class?: string }
+const { name, size = 28, class: className = "" } = Astro.props;
+---
+<svg class={className} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {name === "sun" && <>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+  </>}
+  {name === "moon" && <path d="M20.8 14.2A8.7 8.7 0 0 1 9.8 3.2 8.9 8.9 0 1 0 20.8 14.2Z" />}
+  {name === "planet" && <>
+    <circle cx="12" cy="12" r="5.5" />
+    <ellipse cx="12" cy="12" rx="10" ry="3.6" transform="rotate(-24 12 12)" />
+  </>}
+  {name === "comet" && <>
+    <path d="M14.5 4.5c-2.7 2.7-5.4 6.1-7.4 9.5-1.5 2.5-2 4.5-1.3 5.2s2.7.2 5.2-1.3c3.4-2 6.8-4.7 9.5-7.4" />
+    <path d="m3 21 5.2-2.3M2 16l3.6-.8M8 22l.8-3.6M16 3l.8 2.5L19 7l-2.2 1.5L16 11l-.8-2.5L13 7l2.2-1.5L16 3Z" />
+  </>}
+  {name === "orbit" && <>
+    <ellipse cx="12" cy="12" rx="9.5" ry="4.2" transform="rotate(-28 12 12)" />
+    <ellipse cx="12" cy="12" rx="9.5" ry="4.2" transform="rotate(52 12 12)" />
+    <circle cx="12" cy="12" r="2.2" />
+  </>}
+  {name === "scale" && <>
+    <path d="M12 3v17M5 6h14M7 6l-4 7h8L7 6Zm10 0-4 7h8l-4-7ZM8 21h8" />
+  </>}
+  {name === "ruler" && <>
+    <path d="M4 20 20 4M7 17l-2-2m5-1-2-2m5-1-2-2m5-1-2-2M3 21l18-18" />
+    <path d="m16 4 4 4" />
+  </>}
+  {name === "calendar" && <>
+    <rect x="3" y="5" width="18" height="16" rx="2" />
+    <path d="M16 3v4M8 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01" />
+  </>}
+  {name === "compass" && <>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m15.8 8.2-2.2 5.4-5.4 2.2 2.2-5.4 5.4-2.2Z" />
+  </>}
+</svg>
