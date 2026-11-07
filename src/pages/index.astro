@@ -28,6 +28,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
         <div class="orrery-map-topline">
           <span>OUR SOLAR SYSTEM</span>
           <span>SCHEMATIC · NOT TO SCALE</span>
+          <span class="orrery-scroll-hint">SWIPE TO EXPLORE →</span>
         </div>
         <div class="orrery-map-scroll">
           <div class="orrery-map" role="img" aria-label="A schematic view of the Solar System showing the Sun, the eight planets in order, the asteroid belt between Mars and Jupiter, and the Kuiper Belt among trans-Neptunian objects. Planet sizes and orbital distances are not to scale.">
@@ -83,7 +84,6 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
                 <text x="1265" y="382" text-anchor="middle">KUIPER BELT</text>
               </g>
             </svg>
-            <div class="orrery-sun-label" aria-hidden="true">Sun</div>
             {orbitalDisplay.map((item) => <div class="orrery-world" style={"--world-x:" + (item.x / 14) + "%;--world-size:" + item.size + "px"}>
               <img src={item.image} alt="" loading="lazy" decoding="async" />
               <span>{item.name}</span>
@@ -232,6 +232,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
     .orrery-hero-intro .hero-actions{margin-top:20px}
     .orrery-map-frame{padding:22px 0 12px}
     .orrery-map-topline{display:flex;justify-content:space-between;gap:16px;margin:0 4px 8px;color:#64778a;font-size:.65rem;font-weight:700;letter-spacing:.15em}
+    .orrery-scroll-hint{display:none;color:#8c683b}
     .orrery-map-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-color:#c2ccd3 transparent;scrollbar-width:thin}
     .orrery-map{position:relative;width:100%;min-width:900px;height:auto;aspect-ratio:10/3;isolation:isolate;background:radial-gradient(ellipse at 8% 50%,rgba(230,179,106,.12),transparent 16%),linear-gradient(180deg,rgba(255,255,255,.45),rgba(236,241,244,.36));border-block:1px solid rgba(39,64,86,.08)}
     .orrery-orbit-art{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
@@ -244,7 +245,6 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
     .orrery-world{position:absolute;left:var(--world-x);top:50%;width:var(--world-size);display:flex;flex-direction:column;align-items:center;gap:10px;transform:translate(-50%,-50%);z-index:2}
     .orrery-world img{display:block;width:var(--world-size);height:var(--world-size);object-fit:cover;border-radius:50%;background:#d9e0e4;border:1px solid rgba(28,51,70,.18);box-shadow:0 5px 16px rgba(25,47,70,.14)}
     .orrery-world span{color:#29465e;font-size:.72rem;font-weight:650;letter-spacing:.015em;background:rgba(250,251,249,.82);padding:2px 6px;border-radius:3px;white-space:nowrap}
-    .orrery-sun-label{position:absolute;left:7.85%;top:75%;transform:translateX(-50%);color:#8a6335;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
     .orrery-map-legend{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:18px;color:#5c7183;font-size:.68rem;padding:12px 4px 2px}
     .orrery-map-legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.orrery-map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%}
     .legend-asteroid{background:#99805b}.legend-kuiper{background:#7b93a7}.orrery-map-legend .legend-note{color:#718294;font-style:italic}
@@ -252,6 +252,6 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
     .orrery-hero-bottom{display:flex;align-items:center;gap:13px;padding:15px 0 20px;border-top:1px solid rgba(25,47,70,.13);color:#77899a;font-size:.68rem;letter-spacing:.1em}
     .orrery-hero-bottom a{color:#315771;font-size:.74rem;letter-spacing:0}.orrery-hero-bottom .line{height:1px;max-width:70px;flex:1;background:rgba(25,47,70,.16)}
     @media(max-width:800px){.orrery-home-inner{padding-top:30px}.orrery-hero-head{grid-template-columns:1fr;gap:20px}.orrery-hero-intro{justify-self:start}.orrery-logo-title{font-size:clamp(4rem,17vw,6rem)!important}.orrery-map{height:auto;aspect-ratio:10/3}.orrery-map-legend{gap:12px;font-size:.62rem}.orrery-map-legend .legend-note{display:none}}
-    @media(max-width:540px){.orrery-map-topline{font-size:.58rem}.orrery-hero-bottom{gap:8px;flex-wrap:wrap}.orrery-hero-bottom>span:first-child{display:none}.orrery-hero-bottom .line{max-width:28px}.orrery-map-note{text-align:left}.orrery-world span{font-size:.66rem}}
+    @media(max-width:540px){ .orrery-map-topline{font-size:.58rem}.orrery-scroll-hint{display:inline}.orrery-hero-bottom{gap:8px;flex-wrap:wrap}.orrery-hero-bottom>span:first-child{display:none}.orrery-hero-bottom .line{max-width:28px}.orrery-map-note{text-align:left}.orrery-world span{font-size:.66rem}}
   </style>
 </SiteLayout>
