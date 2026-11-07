@@ -140,11 +140,11 @@ const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
             <span class="moon-host">{m.host.toUpperCase()}</span>
             <h3>{m.name}</h3>
             <p>{m.description}</p>
-            <dl><div><dt>Mean radius</dt><dd>{fmt(m.meanRadiusKm,1)} km</dd></div><div><dt>Mass (derived)</dt><dd>{sci(derived.massKg)} kg</dd></div><div><dt>Mean density</dt><dd>{fmt(m.densityGcm3,3)} g/cm³</dd></div><div><dt>Surface gravity (derived)</dt><dd>{fmt(derived.gravityMS2,3)} m/s²</dd></div><div><dt>Escape speed (derived)</dt><dd>{fmt(derived.escapeVelocityKmS,3)} km/s</dd></div></dl>
+            <dl><div><dt>Mean radius</dt><dd>{fmt(m.meanRadiusKm,1)} km</dd></div><div><dt>Mass (derived)</dt><dd>{sci(derived.massKg)} kg</dd></div><div><dt>Mean density</dt><dd>{fmt(derived.densityGcm3,3)} g/cm³</dd></div><div><dt>Surface gravity (derived)</dt><dd>{fmt(derived.gravityMS2,3)} m/s²</dd></div><div><dt>Escape speed (derived)</dt><dd>{fmt(derived.escapeVelocityKmS,3)} km/s</dd></div></dl>
           </article>;
         })}
       </div>
-      <p class="table-footnote">Moon masses and surface gravity are calculated from JPL's satellite GM and mean-radius values using G = 6.67430 × 10⁻²⁰ km³ kg⁻¹ s⁻². This makes the calculation transparent; values inherit the uncertainty and convention of the source GM and radius. <a href={solarSystemSources.moons} target="_blank" rel="noreferrer">JPL satellite physical parameters ↗</a></p>
+      <p class="table-footnote">Moon mass is estimated as GM/G; mean density is derived from that mass and the equivalent-volume sphere; reference gravity and spherical escape speed use GM/r² and √(2GM/r). These values use JPL GM and mean-radius data with G = 6.67430 × 10⁻²⁰ km³ kg⁻¹ s⁻². They do not model local effects of irregular shape, rotation or topography, and formal uncertainties are not propagated. <a href={solarSystemSources.moons} target="_blank" rel="noreferrer">JPL satellite physical parameters ↗</a></p>
       <a class="text-link" href="/explore/moons/">Explore moons and rings ↗</a>
     </div>
   </section>
