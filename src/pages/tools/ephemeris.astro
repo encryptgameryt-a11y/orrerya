@@ -5,9 +5,9 @@ import { ephemerisElements } from "../../data/ephemeris";
 <SiteLayout title="Planet position explorer" description="Explore approximate heliocentric planetary positions for dates from 1 to 3000 CE using NASA/JPL long-range Keplerian elements and periodic corrections.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Planet position explorer</span></div>
   <header class="page-intro container">
-    <div class="eyebrow">Tool 06 · Planetary motion · JPL method</div>
-    <h1>Where are the<br /><span class="heading-muted">planets right now?</span></h1>
-    <p class="lede">Set a date and explore the planets' approximate positions around the Sun. The model calculates orbital coordinates in your browser — no API key, account or external telemetry feed required.</p>
+    <div class="eyebrow">TOOL 06 · PLANETARY POSITIONS</div>
+    <h1>Approximate planetary<br /><span class="heading-muted">positions by date.</span></h1>
+    <p class="lede">Choose a date to see the planets' approximate positions around the Sun. The calculation runs in your browser.</p>
   </header>
 
   <section class="section container ephem-section">
@@ -33,7 +33,7 @@ import { ephemerisElements } from "../../data/ephemeris";
       </figure>
 
       <aside class="card ephem-summary">
-        <span class="eyebrow">At a glance</span><h2>Eight worlds.<br />One orbital system.</h2>
+        <span class="eyebrow">At a glance</span><h2>The planets<br />around the Sun.</h2>
         <p>The geometry is heliocentric: each planet is plotted relative to the Sun. The table also gives each planet's geometric distance and direction as seen from Earth's centre at the selected instant.</p>
         <div class="ephem-callout"><strong>What “today” means here</strong><p>The default instant is your device's current local time. The selected local instant is converted to a Julian date from its UTC timestamp. This educational implementation does not perform a full UTC-to-TDB time-scale conversion.</p></div>
         <a class="text-link" href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">Read the JPL method and accuracy notes ↗</a>
@@ -55,7 +55,7 @@ import { ephemerisElements } from "../../data/ephemeris";
 
     <div class="ephem-method prose">
       <span class="eyebrow">Model notes · Read before using</span>
-      <h2>Fast and transparent — not a precision ephemeris.</h2>
+      <h2>Model accuracy and limitations.</h2>
       <p>This explorer implements NASA/JPL Solar System Dynamics Tables 2a and 2b: secular rates for the six Keplerian elements, the required periodic mean-anomaly corrections for Jupiter through Neptune, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. Table 2a is fitted for 3000 BCE–3000 CE; this browser date picker accepts 1–3000 CE. JPL's published nominal longitude errors for the long-range approximation vary by planet: about 20 arcseconds for Mercury, 40 for Venus and the Earth–Moon barycentre, 100 for Mars, 600 for Jupiter, 1,000 for Saturn, 2,000 for Uranus and 400 for Neptune. These are nominal model errors, not guaranteed bounds. JPL's formula expects a JDTDB ephemeris date; this browser version converts the selected local civil time to a UTC Julian date but does not apply a full UTC-to-TDB time-scale conversion.</p>
       <p>The model is suitable for learning orbital geometry and seeing broad configurations. It is not an observational almanac, spacecraft navigation tool, or substitute for a numerically integrated ephemeris. It does not include light-time correction, aberration, perturbation integration or topocentric parallax. For high-precision work, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a>.</p>
       <p><strong>Source:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Approximate Positions of the Planets ↗</a>.</p>
