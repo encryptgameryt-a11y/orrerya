@@ -35,7 +35,7 @@ import { ephemerisElements } from "../../data/ephemeris";
       <aside class="card ephem-summary">
         <span class="eyebrow">At a glance</span><h2>Eight worlds.<br />One orbital system.</h2>
         <p>The geometry is heliocentric: each planet is plotted relative to the Sun. The table also gives each planet's geometric distance and direction as seen from Earth's centre at the selected instant.</p>
-        <div class="ephem-callout"><strong>What “today” means here</strong><p>The default instant is your device's current local time. The calculation converts it to a Julian date and evaluates the JPL approximate elements at that instant.</p></div>
+        <div class="ephem-callout"><strong>What “today” means here</strong><p>The default instant is your device's current local time. The selected local instant is converted to a Julian date from its UTC timestamp. This educational implementation does not perform a full UTC-to-TDB time-scale conversion.</p></div>
         <a class="text-link" href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">Read the JPL method and accuracy notes ↗</a>
       </aside>
     </div>
@@ -56,7 +56,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     <div class="ephem-method prose">
       <span class="eyebrow">Model notes · Read before using</span>
       <h2>Fast and transparent — not a precision ephemeris.</h2>
-      <p>This explorer implements the NASA/JPL Solar System Dynamics approximate-position method: secular rates for the six Keplerian elements, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. JPL fits these elements for 1800–2050 and publishes nominal error estimates that vary by planet; the outer-planet longitude errors can be several hundred arcseconds.</p>
+      <p>This explorer implements the NASA/JPL Solar System Dynamics approximate-position method: secular rates for the six Keplerian elements, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. JPL fits these elements for 1800–2050 and publishes nominal error estimates that vary by planet; the outer-planet longitude errors can be several hundred arcseconds. JPL's method expects a JDTDB ephemeris date; this browser version uses the selected UTC instant directly as a near-date Julian-date approximation rather than applying a full time-scale conversion.</p>
       <p>The model is suitable for learning orbital geometry and seeing broad configurations. It is not an observational almanac, spacecraft navigation tool, or substitute for a numerically integrated ephemeris. It does not include light-time correction, aberration, perturbation integration or topocentric parallax. For high-precision work, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a>.</p>
       <p><strong>Source:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Approximate Positions of the Planets ↗</a>.</p>
     </div>
@@ -146,16 +146,24 @@ import { ephemerisElements } from "../../data/ephemeris";
       return local.toISOString().slice(0, 16);
     }
 
+    function clearResults() {
+      orbitLayer?.replaceChildren();
+      markerLayer?.replaceChildren();
+      document.querySelectorAll<HTMLTableCellElement>(".ephem-table tbody td").forEach((cell) => { cell.textContent = "—"; });
+    }
+
     function calculate() {
       if (!dateField || !status || !message || !orbitLayer || !markerLayer) return;
       const selectedDate = new Date(dateField.value);
       if (!dateField.value || Number.isNaN(selectedDate.getTime())) {
+        clearResults();
         status.textContent = "Choose a valid date and time";
         message.textContent = "Enter a date between 1800 and 2050.";
         return;
       }
-      const year = selectedDate.getFullYear();
+      const year = selectedDate.getUTCFullYear();
       if (year < 1800 || year > 2050) {
+        clearResults();
         status.textContent = "Date outside model range";
         message.textContent = "The JPL element fit used here is valid only from 1800 through 2050. Choose a date within that interval.";
         return;
