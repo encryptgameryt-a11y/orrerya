@@ -6,10 +6,10 @@ const featured = planets.slice(0, 4);
 const outer = planets.slice(4);
 const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
 const homeSummaries: Record<string, string> = {
-  mercury: "A small, crater-covered world that races around the Sun.",
-  venus: "A bright world hidden by thick clouds, with crushing pressure and extreme heat.",
-  earth: "Our ocean-covered home, with air, water and the only life we know.",
-  mars: "A cold, red desert with giant volcanoes and signs of ancient rivers."
+  mercury: "The smallest planet, with a heavily cratered surface and the shortest year.",
+  venus: "A planet hidden by thick clouds, with a dense atmosphere and extreme surface heat.",
+  earth: "The only known planet with life, liquid oceans and a protective atmosphere.",
+  mars: "A cold, rocky desert with giant volcanoes, ancient river valleys and two small moons."
 };
 ---
 <SiteLayout title="ORRERYA" description="Explore the Sun, all eight planets, the Kuiper Belt and the many icy worlds beyond Neptune with ORRERYA.">
@@ -23,8 +23,8 @@ const homeSummaries: Record<string, string> = {
           <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
         <div class="orrery-hero-intro">
-          <p class="orrery-hero-line">The Mechanics of the Cosmos.</p>
-          <p class="orrery-hero-description">Meet the Sun, eight planets and icy worlds beyond Neptune.</p>
+          <p class="orrery-hero-line">How the Solar System works.</p>
+          <p class="orrery-hero-description">Explore the Sun, eight planets, moons, rings and icy bodies beyond Neptune.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
             <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
