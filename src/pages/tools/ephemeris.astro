@@ -2,7 +2,7 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { ephemerisElements } from "../../data/ephemeris";
 ---
-<SiteLayout title="Planet position explorer" description="Explore approximate heliocentric planetary positions for today or another date from 1800 to 2050, calculated locally using NASA/JPL Keplerian elements.">
+<SiteLayout title="Planet position explorer" description="Explore approximate heliocentric planetary positions for dates from 1 to 3000 CE using NASA/JPL long-range Keplerian elements and periodic corrections.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Planet position explorer</span></div>
   <header class="page-intro container">
     <div class="eyebrow">Tool 06 · Planetary motion · JPL method</div>
@@ -12,8 +12,8 @@ import { ephemerisElements } from "../../data/ephemeris";
 
   <section class="section container ephem-section">
     <div class="ephem-toolbar card">
-      <div class="ephemeris-date-control"><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="1800-01-01T00:00" max="2050-12-31T23:59" /><button type="button" class="btn ephemeris-now-button" id="ephemeris-now" aria-label="Return to the current date and time">↻ Use current time</button></div>
-      <div class="ephem-status"><span class="eyebrow">Calculation status</span><strong id="ephemeris-status">Preparing planetary positions…</strong><p id="ephemeris-message" role="status">The model is limited to dates from 1800 through 2050.</p></div>
+      <div class="ephemeris-date-control"><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="0001-01-01T00:00" max="3000-12-31T23:59" /><button type="button" class="btn ephemeris-now-button" id="ephemeris-now" aria-label="Return to the current date and time">↻ Use current time</button></div>
+      <div class="ephem-status"><span class="eyebrow">Calculation status</span><strong id="ephemeris-status">Preparing planetary positions…</strong><p id="ephemeris-message" role="status">The browser date picker accepts dates from 1 CE through 3000 CE.</p></div>
     </div>
 
     <div class="ephem-layout">
@@ -56,7 +56,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     <div class="ephem-method prose">
       <span class="eyebrow">Model notes · Read before using</span>
       <h2>Fast and transparent — not a precision ephemeris.</h2>
-      <p>This explorer implements the NASA/JPL Solar System Dynamics approximate-position method: secular rates for the six Keplerian elements, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. JPL fits these elements for 1800–2050 and publishes nominal error estimates that vary by planet; the outer-planet longitude errors can be several hundred arcseconds. JPL's method expects a JDTDB ephemeris date; this browser version uses the selected UTC instant directly as a near-date Julian-date approximation rather than applying a full time-scale conversion.</p>
+      <p>This explorer implements NASA/JPL Solar System Dynamics Tables 2a and 2b: secular rates for the six Keplerian elements, the required periodic mean-anomaly corrections for Jupiter through Neptune, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. Table 2a is fitted for 3000 BCE–3000 CE; this browser date picker accepts 1–3000 CE. JPL's published nominal longitude errors for the long-range approximation vary by planet: about 20 arcseconds for Mercury, 40 for Venus and the Earth–Moon barycentre, 100 for Mars, 600 for Jupiter, 1,000 for Saturn, 2,000 for Uranus and 400 for Neptune. These are nominal model errors, not guaranteed bounds. JPL's formula expects a JDTDB ephemeris date; this browser version converts the selected local civil time to a UTC Julian date but does not apply a full UTC-to-TDB time-scale conversion.</p>
       <p>The model is suitable for learning orbital geometry and seeing broad configurations. It is not an observational almanac, spacecraft navigation tool, or substitute for a numerically integrated ephemeris. It does not include light-time correction, aberration, perturbation integration or topocentric parallax. For high-precision work, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a>.</p>
       <p><strong>Source:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Approximate Positions of the Planets ↗</a>.</p>
     </div>
@@ -121,7 +121,8 @@ import { ephemerisElements } from "../../data/ephemeris";
     function positionAt(item: typeof ephemerisElements[number], T: number) {
       const el = elementsAt(item, T);
       const omegaDeg = el.perihelion - el.node;
-      const meanAnomaly = el.meanLongitude - el.perihelion;
+      const anomalyCorrection = item.b * T * T + item.c * Math.cos(radians(item.f * T)) + item.s * Math.sin(radians(item.f * T));
+      const meanAnomaly = el.meanLongitude - el.perihelion + anomalyCorrection;
       const E = solveKepler(meanAnomaly, el.e);
       const point = orbitalPlaneToEcliptic(el.a, el.e, el.inclination, radians(omegaDeg), radians(el.node), E);
       const distance = Math.hypot(point.x, point.y, point.z);
@@ -159,14 +160,14 @@ import { ephemerisElements } from "../../data/ephemeris";
       if (!dateField.value || Number.isNaN(selectedDate.getTime())) {
         clearResults();
         status.textContent = "Choose a valid date and time";
-        message.textContent = "Enter a date between 1800 and 2050.";
+        message.textContent = "Enter a valid date between 1 CE and 3000 CE.";
         return;
       }
       const year = selectedDate.getUTCFullYear();
-      if (year < 1800 || year > 2050) {
+      if (year < 1 || year > 3000) {
         clearResults();
         status.textContent = "Date outside model range";
-        message.textContent = "The JPL element fit used here is valid only from 1800 through 2050. Choose a date within that interval.";
+        message.textContent = "The browser date picker supports 1–3000 CE, inside the JPL long-range element fit. Choose a date in that interval.";
         return;
       }
 
@@ -236,8 +237,8 @@ import { ephemerisElements } from "../../data/ephemeris";
         });
       }
 
-      status.textContent = "Positions calculated";
-      message.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(selectedDate) + " UTC · geometric positions from the JPL approximate-element model.";
+      status.textContent = "Approximate positions calculated";
+      message.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(selectedDate) + " UTC · geometric positions from the JPL long-range approximate-element model.";
     }
 
     if (dateField) {
