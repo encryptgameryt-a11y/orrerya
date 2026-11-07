@@ -92,11 +92,11 @@ export const solarMassDistribution = {
 } as const;
 
 export const dwarfPlanets: SolarBodyPhysical[] = [
-  {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five IAU-recognized dwarf planets; largest object in the main asteroid belt."},
+  {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five widely recognised dwarf planets; largest object in the main asteroid belt."},
   {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent."},
   {name:"Haumea",type:"Dwarf planet · trans-Neptunian region",massKg:4.006e21,meanRadiusKm:715,densityGcm3:2.6,equatorialGravityMS2:0.35,escapeVelocityKmS:0.78,meanDistanceAU:43.13,orbitDays:103774,siderealRotationDays:0.1631,note:"Fast rotation makes Haumea strongly elongated; a single spherical diameter hides its triaxial shape."},
   {name:"Makemake",type:"Dwarf planet · Kuiper Belt",massKg:3.1e21,meanRadiusKm:714,densityGcm3:2.1,equatorialGravityMS2:0.40,escapeVelocityKmS:0.76,meanDistanceAU:45.43,orbitDays:112897,siderealRotationDays:0.937,note:"Radius, mass and density are less tightly constrained than for Pluto or Ceres."},
-  {name:"Eris",type:"Dwarf planet · scattered disc",massKg:1.66e22,meanRadiusKm:1200,densityGcm3:2.3,equatorialGravityMS2:0.77,escapeVelocityKmS:1.36,meanDistanceAU:67.7,orbitDays:203830,siderealRotationDays:1.079,note:"Most massive of the five IAU-recognized dwarf planets; its diameter uncertainty overlaps Pluto's."}
+  {name:"Eris",type:"Dwarf planet · scattered disc",massKg:1.66e22,meanRadiusKm:1200,densityGcm3:2.3,equatorialGravityMS2:0.77,escapeVelocityKmS:1.36,meanDistanceAU:67.7,orbitDays:203830,siderealRotationDays:1.079,note:"Most massive of the five widely recognised dwarf planets; its diameter uncertainty overlaps Pluto's."}
 ];
 
 export interface SatellitePhysical {
