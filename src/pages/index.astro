@@ -18,7 +18,7 @@ const homeSummaries: Record<string, string> = {
     <div class="container orrery-home-inner">
       <div class="orrery-hero-head">
         <div class="orrery-brand-feature">
-          <span class="eyebrow">NAVIGATE THE CELESTIAL FRONTIER</span>
+          <span class="eyebrow">SOLAR SYSTEM FIELD GUIDE</span>
           <h1 class="orrery-logo-title">ORRERYA</h1>
           <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
@@ -119,27 +119,27 @@ const homeSummaries: Record<string, string> = {
 
   <section class="section container home-planets-section">
     <div class="section-head">
-      <div><div class="eyebrow">01 / THE TERRESTRIAL WORLDS</div><h2>The Terrestrial Frontier.</h2></div>
-      <div class="section-side"><p>Four rocky worlds. Infinite untold histories.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
+      <div><div class="eyebrow">01 / THE INNER PLANETS</div><h2>The four inner planets</h2></div>
+      <div class="section-side"><p>Mercury, Venus, Earth and Mars have solid surfaces and metal-rich interiors.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
     </div>
     <div class="home-planet-grid">
       {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{homeSummaries[planet.slug] ?? planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
-      <div class="outer-band-copy"><span class="eyebrow">02 / THE OUTER GIANTS</span><h3>Titans of the Outer Dark.</h3><p>Beyond the asteroid belt, two gas giants and two ice giants command the outer Solar System. Jupiter and Saturn are dominated by hydrogen and helium; Uranus and Neptune contain much larger proportions of heavier volatile compounds.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
+      <div class="outer-band-copy"><span class="eyebrow">02 / THE OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are gas giants, made mostly of hydrogen and helium. Uranus and Neptune are ice giants, with larger amounts of water-, ammonia- and methane-bearing material inside.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
       <div class="outer-mini-grid">{outer.map((planet) => <a href={"/planets/" + planet.slug + "/"}><img src={planet.image} alt={planet.imageAlt} loading="lazy" /><span>{planet.name}</span></a>)}</div>
     </div>
   </section>
 
   <section class="section home-discover">
     <div class="container">
-      <div class="section-head"><div><div class="eyebrow">03 / THE WIDER SYSTEM</div><h2>Beyond the Familiar.</h2></div><p>From solar activity to hidden oceans, the science of our system is still unfolding.</p></div>
+      <div class="section-head"><div><div class="eyebrow">03 / MORE TO EXPLORE</div><h2>Moons, the Sun and planetary science</h2></div><p>Explore solar activity, moons with possible subsurface oceans and the physics that shapes planetary orbits.</p></div>
 
       <div class="discover-grid">
         <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-number">01</span><span class="discover-icon"><LineIcon name="sun" size={28} /></span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun gives us light and heat. It also creates magnetic storms and sends tiny particles into space.</p><span class="text-link">Meet our star ↗</span></div></a>
-        <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon"><LineIcon name="moon" size={28} /></span><div><span class="eyebrow">Worlds in orbit</span><h3>Moons & rings</h3><p>Some moons may hide oceans; others have active volcanoes or rings made from countless small pieces.</p><span class="text-link">Explore the moons ↗</span></div></a>
-        <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-number">03</span><span class="discover-icon"><LineIcon name="planet" size={28} /></span><div><span class="eyebrow">Small worlds</span><h3>Dwarf planets</h3><p>Meet Pluto, Ceres, Haumea, Makemake and Eris, and see what makes them special.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
-        <a class="discover-card" href="/science/"><span class="discover-number">04</span><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">The big picture</span><h3>How it works</h3><p>See how gravity moves planets, why seasons change and how moons create tides.</p><span class="text-link">Explore the science ↗</span></div></a>
+        <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon"><LineIcon name="moon" size={28} /></span><div><span class="eyebrow">Moons and rings</span><h3>Moons & rings</h3><p>Some moons may hide oceans; others have active volcanoes or rings made from countless small pieces.</p><span class="text-link">Explore the moons ↗</span></div></a>
+        <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-number">03</span><span class="discover-icon"><LineIcon name="planet" size={28} /></span><div><span class="eyebrow">Dwarf planets</span><h3>Dwarf planets</h3><p>Meet Pluto, Ceres, Haumea, Makemake and Eris, and see what makes them special.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
+        <a class="discover-card" href="/science/"><span class="discover-number">04</span><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">Planetary science</span><h3>How the Solar System works</h3><p>See how gravity moves planets, why seasons change and how moons create tides.</p><span class="text-link">Explore the science ↗</span></div></a>
       </div>
       <a class="comets-banner" href="/explore/small-bodies/">
         <div class="comets-banner-art" role="img" aria-label="Illustration of a bright comet passing rocky asteroid fragments.">
@@ -164,14 +164,14 @@ const homeSummaries: Record<string, string> = {
           </svg>
         </div>
         <div class="comets-banner-copy">
-          <span class="eyebrow">04 / PRIMORDIAL REMNANTS</span><h3>Relics of Creation.</h3>
-          <p>Rocky asteroids and ice-rich comets preserve clues from the Solar System’s formation.</p>
+          <span class="eyebrow">04 / SMALL BODIES</span><h3>Asteroids and comets</h3>
+          <p>Asteroids and comets preserve material from the Solar System's formation and record billions of years of collisions and change.</p>
           <span class="text-link">Explore comets & asteroids ↗</span>
         </div>
       </a>
       <section class="distant-worlds" aria-labelledby="distant-worlds-title">
         <div class="distant-worlds-heading">
-          <div><span class="eyebrow">05 / THE TRANS-NEPTUNIAN FRONTIER</span><h3 id="distant-worlds-title">The Kuiper Frontier.</h3><p>Beyond Neptune, icy worlds orbit in the Sun’s distant light. The Kuiper Belt is one part of the wider trans-Neptunian region.</p></div>
+          <div><span class="eyebrow">05 / BEYOND NEPTUNE</span><h3 id="distant-worlds-title">The Kuiper Belt and beyond</h3><p>The Kuiper Belt contains many icy bodies beyond Neptune. Farther out, the Oort Cloud is thought to contain a large population of long-period comets.</p></div>
           <span class="carousel-hint">SCROLL TO EXPLORE <span aria-hidden="true">→</span></span>
         </div>
         <div class="distant-worlds-track" role="region" aria-label="Distant icy worlds. Scroll sideways to explore." tabindex="0">
@@ -185,19 +185,19 @@ const homeSummaries: Record<string, string> = {
   </section>
 
   <section class="section container">
-    <div class="section-head"><div><div class="eyebrow">06 / INTERACTIVE FIELD TOOLS</div><h2>See how the Solar System works.</h2></div><p>Try quick calculators and experiments to compare worlds and see how gravity, distance and orbits work.</p></div>
+    <div class="section-head"><div><div class="eyebrow">06 / INTERACTIVE TOOLS</div><h2>Try the science yourself</h2></div><p>Use the calculators to compare gravity, distance, planet sizes and orbital motion.</p></div>
 
     <div class="tool-preview-grid">
       <a class="tool-preview" href="/tools/#weight"><span class="tool-index">TOOL 01</span><span class="tool-symbol"><LineIcon name="scale" size={27} /></span><h3>Your weight on other worlds</h3><p>See how your weight would change under another world's gravity.</p><span class="text-link">Open calculator ↗</span></a>
       <a class="tool-preview" href="/tools/#distance"><span class="tool-index">TOOL 02</span><span class="tool-symbol"><LineIcon name="ruler" size={27} /></span><h3>Space distance converter</h3><p>Turn huge space distances into kilometres and light-travel time.</p><span class="text-link">Open converter ↗</span></a>
       <a class="tool-preview" href="/tools/#compare"><span class="tool-index">TOOL 03</span><span class="tool-symbol"><LineIcon name="planet" size={27} /></span><h3>Compare planet sizes</h3><p>See how big each planet is compared with Earth.</p><span class="text-link">Open comparison ↗</span></a>
       <a class="tool-preview" href="/tools/#year"><span class="tool-index">TOOL 04</span><span class="tool-symbol"><LineIcon name="calendar" size={27} /></span><h3>How long is a year?</h3><p>Compare how long each planet takes to travel around the Sun.</p><span class="text-link">Open year calculator ↗</span></a>
-      <a class="tool-preview" href="/tools/#orbit"><span class="tool-index">TOOL 05</span><span class="tool-symbol"><LineIcon name="orbit" size={27} /></span><h3>Try an orbit</h3><p>Move a planet along its path and watch its distance and speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
-      <a class="tool-preview" href="/tools/ephemeris/"><span class="tool-index">TOOL 06</span><span class="tool-symbol"><LineIcon name="compass" size={27} /></span><h3>Where are the planets?</h3><p>Choose a date and see where the planets appear around the Sun.</p><span class="text-link">Open position explorer ↗</span></a>
+      <a class="tool-preview" href="/tools/#orbit"><span class="tool-index">TOOL 05</span><span class="tool-symbol"><LineIcon name="orbit" size={27} /></span><h3>Orbit model</h3><p>Move a planet along its orbit and see how its distance and speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
+      <a class="tool-preview" href="/tools/ephemeris/"><span class="tool-index">TOOL 06</span><span class="tool-symbol"><LineIcon name="compass" size={27} /></span><h3>Approximate planet positions</h3><p>Choose a date to see the planets' approximate positions around the Sun.</p><span class="text-link">Open position explorer ↗</span></a>
     </div>
     </div>
   </section>
-  <section class="container home-endcap"><div><span class="eyebrow">Keep looking up</span><h2>Curiosity is a good<br />place to start.</h2><p>Choose a world. Ask a question. Follow the evidence.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
+  <section class="container home-endcap"><div><span class="eyebrow">START EXPLORING</span><h2>Explore the Solar System</h2><p>Start with a planet, moon or small body. Every page includes sources and further reading.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
   <style>
     .home-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 77% 47%,rgba(33,66,111,.34),transparent 37rem),linear-gradient(180deg,rgba(13,23,39,.25),transparent)}
     .home-hero-grid{display:grid;grid-template-columns:1.03fr .97fr;gap:25px;align-items:center;min-height:610px;padding-top:35px;padding-bottom:35px}
