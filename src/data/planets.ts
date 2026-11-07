@@ -62,7 +62,7 @@ export const planets: Planet[] = [
       "Mercury's large iron-rich core makes it unusually dense for a small rocky world. The MESSENGER mission transformed our understanding of its composition, geology and magnetic environment."
     ],
     highlight: "One Mercury solar day — sunrise to sunrise — lasts about 176 Earth days. That is different from its roughly 59-day rotation relative to distant stars.",
-    mission: "NASA's MESSENGER orbited Mercury from 2011 to 2015. ESA and JAXA's BepiColombo mission is on its journey to study Mercury with two orbiters."
+    mission: "NASA's MESSENGER orbited Mercury from 2011 to 2015. ESA and JAXA's BepiColombo mission entered its Mercury arrival phase in September 2026. Orbit capture is scheduled for 21 November 2026, with the two orbiters due to separate in December and routine science planned for April 2027."
   },
   {
     slug: "venus", name: "Venus", order: 2, className: "Terrestrial planet",
@@ -150,7 +150,7 @@ export const planets: Planet[] = [
       "The Galilean moons form a remarkable planetary system of their own: volcanic Io, ocean-world candidate Europa, giant Ganymede and heavily cratered Callisto. Studying them reveals how moons can be worlds in their own right."
     ],
     highlight: "Jupiter's equatorial gravity is about 2.5 times Earth's, but a person could not stand on a solid surface there — Jupiter has no solid surface like Earth.",
-    mission: "NASA's Galileo orbiter studied Jupiter and its moons; Juno continues to investigate the planet's gravity, magnetic field, atmosphere and interior."
+    mission: "NASA's Galileo orbiter studied Jupiter and its moons; Juno continues to investigate the planet's gravity, magnetic field, atmosphere and interior. NASA's Europa Clipper is due to enter Jupiter orbit in April 2030 for repeated Europa flybys. ESA's JUICE is scheduled to arrive in July 2031 to study Ganymede, Callisto, Europa and the Jupiter system."
   },
   {
     slug: "saturn", name: "Saturn", order: 6, className: "Gas giant",
