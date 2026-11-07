@@ -1,0 +1,266 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { planets } from "../../data/planets";
+import { sunFacts, planetPhysics, dwarfPlanets, satellitePhysical, satelliteDerived, solarSystemSources } from "../../data/solar-system";
+
+const fmt = (n: number, digits = 3) => n.toLocaleString("en-US", { maximumFractionDigits: digits });
+const sci = (n: number) => n.toExponential(3).replace("e+", " × 10^").replace("e-", " × 10^−");
+const planetImage = Object.fromEntries(planets.map(p => [p.slug, p.image]));
+const moonShowcase = ["Moon","Io","Europa","Ganymede","Titan","Enceladus","Triton"];
+const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
+---
+<SiteLayout title="Solar System Atlas" description="A sourced scientific atlas of the Sun, eight planets, dwarf planets, moons, asteroids, comets, rings and the distant outer Solar System." image="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/o/Oort_Cloud.jpg?w=1200">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Solar System Atlas</span></div>
+
+  <header class="atlas-hero">
+    <div class="container atlas-hero-inner">
+      <div class="atlas-hero-copy">
+        <span class="eyebrow">THE ORRERYA REFERENCE ATLAS</span>
+        <h1>The Solar System,<br /><em>measured and explored.</em></h1>
+        <p class="lede">One star, eight planets, hundreds of moons, millions of small bodies and an immense, only partly explored frontier.</p>
+        <div class="atlas-hero-actions">
+          <a class="btn" href="#physical-data">Explore the data <span aria-hidden="true">↓</span></a>
+          <a class="btn secondary" href="/explore/outer-solar-system/">Journey to the outer frontier <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <figure class="atlas-hero-image">
+        <img src="https://assets.science.nasa.gov/content/dam/science/cds/general/images/2023/06/s/solar-system-illustration-16x9-1.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg" alt="NASA artist's concept showing the Sun, planets, asteroid belt and a comet; the arrangement is not to scale." fetchpriority="high" />
+        <figcaption>NASA artist's concept · Distances and sizes are not to scale</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="container atlas-snapshot" aria-label="Solar System overview">
+    <div><strong>4.6 <small>billion years</small></strong><span>Approximate age</span></div>
+    <div><strong>1 <small>star</small></strong><span>The Sun</span></div>
+    <div><strong>8 <small>planets</small></strong><span>Four rocky, four giant</span></div>
+    <div><strong>5 <small>recognized</small></strong><span>IAU dwarf planets</span></div>
+    <div><strong>1 <small>heliosphere</small></strong><span>Our solar-wind bubble</span></div>
+  </section>
+
+  <section class="section container" id="sun">
+    <div class="section-head">
+      <div><span class="eyebrow">01 / THE STAR</span><h2>The Sun holds the system together.</h2></div>
+      <p>Almost all the Solar System's mass is in the Sun. Its light powers planetary climates, while its gravity shapes the paths of the planets, comets and countless smaller bodies.</p>
+    </div>
+    <div class="sun-feature card">
+      <figure>
+        <img src="https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26681/PIA26681.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg" alt="The Sun observed by NASA's Solar Dynamics Observatory, showing bright regions of solar activity." loading="lazy" />
+        <figcaption>NASA / Solar Dynamics Observatory · Ultraviolet solar observation, not a visible-light colour photograph</figcaption>
+      </figure>
+      <div class="sun-facts">
+        <span class="eyebrow">REFERENCE MEASUREMENTS</span>
+        <h3>Our G2 V star</h3>
+        <p>The Sun is a plasma sphere powered by nuclear fusion in its core. It rotates at different rates across latitude, so there is no single rotation period that describes the whole Sun.</p>
+        <div class="metric-grid">
+          <div><span>Mass</span><strong>1.9884 × 10³⁰ kg</strong><small>≈ 332,900 Earth masses</small></div>
+          <div><span>Mean radius</span><strong>695,700 km</strong><small>Mean diameter: 1,391,400 km</small></div>
+          <div><span>Mean density</span><strong>1,408 kg/m³</strong><small>About 0.255 of Earth's mean density</small></div>
+          <div><span>Equatorial gravity</span><strong>274.0 m/s²</strong><small>About 28 times Earth's</small></div>
+          <div><span>Escape velocity</span><strong>617.6 km/s</strong><small>At the photospheric radius</small></div>
+          <div><span>Luminosity</span><strong>3.828 × 10²⁶ W</strong><small>Total radiant power</small></div>
+        </div>
+        <p class="small-note">Values are rounded reference quantities from NASA's Sun Fact Sheet. Solar radius, gravity and rotation depend on the convention and latitude used.</p>
+        <a class="text-link" href="/explore/sun/">Read the full Sun profile ↗</a>
+      </div>
+    </div>
+    <div class="sun-layer-strip">
+      <div><b>Core</b><span>Fusion turns hydrogen into helium.</span></div>
+      <div><b>Radiative zone</b><span>Energy moves outward mainly by radiation.</span></div>
+      <div><b>Convective zone</b><span>Hot plasma rises; cooler plasma sinks.</span></div>
+      <div><b>Photosphere</b><span>The visible-light layer.</span></div>
+      <div><b>Corona</b><span>The very hot, extended outer atmosphere.</span></div>
+    </div>
+  </section>
+
+  <section class="section atlas-dark" id="physical-data">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">02 / THE EIGHT PLANETS</span><h2>Eight worlds, one star.</h2></div>
+        <p>Planetary values below use JPL's published physical-parameter table. Radius is the volume-equivalent mean radius; gravity is equatorial gravity, not a universal value at every altitude or latitude.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Planet</th><th>Group</th><th>Mass (kg)</th><th>Mean radius</th><th>Density</th><th>Equatorial gravity</th><th>Escape speed</th><th>Average distance</th></tr></thead>
+          <tbody>
+            {planetPhysics.map((p) => <tr>
+              <th><a href={"/planets/" + p.name.toLowerCase() + "/"}>{p.name}</a></th>
+              <td>{p.type}</td>
+              <td>{sci(p.massKg)}</td>
+              <td>{fmt(p.meanRadiusKm,1)} km</td>
+              <td>{fmt(p.densityGcm3,3)} g/cm³</td>
+              <td>{fmt(p.equatorialGravityMS2,2)} m/s²</td>
+              <td>{fmt(p.escapeVelocityKmS,2)} km/s</td>
+              <td>{p.meanDistanceAU} AU</td>
+            </tr>)}
+          </tbody>
+        </table>
+      </div>
+      <div class="planet-groups">
+        <article><span class="group-mark rocky"></span><h3>Terrestrial planets</h3><p><strong>Mercury, Venus, Earth and Mars.</strong> Rocky worlds with metal-rich cores and silicate mantles and crusts. They are comparatively small and dense.</p></article>
+        <article><span class="group-mark gas"></span><h3>Gas giants</h3><p><strong>Jupiter and Saturn.</strong> Mostly hydrogen and helium, with deep atmospheres and no solid surface you could stand on.</p></article>
+        <article><span class="group-mark ice"></span><h3>Ice giants</h3><p><strong>Uranus and Neptune.</strong> Their interiors contain large fractions of water-, ammonia- and methane-bearing material beneath hydrogen-rich atmospheres. “Ice” describes planetary-science volatiles, not necessarily ordinary surface ice.</p></article>
+      </div>
+      <p class="table-footnote">Mass is total mass. Density is bulk mean density. Equatorial gravity includes the effect of rotation and the planet's shape. Escape velocity is the ideal speed from the reference surface, neglecting atmosphere and further propulsion. <a href={solarSystemSources.planets} target="_blank" rel="noreferrer">NASA/JPL physical parameter tables ↗</a></p>
+    </div>
+  </section>
+
+  <section class="section container" id="dwarf-planets">
+    <div class="section-head">
+      <div><span class="eyebrow">03 / DWARF PLANETS</span><h2>Small worlds with planetary complexity.</h2></div>
+      <p>The five IAU-recognized dwarf planets are Ceres, Pluto, Haumea, Makemake and Eris. Other candidates exist, but their classification is not settled.</p>
+    </div>
+    <div class="dwarf-photo-grid">
+      <figure><img src="https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA22485.width-1024.jpg" alt="NASA Dawn view of Ceres's Occator Crater and bright salt deposits." loading="lazy"/><figcaption>Ceres · NASA Dawn · Occator Crater and bright deposits</figcaption></figure>
+      <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia19/pia19952/PIA19952.jpg?w=1536&h=1536&fit=clip&crop=faces%2Cfocalpoint" alt="Enhanced-colour New Horizons image of Pluto, showing its varied surface and bright heart-shaped region." loading="lazy"/><figcaption>Pluto · NASA New Horizons · Enhanced colour</figcaption></figure>
+      <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15678/PIA15678.jpg?w=1200" alt="NASA Dawn spacecraft global view of the asteroid Vesta." loading="lazy"/><figcaption>Vesta is an asteroid, not a dwarf planet · NASA Dawn</figcaption></figure>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Dwarf planet</th><th>Region</th><th>Mass (kg)</th><th>Mean radius</th><th>Density</th><th>Equatorial gravity</th><th>Escape speed</th></tr></thead>
+        <tbody>
+          {dwarfPlanets.map((p) => <tr><th>{p.name}</th><td>{p.type.replace("Dwarf planet · ","")}</td><td>{sci(p.massKg)}</td><td>{fmt(p.meanRadiusKm,1)} km</td><td>{fmt(p.densityGcm3,2)} g/cm³</td><td>{fmt(p.equatorialGravityMS2,2)} m/s²</td><td>{fmt(p.escapeVelocityKmS,2)} km/s</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+    <div class="callout atlas-callout"><strong>Size and mass are not the same ranking.</strong><p>Pluto is commonly described by NASA as slightly larger in diameter than Eris, while Eris is more massive. Their size estimates are close and model-dependent. Ceres is the smallest of the five recognized dwarf planets. Haumea is strongly elongated, so its mean radius alone hides its shape.</p></div>
+    <a class="text-link" href="/explore/dwarf-planets/">Explore all five dwarf planets and classification details ↗</a>
+  </section>
+
+  <section class="section atlas-dark" id="moons">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">04 / NATURAL SATELLITES</span><h2>Moons are worlds in their own right.</h2></div>
+        <p>Some have subsurface oceans, volcanic activity, atmospheres or ancient impact records. These selected examples are a scientific starting set, not a complete moon catalogue.</p>
+      </div>
+      <div class="moon-feature-grid">
+        {moons.map((m) => {
+          const derived = satelliteDerived(m);
+          return <article class="moon-fact-card">
+            <span class="moon-host">{m.host.toUpperCase()}</span>
+            <h3>{m.name}</h3>
+            <p>{m.description}</p>
+            <dl><div><dt>Mean radius</dt><dd>{fmt(m.meanRadiusKm,1)} km</dd></div><div><dt>Mass (derived)</dt><dd>{sci(derived.massKg)} kg</dd></div><div><dt>Mean density</dt><dd>{fmt(m.densityGcm3,3)} g/cm³</dd></div><div><dt>Surface gravity (derived)</dt><dd>{fmt(derived.gravityMS2,3)} m/s²</dd></div><div><dt>Escape speed (derived)</dt><dd>{fmt(derived.escapeVelocityKmS,3)} km/s</dd></div></dl>
+          </article>;
+        })}
+      </div>
+      <p class="table-footnote">Moon masses and surface gravity are calculated from JPL's satellite GM and mean-radius values using G = 6.67430 × 10⁻²⁰ km³ kg⁻¹ s⁻². This makes the calculation transparent; values inherit the uncertainty and convention of the source GM and radius. <a href={solarSystemSources.moons} target="_blank" rel="noreferrer">JPL satellite physical parameters ↗</a></p>
+      <a class="text-link" href="/explore/moons/">Explore moons and rings ↗</a>
+    </div>
+  </section>
+
+  <section class="section container" id="small-bodies">
+    <div class="section-head">
+      <div><span class="eyebrow">05 / SMALL BODIES</span><h2>Leftovers from the Solar System's beginnings.</h2></div>
+      <p>Asteroids, comets and many smaller objects preserve clues to the material from which the planets formed. They are not all made of the same thing, and they do not all live in one belt.</p>
+    </div>
+    <div class="small-body-panels">
+      <article class="small-body-card">
+        <img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1200" alt="NASA OSIRIS-REx view of asteroid Bennu's rocky, boulder-covered surface." loading="lazy"/>
+        <div><span class="eyebrow">ROCKY & METAL-RICH OBJECTS</span><h3>Asteroids</h3><p>Most are rocky, metallic or carbon-rich remnants. The main asteroid belt lies mostly between Mars and Jupiter. Ceres is the belt's largest body and is classified as a dwarf planet; Vesta is the next most massive major body.</p><ul><li><strong>C-type:</strong> carbon-rich, dark and often rich in hydrated minerals.</li><li><strong>S-type:</strong> silicate-rich rocky material, commonly with some metal.</li><li><strong>M-type:</strong> metal-rich; often associated with iron-nickel compositions, though asteroid classes are not simple ingredient labels.</li></ul></div>
+      </article>
+      <article class="small-body-card">
+        <img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia17/pia17485/PIA17485.jpg?w=1536&h=804&fit=clip&crop=faces%2Cfocalpoint" alt="Enhanced image of Comet Halley's dark, irregular nucleus photographed by ESA's Giotto spacecraft in 1986." loading="lazy"/>
+        <div><span class="eyebrow">ICE, DUST & GAS</span><h3>Comets</h3><p>A comet's nucleus is a mixture of ice, frozen gases, dust and rocky material. Sunlight warms the surface; escaping gas and dust form a coma and tails. The dust tail and ion tail respond differently to sunlight and the solar wind.</p><p>NASA's Hubble measurement of C/2014 UN271 (Bernardinelli–Bernstein) found a nucleus about 80 miles (roughly 129 km) across by estimating its size from brightness after modelling and subtracting the surrounding coma. It was not resolved as a sharp disk.</p></div>
+      </article>
+    </div>
+    <div class="classification-row">
+      <div><b>Meteoroid</b><span>A small natural object travelling through space.</span></div>
+      <div><b>Meteor</b><span>The streak of light and related phenomenon as it enters an atmosphere.</span></div>
+      <div><b>Meteorite</b><span>A surviving fragment that reaches the ground.</span></div>
+    </div>
+    <div class="callout atlas-callout"><strong>There is no meaningful single “smallest asteroid.”</strong><p>Asteroids span a huge range of sizes and merge into the smaller meteoroid population. The minimum detectable size depends on distance, brightness, observing method and survey limits. A claimed record needs a defined catalogue and detection threshold.</p></div>
+    <a class="text-link" href="/explore/small-bodies/">Explore asteroids, comets, meteoroids and the outer frontier ↗</a>
+  </section>
+
+  <section class="section atlas-dark" id="rings">
+    <div class="container rings-layout">
+      <div>
+        <span class="eyebrow">06 / PLANETARY RINGS</span>
+        <h2>Not solid hoops — countless orbiting particles.</h2>
+        <p>Jupiter, Saturn, Uranus and Neptune all have ring systems. Their particles range from fine dust to larger icy or rocky chunks. Gravity, collisions, small shepherd moons and electromagnetic forces shape the rings.</p>
+        <p>Saturn's rings are especially bright because they are rich in water ice. They are extremely thin compared with their enormous width.</p>
+        <a class="text-link" href="https://science.nasa.gov/solar-system/rings/" target="_blank" rel="noreferrer">NASA: planetary rings ↗</a>
+      </div>
+      <figure><img src="https://images-assets.nasa.gov/image/PIA18325/PIA18325~large.jpg" alt="Saturn and its rings photographed by NASA's Cassini spacecraft." loading="lazy"/><figcaption>NASA / Cassini · Saturn's ring system</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section container" id="outer-system">
+    <div class="section-head">
+      <div><span class="eyebrow">07 / THE OUTER FRONTIER</span><h2>Far beyond Neptune.</h2></div>
+      <p>The planetary orbits are only the inner architecture. Distant icy populations, long-period comets and the solar wind all extend the Solar System into a much larger environment.</p>
+    </div>
+    <div class="frontier-cards">
+      <a href="/explore/outer-solar-system/"><span>30–50 AU</span><h3>Kuiper Belt</h3><p>A broad, flattened population of icy bodies beyond Neptune.</p><b>Explore the outer Solar System ↗</b></a>
+      <a href="/explore/outer-solar-system/#scattered-disc"><span>To hundreds of AU and beyond</span><h3>Scattered disc & detached objects</h3><p>Objects on more stretched or tilted paths, with some reaching very great distances.</p><b>Explore distant populations ↗</b></a>
+      <a href="/explore/outer-solar-system/#heliosphere"><span>Voyager crossings near 120 AU</span><h3>Heliosphere</h3><p>The immense bubble shaped by the solar wind as it meets interstellar space.</p><b>Explore the heliosphere ↗</b></a>
+      <a href="/explore/outer-solar-system/#oort-cloud"><span>Model: thousands to ~100,000 AU</span><h3>Oort Cloud</h3><p>A hypothetical distant shell of icy comet-like bodies, inferred rather than directly photographed.</p><b>Explore the Oort Cloud ↗</b></a>
+    </div>
+  </section>
+
+  <section class="section atlas-dark" id="scale">
+    <div class="container">
+      <div class="section-head"><div><span class="eyebrow">08 / DISTANCE SCALE</span><h2>From one AU to light-years.</h2></div><p>An astronomical unit is the exact defined distance of 149,597,870.7 km. Light travels that distance in about 8 minutes 19 seconds.</p></div>
+      <div class="scale-table">
+        <div><b>Earth</b><span>1 AU</span><small>149.6 million km</small></div>
+        <div><b>Jupiter</b><span>5.2 AU</span><small>Typical orbital distance</small></div>
+        <div><b>Neptune</b><span>30.1 AU</span><small>Typical orbital distance</small></div>
+        <div><b>Main Kuiper Belt</b><span>~30–50 AU</span><small>Broad main region</small></div>
+        <div><b>Voyager heliopause crossings</b><span>~119–121 AU</span><small>Two different directions, not a universal radius</small></div>
+        <div><b>Oort Cloud model</b><span>~5,000–100,000 AU</span><small>~0.08–1.6 light-years</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-head"><div><span class="eyebrow">09 / CONTINUE EXPLORING</span><h2>Go deeper into each family.</h2></div><p>Use the focused reference pages for longer explanations, object profiles, photographs and mission histories.</p></div>
+    <div class="atlas-link-grid">
+      <a href="/explore/sun/"><b>The Sun</b><span>Structure, fusion and solar activity ↗</span></a>
+      <a href="/planets/"><b>The eight planets</b><span>Individual profiles and physical data ↗</span></a>
+      <a href="/explore/dwarf-planets/"><b>Dwarf planets</b><span>Five recognized worlds and candidates ↗</span></a>
+      <a href="/explore/moons/"><b>Moons & rings</b><span>Natural satellites and ring systems ↗</span></a>
+      <a href="/explore/small-bodies/"><b>Asteroids & comets</b><span>Small-body populations ↗</span></a>
+      <a href="/explore/outer-solar-system/"><b>Outer Solar System</b><span>Kuiper Belt, Oort Cloud and heliosphere ↗</span></a>
+      <a href="/science/"><b>The science</b><span>Gravity, motion and planetary physics ↗</span></a>
+      <a href="/missions/"><b>Space missions</b><span>Spacecraft that revealed these worlds ↗</span></a>
+    </div>
+    <div class="source-panel atlas-sources">
+      <div><span class="eyebrow">REFERENCE SOURCES</span><h3>Where the numbers come from</h3><p>Prefer the source database and its column definitions when a value is unusual or uncertainty matters.</p></div>
+      <ul class="source-list">
+        <li><a href={solarSystemSources.sun} target="_blank" rel="noreferrer">NASA NSSDC — Sun Fact Sheet ↗</a></li>
+        <li><a href={solarSystemSources.planets} target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li>
+        <li><a href={solarSystemSources.moons} target="_blank" rel="noreferrer">NASA/JPL — Satellite Physical Parameters ↗</a></li>
+        <li><a href={solarSystemSources.kuiperBelt} target="_blank" rel="noreferrer">NASA — Kuiper Belt Facts ↗</a></li>
+        <li><a href={solarSystemSources.oortCloud} target="_blank" rel="noreferrer">NASA — Oort Cloud ↗</a></li>
+        <li><a href={solarSystemSources.asteroids} target="_blank" rel="noreferrer">NASA — Asteroid Facts ↗</a></li>
+        <li><a href={solarSystemSources.comets} target="_blank" rel="noreferrer">NASA — Comet Facts ↗</a></li>
+      </ul>
+    </div>
+    <p class="data-disclaimer">Reference values were checked on 7 November 2026. Values are rounded for readability. They are not all measured to the same precision; see source tables for uncertainties, reference frames and definitions. Images retain their NASA, ESA or mission credits, and illustrations are labelled as concepts rather than photographs.</p>
+  </section>
+
+  <style>
+    .atlas-hero{background:radial-gradient(ellipse at 18% 38%,rgba(65,107,145,.25),transparent 36rem),linear-gradient(120deg,#0b1827,#142b3e 60%,#0c1a29);color:#f4f2ed;border-bottom:1px solid rgba(255,255,255,.12)}
+    .atlas-hero-inner{display:grid;grid-template-columns:.86fr 1.14fr;align-items:center;gap:40px;padding:56px 0}
+    .atlas-hero-copy .eyebrow{color:#d8bb8a}.atlas-hero h1{font:500 clamp(2.8rem,5vw,5rem)/1.03 Georgia,serif;margin:17px 0}.atlas-hero h1 em{font-style:normal;color:#d9bc8c}.atlas-hero .lede{color:#c8d3dc;max-width:38rem}
+    .atlas-hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.atlas-hero-actions .btn.secondary{color:#f4f2ed;background:transparent;border-color:rgba(255,255,255,.32)}
+    .atlas-hero-image{margin:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#0a1521}.atlas-hero-image img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.atlas-hero-image figcaption{padding:9px 13px;color:#c3ced8;font-size:.7rem}
+    .atlas-snapshot{display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:24px 0 28px;border-bottom:1px solid var(--line)}
+    .atlas-snapshot>div{padding:0 18px;border-right:1px solid var(--line)}.atlas-snapshot>div:first-child{padding-left:0}.atlas-snapshot>div:last-child{border:0}
+    .atlas-snapshot strong{display:block;font:600 1.65rem "Space Grotesk",sans-serif;color:#18354d}.atlas-snapshot small{font:500 .8rem Inter,sans-serif;color:#536a7f}.atlas-snapshot span{font-size:.74rem;color:#5b7082}
+    .sun-feature{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:17px;align-items:stretch}.sun-feature figure{margin:0;min-width:0;background:#091624;border-radius:8px;overflow:hidden}.sun-feature figure img{width:100%;height:100%;min-height:360px;object-fit:cover;display:block}.sun-feature figcaption{padding:9px 12px;color:#c7d3dc;font-size:.68rem}.sun-facts{padding:16px 16px 16px 4px}.sun-facts h3{font:500 1.8rem Georgia,serif;margin:5px 0}.sun-facts>p{font-size:.86rem;color:#53697c}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:18px 0}.metric-grid div{padding:11px;border:1px solid var(--line);border-radius:7px;background:#f5f7f8}.metric-grid span,.metric-grid small{display:block;color:#5a6f82;font-size:.68rem}.metric-grid strong{display:block;color:#17354e;font-size:.94rem;margin:3px 0}.small-note,.table-footnote,.data-disclaimer{font-size:.73rem;color:#617589;line-height:1.65}.sun-layer-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:15px}.sun-layer-strip>div{padding:14px;border-radius:7px;background:#edf2f5;border:1px solid var(--line)}.sun-layer-strip b,.sun-layer-strip span{display:block}.sun-layer-strip b{font-size:.8rem;color:#18354d}.sun-layer-strip span{font-size:.72rem;color:#5b7082;margin-top:4px}
+    .atlas-dark{background:linear-gradient(145deg,#0c1b2a,#142c40 55%,#0b1928);color:#edf2f5;border-block:1px solid rgba(255,255,255,.08)}.atlas-dark .section-head h2,.atlas-dark h2{color:#f2f1eb}.atlas-dark .section-head p,.atlas-dark p{color:#bdcbd6}.atlas-dark .eyebrow{color:#d0b382}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}.data-table{width:100%;border-collapse:collapse;min-width:1000px;font-variant-numeric:tabular-nums}.data-table th,.data-table td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid #e5ebef;font-size:.76rem}.data-table thead th{background:#eaf0f4;color:#425b70;font-size:.67rem;text-transform:uppercase;letter-spacing:.08em}.data-table tbody th{color:#163b57}.data-table tbody td{color:#4e6376}.data-table tbody tr:last-child th,.data-table tbody tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#f7f9fa}.data-table a{color:#174f74}
+    .planet-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:18px}.planet-groups article{padding:20px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(255,255,255,.055)}.planet-groups h3{color:#f5f3ee;font:500 1.25rem Georgia,serif}.planet-groups p{font-size:.82rem;line-height:1.7}.group-mark{display:inline-block;width:34px;height:4px;border-radius:8px}.rocky{background:#c58a58}.gas{background:#d7b26f}.ice{background:#69a6bb}.atlas-dark .table-footnote{color:#c0ccd5}.atlas-dark .table-footnote a{color:#f0d09a}
+    .dwarf-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:22px 0}.dwarf-photo-grid figure{margin:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#eef2f4}.dwarf-photo-grid img{width:100%;height:210px;object-fit:cover;display:block}.dwarf-photo-grid figcaption{padding:10px 12px;color:#566d80;font-size:.7rem}
+    .atlas-callout{margin:22px 0}.atlas-link-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.atlas-link-grid a{display:block;padding:18px;border:1px solid var(--line);border-radius:8px;background:#fff}.atlas-link-grid b,.atlas-link-grid span{display:block}.atlas-link-grid b{color:#18354d}.atlas-link-grid span{color:#5d7184;font-size:.75rem;margin-top:6px}
+    .moon-feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.moon-fact-card{background:#f7f9fa;border-radius:8px;padding:17px;color:#17344b}.moon-host{color:#916d3c;font-size:.65rem;letter-spacing:.12em;font-weight:700}.moon-fact-card h3{color:#18354d;font:500 1.3rem Georgia,serif;margin:5px 0}.moon-fact-card>p{font-size:.77rem;min-height:58px;line-height:1.6;color:#596f82}.moon-fact-card dl{margin:10px 0 0}.moon-fact-card dl div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid #dfe6eb;font-size:.7rem}.moon-fact-card dt{color:#617588}.moon-fact-card dd{margin:0;color:#18354d;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}.atlas-dark .moon-fact-card p{color:#596f82}.atlas-dark .moon-fact-card .moon-host{color:#926d3d}
+    .small-body-panels{display:grid;gap:15px}.small-body-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:25px;align-items:center;padding:18px;border:1px solid var(--line);border-radius:10px;background:#fff}.small-body-card img{width:100%;height:260px;object-fit:cover;border-radius:7px;background:#0b1a29}.small-body-card h3{font:500 1.8rem Georgia,serif;color:#17344c;margin:8px 0}.small-body-card p,.small-body-card li{font-size:.84rem;line-height:1.75;color:#52697c}.small-body-card ul{padding-left:19px}.classification-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.classification-row>div{padding:18px;border-left:3px solid #b48c54;background:#edf2f5}.classification-row b,.classification-row span{display:block}.classification-row b{color:#17344c}.classification-row span{color:#586f83;font-size:.78rem;margin-top:5px}
+    .rings-layout{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}.rings-layout h2{font:500 clamp(2rem,3vw,3rem) Georgia,serif}.rings-layout p{line-height:1.8}.rings-layout figure{margin:0}.rings-layout img{width:100%;border-radius:8px;display:block}.rings-layout figcaption{font-size:.68rem;color:#becbd6;margin-top:8px}
+    .frontier-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.frontier-cards a{padding:20px;border:1px solid var(--line);border-radius:9px;background:linear-gradient(160deg,#fff,#edf2f5)}.frontier-cards span{color:#98713e;font-size:.68rem;font-weight:700}.frontier-cards h3{color:#18354d;font:500 1.2rem Georgia,serif}.frontier-cards p{font-size:.8rem;color:#5a7083;line-height:1.6}.frontier-cards b{font-size:.72rem;color:#1b5d82}
+    .scale-table{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scale-table>div{padding:17px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(255,255,255,.05)}.scale-table b,.scale-table span,.scale-table small{display:block}.scale-table b{color:#f3f0e9}.scale-table span{color:#e6c995;font-size:1.15rem;font-weight:700;margin:7px 0}.scale-table small{color:#c4d0da}.atlas-sources{margin-top:30px}.atlas-sources h3{color:#18354d}.atlas-sources p{color:#5c7286}.atlas-sources a{color:#1a587d}.data-disclaimer{margin-top:20px}
+    @media(max-width:950px){.atlas-hero-inner{grid-template-columns:1fr;gap:24px}.sun-feature{grid-template-columns:1fr}.sun-feature figure img{height:340px;min-height:0}.planet-groups{grid-template-columns:1fr}.atlas-link-grid{grid-template-columns:repeat(2,1fr)}.frontier-cards{grid-template-columns:repeat(2,1fr)}.moon-feature-grid{grid-template-columns:repeat(2,1fr)}.rings-layout{grid-template-columns:1fr}}
+    @media(max-width:650px){.atlas-hero-inner{padding:36px 0}.atlas-snapshot{grid-template-columns:repeat(2,1fr);gap:15px}.atlas-snapshot>div{padding:0 10px;border:0}.atlas-snapshot>div:first-child{padding-left:10px}.sun-layer-strip{grid-template-columns:repeat(2,1fr)}.dwarf-photo-grid{grid-template-columns:1fr}.dwarf-photo-grid img{height:220px}.moon-feature-grid{grid-template-columns:1fr}.small-body-card{grid-template-columns:1fr}.small-body-card img{height:220px}.classification-row{grid-template-columns:1fr}.frontier-cards,.scale-table,.atlas-link-grid{grid-template-columns:1fr}.metric-grid{gap:7px}.metric-grid strong{font-size:.85rem}.atlas-hero-actions{flex-direction:column;align-items:stretch}}
+  </style>
+</SiteLayout>
