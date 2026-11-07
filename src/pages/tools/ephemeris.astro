@@ -64,6 +64,10 @@ import { ephemerisElements } from "../../data/ephemeris";
 
   <script>
     import { ephemerisElements } from "../../data/ephemeris";
+    import {
+      ASTRONOMICAL_UNIT_KM,
+      SPEED_OF_LIGHT_KM_S
+    } from "../../lib/scientific-constants.js";
 
     const dateField = document.querySelector<HTMLInputElement>("#ephemeris-date");
     const nowButton = document.querySelector<HTMLButtonElement>("#ephemeris-now");
@@ -71,8 +75,8 @@ import { ephemerisElements } from "../../data/ephemeris";
     const message = document.querySelector<HTMLElement>("#ephemeris-message");
     const orbitLayer = document.querySelector<SVGGElement>("#ephemeris-orbits");
     const markerLayer = document.querySelector<SVGGElement>("#ephemeris-markers");
-    const AU_KM = 149597870.7;
-    const AU_LIGHT_SECONDS = 499.004783836;
+    const AU_KM = ASTRONOMICAL_UNIT_KM;
+    const AU_LIGHT_SECONDS = AU_KM / SPEED_OF_LIGHT_KM_S;
     const SVG_NS = "http://www.w3.org/2000/svg";
     const center = 260;
     const scale = 7.15;
