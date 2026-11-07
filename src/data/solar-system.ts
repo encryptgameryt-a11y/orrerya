@@ -7,7 +7,7 @@ import {
   escapeSpeedFromGM,
   massFromGM,
   massSharePercent,
-  surfaceGravityFromGM
+  gravityAtRadiusFromGM
 } from "../lib/physical-mechanics.js";
 
 export const solarSystemSources = {
@@ -136,7 +136,7 @@ const G_KM3_KG_S2 = GRAVITATIONAL_CONSTANT_KM3_KG_S2;
 
 export function satelliteDerived(body: SatellitePhysical) {
   const massKg = massFromGM(body.gmKm3S2, G_KM3_KG_S2);
-  const gravityMS2 = surfaceGravityFromGM(body.gmKm3S2, body.meanRadiusKm);
+  const gravityMS2 = gravityAtRadiusFromGM(body.gmKm3S2, body.meanRadiusKm);
   const escapeVelocityKmS = escapeSpeedFromGM(body.gmKm3S2, body.meanRadiusKm);
   const densityGcm3 = bulkDensityFromGMAndRadius(
     body.gmKm3S2,
