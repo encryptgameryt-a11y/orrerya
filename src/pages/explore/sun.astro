@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import { sunFacts } from "../../data/solar-system";
+import { sunFacts, solarMassDistribution } from "../../data/solar-system";
 const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26681/PIA26681.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg";
 ---
 <SiteLayout title="The Sun" description="Learn how the Sun works: nuclear fusion, its layers, magnetic activity, solar wind and the heliosphere." image={sunImage}>
@@ -10,8 +10,9 @@ const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photoj
     <figure class="image-figure"><div class="hero-image"><img src={sunImage} alt="The Sun observed by NASA's Solar Dynamics Observatory on 10 September 2025." fetchpriority="high" /><span class="image-credit">NASA / Solar Dynamics Observatory · <a href="https://science.nasa.gov/photojournal/image-of-sun-from-nasas-solar-dynamics-observatory/" target="_blank" rel="noreferrer">image record ↗</a></span></div><figcaption>Solar Dynamics Observatory image captured on 10 September 2025. The image is a scientific view of solar activity, not a visible-light photograph of the Sun.</figcaption></figure>
   </section>
   <section class="section container">
-    <div class="grid-4 sun-stats"><div class="stat"><span class="label">Mass share</span><strong>~99.8%</strong><small>Of the Solar System's mass</small></div><div class="stat"><span class="label">Core temperature</span><strong>~15 million K</strong><small>Approximate central temperature</small></div><div class="stat"><span class="label">Light to Earth</span><strong>~8 min 20 s</strong><small>At one astronomical unit</small></div><div class="stat"><span class="label">Power source</span><strong>Fusion</strong><small>Hydrogen nuclei become helium</small></div></div>
+    <div class="grid-4 sun-stats"><div class="stat"><span class="label">Whole-system mass share</span><strong>~99.85%</strong><small>NASA approximate inventory estimate</small></div><div class="stat"><span class="label">Core temperature</span><strong>~15 million K</strong><small>Approximate central temperature</small></div><div class="stat"><span class="label">Light to Earth</span><strong>~8 min 20 s</strong><small>At one astronomical unit</small></div><div class="stat"><span class="label">Power source</span><strong>Fusion</strong><small>Hydrogen nuclei become helium</small></div></div>
 
+    <div class="callout sun-mass-method"><strong>Why you may see two different percentages</strong><p>NASA gives an approximate <strong>99.85%</strong> share for the Sun in its broad Solar System mass inventory, which includes planets, satellites and smaller bodies. Calculating only the Sun’s share of the Sun-plus-eight-planets total gives <strong>{solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(2)}%</strong>. The latter excludes moons, dwarf planets, asteroids, comets and interplanetary material from its denominator. Neither figure is an exact census of every object.</p><p>Sources: <a href={solarMassDistribution.nasaWholeSolarSystemEstimate.sourceUrl} target="_blank" rel="noreferrer">NASA mass-distribution estimate ↗</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noreferrer">NASA Sun mass ↗</a> · <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">JPL planetary masses ↗</a></p></div>
     <div class="sun-physical-reference card">
       <div><span class="eyebrow">PHYSICAL DATA</span><h2>The Sun in numbers.</h2><p>These are rounded reference values. Mean radius describes an equivalent sphere; equatorial gravity is measured at the equator.</p></div>
       <div class="sun-physical-grid">
