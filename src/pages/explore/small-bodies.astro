@@ -15,18 +15,18 @@ const bodies = [
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/explore/">Explore</a><span aria-hidden="true">/</span><span>Small bodies & frontier</span></div>
   <header class="page-intro container"><div class="eyebrow">ASTEROIDS, COMETS AND SMALL BODIES</div><h1>Asteroids, comets<br />and other small bodies.</h1><p class="lede">Asteroids, comets and distant icy objects preserve material left over from the Solar System's formation. Their surfaces and orbits also record later collisions and gravitational changes.</p></header>
   <section class="section container">
-    <div class="region-banner"><div class="region-sun"></div><div class="region-orbit"></div><div class="region-copy"><span class="eyebrow">ORBITAL GROUPS</span><h2>Different objects.<br />Different orbits.</h2><p>Small bodies occupy different orbital regions and dynamical populations. Their paths can be shaped by planets, resonances, collisions and the Sun's gravity.</p><span class="region-caption">Conceptual illustration · Not to scale</span></div></div>
+    <div class="region-banner"><div class="region-sun"></div><div class="region-orbit"></div><div class="region-copy"><span class="eyebrow">ORBITAL GROUPS</span><h2>Small-body orbital groups</h2><p>Small bodies occupy different orbital regions and dynamical populations. Their paths can be shaped by planets, resonances, collisions and the Sun's gravity.</p><span class="region-caption">Conceptual illustration · Not to scale</span></div></div>
     <div class="body-grid">{bodies.map((body,i)=><article class="card body-card"><span class="body-index">{String(i+1).padStart(2,"0")}</span><h3>{body.name}</h3><span class="body-where">{body.where}</span><p>{body.detail}</p></article>)}</div>
 
     <section class="asteroid-reference">
-      <div class="section-head"><div><span class="eyebrow">ASTEROIDS / ROCKY AND METALLIC REMNANTS</span><h2>The main asteroid belt is mostly empty space.</h2></div><p>Most asteroids orbit the Sun in the main belt between Mars and Jupiter. The region is vast and sparse: spacecraft can pass through without dodging rocks.</p></div>
+      <div class="section-head"><div><span class="eyebrow">ASTEROIDS / ROCKY AND METALLIC REMNANTS</span><h2>The main asteroid belt</h2></div><p>Most asteroids orbit the Sun in the main belt between Mars and Jupiter. The region is vast and sparse: spacecraft can pass through without dodging rocks.</p></div>
       <div class="asteroid-image-grid">
         <figure><img src="https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA22485.width-1024.jpg" alt="NASA Dawn spacecraft close view of the bright deposits in Ceres's Occator Crater." loading="lazy"/><figcaption>Ceres · NASA Dawn · Bright salt deposits in Occator Crater</figcaption></figure>
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15678/PIA15678.jpg?w=1200" alt="Global view of asteroid Vesta made from images acquired by NASA's Dawn spacecraft." loading="lazy"/><figcaption>Vesta · NASA Dawn · Global image mosaic</figcaption></figure>
         <figure><img src="https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536" alt="NASA OSIRIS-REx image of asteroid Bennu." loading="lazy"/><figcaption>Bennu · NASA OSIRIS-REx · Asteroid surface</figcaption></figure>
       </div>
       <div class="asteroid-size-card">
-        <div><span class="eyebrow">LARGEST MAIN-BELT BODIES</span><h3>Asteroids vary greatly in size.</h3><p>Ceres is the largest body in the belt, with an equivalent-volume diameter of about 939 km. It is also classified as a dwarf planet. Vesta is about 525 km in mean diameter and Pallas about 511 km; these are large, differentiated or partly differentiated worlds compared with typical asteroids.</p></div>
+        <div><span class="eyebrow">LARGEST MAIN-BELT BODIES</span><h3>The largest main-belt objects</h3><p>Ceres is the largest body in the belt, with an equivalent-volume diameter of about 939 km. It is also classified as a dwarf planet. Vesta is about 525 km in mean diameter and Pallas about 511 km; these are large, differentiated or partly differentiated worlds compared with typical asteroids.</p></div>
         <ul>
           <li><b>Ceres</b><span>~939 km · dwarf planet</span></li>
           <li><b>Vesta</b><span>~525 km · differentiated rocky body</span></li>
@@ -41,13 +41,13 @@ const bodies = [
       </div>
       <p class="asteroid-note">These are broad spectral/compositional classes, not perfect ingredient labels. Real asteroids are diverse, can be mixtures, and may have been altered by heating, water, impacts or space weathering.</p>
       <div class="named-asteroids">
-        <h3>Famous asteroids and small-body targets</h3>
+        <h3>Notable asteroids and missions</h3>
         <p><strong>Vesta</strong> is differentiated, with a basaltic crust, mantle and iron-rich core. <strong>Bennu</strong> is a carbon-rich rubble-pile near-Earth asteroid; OSIRIS-REx returned 121.6 g of samples in 2023. <strong>Ryugu</strong> is another carbon-rich rubble pile sampled by Hayabusa2. <strong>Itokawa</strong> was visited by Hayabusa. <strong>Psyche</strong> is a metal-rich asteroid being studied by NASA's Psyche mission. <strong>Didymos and Dimorphos</strong> became the target of the DART kinetic-impact test.</p>
       </div>
     </section>
 
     <section class="comet-reference">
-      <div class="section-head"><div><span class="eyebrow">COMETS / ICY BODIES</span><h2>Icy bodies that form comas and tails near the Sun.</h2></div><p>Comets contain volatile ices, dust, rocky material and carbon-bearing compounds. They preserve material from cold regions of the early Solar System.</p></div>
+      <div class="section-head"><div><span class="eyebrow">COMETS / ICY BODIES</span><h2>What happens when a comet nears the Sun?</h2></div><p>Comets contain volatile ices, dust, rocky material and carbon-bearing compounds. They preserve material from cold regions of the early Solar System.</p></div>
       <div class="comet-image-grid">
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia17/pia17485/PIA17485.jpg?w=1536&h=804&fit=clip&crop=faces%2Cfocalpoint" alt="Enhanced image of the dark potato-shaped nucleus of Comet Halley taken by ESA's Giotto spacecraft." loading="lazy"/><figcaption>1P/Halley · ESA Giotto · Enhanced image of the nucleus, about 15 km long</figcaption></figure>
         <figure><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia18/pia18423/PIA18423.jpg?w=726&h=523&fit=clip&crop=faces%2Cfocalpoint" alt="Rosetta spacecraft view of Comet 67P/Churyumov–Gerasimenko." loading="lazy"/><figcaption>67P/Churyumov–Gerasimenko · ESA Rosetta</figcaption></figure>
@@ -75,7 +75,7 @@ const bodies = [
       </div>
     </section>
     <div class="prose body-prose">
-      <h2>The terms describe different stages.</h2>
+      <h2>How to tell the terms apart</h2>
       <p><strong>Meteoroid:</strong> the small natural object while it is travelling through space. <strong>Meteor:</strong> the streak of light and associated atmospheric phenomenon created when it enters an atmosphere. <strong>Meteorite:</strong> a piece that survives the journey and reaches the ground.</p>
       <h2>What are comet tails?</h2>
       <p>As a comet approaches the Sun, volatile ices near its surface can turn directly into gas. Escaping gas carries dust away, creating a coma and often more than one tail. The ion tail is shaped strongly by the solar wind and magnetic field; the dust tail is influenced by sunlight pressure and the comet's orbital motion. A comet's tails generally point away from the Sun, not necessarily behind its direction of travel.</p>
