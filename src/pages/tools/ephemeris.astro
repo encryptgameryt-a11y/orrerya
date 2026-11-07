@@ -1,0 +1,285 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { ephemerisElements } from "../../data/ephemeris";
+---
+<SiteLayout title="Planet position explorer" description="Explore approximate heliocentric planetary positions for today or another date from 1800 to 2050, calculated locally using NASA/JPL Keplerian elements.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Planet position explorer</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">Tool 06 · Planetary motion · JPL method</div>
+    <h1>Where are the<br /><span class="heading-muted">planets right now?</span></h1>
+    <p class="lede">Set a date and explore the planets' approximate positions around the Sun. The model calculates orbital coordinates in your browser — no API key, account or external telemetry feed required.</p>
+  </header>
+
+  <section class="section container ephem-section">
+    <div class="ephem-toolbar card">
+      <div><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="1800-01-01T00:00" max="2050-12-31T23:59" /></div>
+      <div class="ephem-status"><span class="eyebrow">Calculation status</span><strong id="ephemeris-status">Preparing planetary positions…</strong><p id="ephemeris-message" role="status">The model is limited to dates from 1800 through 2050.</p></div>
+    </div>
+
+    <div class="ephem-layout">
+      <figure class="card ephem-map">
+        <div class="ephem-map-head"><div><span class="eyebrow">J2000 ecliptic plane</span><h2>Solar System positions</h2></div><span class="tag">Top-down projection</span></div>
+        <svg id="ephemeris-svg" viewBox="0 0 520 520" role="img" aria-labelledby="ephemeris-title ephemeris-desc">
+          <title id="ephemeris-title">Approximate heliocentric positions of the eight planets</title>
+          <desc id="ephemeris-desc">A top-down projection of the planetary orbits in the J2000 ecliptic plane. The Sun is at the centre. Orbit sizes and positions are calculated for the selected date and are approximate.</desc>
+          <g id="ephemeris-grid" fill="none" stroke="rgba(151,184,220,.12)" stroke-width="1"><circle cx="260" cy="260" r="54"/><circle cx="260" cy="260" r="108"/><circle cx="260" cy="260" r="161"/><circle cx="260" cy="260" r="215"/><path d="M 25 260 H 495 M 260 25 V 495" stroke-dasharray="3 6"/></g>
+          <g id="ephemeris-orbits"></g>
+          <circle cx="260" cy="260" r="7.5" fill="#edb966"/><circle cx="260" cy="260" r="15" fill="none" stroke="rgba(237,185,102,.28)"/>
+          <text x="260" y="286" text-anchor="middle" fill="#e6c88e" font-size="10" letter-spacing="1">SUN</text>
+          <g id="ephemeris-markers"></g>
+        </svg>
+        <div class="ephem-legend"><span><i class="legend-sun"></i> Sun</span><span><i class="legend-earth"></i> Earth</span><span>Other circles: planet positions</span></div>
+        <figcaption>Projected into the mean ecliptic plane. Distances use one common AU scale; planetary bodies are enlarged and not drawn to scale.</figcaption>
+      </figure>
+
+      <aside class="card ephem-summary">
+        <span class="eyebrow">At a glance</span><h2>Eight worlds.<br />One orbital system.</h2>
+        <p>The geometry is heliocentric: each planet is plotted relative to the Sun. The table also gives each planet's geometric distance and direction as seen from Earth's centre at the selected instant.</p>
+        <div class="ephem-callout"><strong>What “today” means here</strong><p>The default instant is your device's current local time. The calculation converts it to a Julian date and evaluates the JPL approximate elements at that instant.</p></div>
+        <a class="text-link" href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">Read the JPL method and accuracy notes ↗</a>
+      </aside>
+    </div>
+
+    <div class="card ephem-table-card">
+      <div class="section-head"><div><div class="eyebrow">Computed coordinates</div><h2>Planet by planet.</h2></div><p>Earth distances are geometric, not light-time corrected apparent positions. “Light time” is a simple one-way vacuum estimate.</p></div>
+      <div class="table-scroll">
+        <table class="ephem-table">
+          <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">Earth distance</th><th scope="col">Direction from Earth</th><th scope="col">Light time</th></tr></thead>
+          <tbody>
+            {ephemerisElements.map((planet) => <tr data-planet={planet.slug}><th scope="row"><span class="planet-swatch" style={"--planet:" + planet.color}></span>{planet.name}{planet.slug === "earth" ? "*" : ""}</th><td data-value="sun-distance">—</td><td data-value="earth-distance">—</td><td data-value="direction">—</td><td data-value="light-time">—</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="ephem-note">* Earth's orbit uses the Earth–Moon barycentre elements supplied in the JPL source table, so this is a close approximation to Earth's centre rather than a lunar-resolved calculation.</p>
+    </div>
+
+    <div class="ephem-method prose">
+      <span class="eyebrow">Model notes · Read before using</span>
+      <h2>Fast and transparent — not a precision ephemeris.</h2>
+      <p>This explorer implements the NASA/JPL Solar System Dynamics approximate-position method: secular rates for the six Keplerian elements, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. JPL fits these elements for 1800–2050 and publishes nominal error estimates that vary by planet; the outer-planet longitude errors can be several hundred arcseconds.</p>
+      <p>The model is suitable for learning orbital geometry and seeing broad configurations. It is not an observational almanac, spacecraft navigation tool, or substitute for a numerically integrated ephemeris. It does not include light-time correction, aberration, perturbation integration or topocentric parallax. For high-precision work, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a>.</p>
+      <p><strong>Source:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Approximate Positions of the Planets ↗</a>.</p>
+    </div>
+  </section>
+
+  <script>
+    import { ephemerisElements } from "../../data/ephemeris";
+
+    const dateField = document.querySelector<HTMLInputElement>("#ephemeris-date");
+    const status = document.querySelector<HTMLElement>("#ephemeris-status");
+    const message = document.querySelector<HTMLElement>("#ephemeris-message");
+    const orbitLayer = document.querySelector<SVGGElement>("#ephemeris-orbits");
+    const markerLayer = document.querySelector<SVGGElement>("#ephemeris-markers");
+    const AU_KM = 149597870.7;
+    const AU_LIGHT_SECONDS = 499.004783836;
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const center = 260;
+    const scale = 7.15;
+
+    function radians(degrees: number) { return degrees * Math.PI / 180; }
+    function wrapSigned(degrees: number) { return ((degrees + 180) % 360 + 360) % 360 - 180; }
+    function wrapPositive(degrees: number) { return ((degrees % 360) + 360) % 360; }
+    function number(value: number, digits = 3) { return new Intl.NumberFormat("en-US", { maximumFractionDigits: digits }).format(value); }
+
+    function elementsAt(item: typeof ephemerisElements[number], T: number) {
+      return {
+        a: item.a + item.aRate * T,
+        e: item.e + item.eRate * T,
+        inclination: radians(item.inclination + item.inclinationRate * T),
+        meanLongitude: item.meanLongitude + item.meanLongitudeRate * T,
+        perihelion: item.longitudePerihelion + item.longitudePerihelionRate * T,
+        node: item.longitudeNode + item.longitudeNodeRate * T
+      };
+    }
+
+    function orbitalPlaneToEcliptic(a: number, e: number, inclination: number, omega: number, node: number, E: number) {
+      const xPrime = a * (Math.cos(E) - e);
+      const yPrime = a * Math.sqrt(1 - e * e) * Math.sin(E);
+      const cosW = Math.cos(omega), sinW = Math.sin(omega);
+      const cosO = Math.cos(node), sinO = Math.sin(node);
+      const cosI = Math.cos(inclination), sinI = Math.sin(inclination);
+      const x = (cosW * cosO - sinW * sinO * cosI) * xPrime + (-sinW * cosO - cosW * sinO * cosI) * yPrime;
+      const y = (cosW * sinO + sinW * cosO * cosI) * xPrime + (-sinW * sinO + cosW * cosO * cosI) * yPrime;
+      const z = sinW * sinI * xPrime + cosW * sinI * yPrime;
+      return { x, y, z };
+    }
+
+    function solveKepler(meanAnomalyDegrees: number, eccentricity: number) {
+      const M = wrapSigned(meanAnomalyDegrees);
+      const eDegrees = eccentricity * 180 / Math.PI;
+      let E = M + eDegrees * Math.sin(radians(M));
+      for (let i = 0; i < 20; i++) {
+        const deltaM = M - (E - eDegrees * Math.sin(radians(E)));
+        const deltaE = deltaM / (1 - eccentricity * Math.cos(radians(E)));
+        E += deltaE;
+        if (Math.abs(deltaE) <= 1e-6) break;
+      }
+      return radians(E);
+    }
+
+    function positionAt(item: typeof ephemerisElements[number], T: number) {
+      const el = elementsAt(item, T);
+      const omegaDeg = el.perihelion - el.node;
+      const meanAnomaly = el.meanLongitude - el.perihelion;
+      const E = solveKepler(meanAnomaly, el.e);
+      const point = orbitalPlaneToEcliptic(el.a, el.e, el.inclination, radians(omegaDeg), radians(el.node), E);
+      const distance = Math.hypot(point.x, point.y, point.z);
+      return { ...point, distance, longitude: wrapPositive(Math.atan2(point.y, point.x) * 180 / Math.PI) };
+    }
+
+    function makeSvgElement(name: string, attrs: Record<string, string>) {
+      const node = document.createElementNS(SVG_NS, name);
+      Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+      return node;
+    }
+
+    function lightTime(distanceAu: number) {
+      const totalSeconds = distanceAu * AU_LIGHT_SECONDS;
+      if (totalSeconds < 3600) return number(totalSeconds / 60, 1) + " min";
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.round((totalSeconds - hours * 3600) / 60);
+      return hours + " h " + minutes + " min";
+    }
+
+    function localDateTimeValue(date: Date) {
+      const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0, 16);
+    }
+
+    function calculate() {
+      if (!dateField || !status || !message || !orbitLayer || !markerLayer) return;
+      const selectedDate = new Date(dateField.value);
+      if (!dateField.value || Number.isNaN(selectedDate.getTime())) {
+        status.textContent = "Choose a valid date and time";
+        message.textContent = "Enter a date between 1800 and 2050.";
+        return;
+      }
+      const year = selectedDate.getFullYear();
+      if (year < 1800 || year > 2050) {
+        status.textContent = "Date outside model range";
+        message.textContent = "The JPL element fit used here is valid only from 1800 through 2050. Choose a date within that interval.";
+        return;
+      }
+
+      const julianDate = selectedDate.getTime() / 86400000 + 2440587.5;
+      const T = (julianDate - 2451545.0) / 36525;
+      const positions = new Map<string, ReturnType<typeof positionAt>>();
+      ephemerisElements.forEach((item) => positions.set(item.slug, positionAt(item, T)));
+      const earth = positions.get("earth");
+      if (!earth) return;
+
+      orbitLayer.replaceChildren();
+      markerLayer.replaceChildren();
+      ephemerisElements.forEach((item) => {
+        const el = elementsAt(item, T);
+        const omega = radians(el.perihelion - el.node);
+        const node = radians(el.node);
+        const coords: string[] = [];
+        for (let step = 0; step <= 90; step++) {
+          const E = step * Math.PI * 2 / 90;
+          const p = orbitalPlaneToEcliptic(el.a, el.e, el.inclination, omega, node, E);
+          const x = center + p.x * scale;
+          const y = center - p.y * scale;
+          coords.push((step === 0 ? "M " : "L ") + x.toFixed(2) + " " + y.toFixed(2));
+        }
+        orbitLayer.append(makeSvgElement("path", {
+          d: coords.join(" "),
+          fill: "none",
+          stroke: item.color,
+          "stroke-width": item.slug === "earth" ? "1.7" : "1.15",
+          "stroke-opacity": item.slug === "earth" ? ".8" : ".42"
+        }));
+
+        const p = positions.get(item.slug);
+        if (!p) return;
+        const dot = makeSvgElement("circle", {
+          cx: String(center + p.x * scale),
+          cy: String(center - p.y * scale),
+          r: item.slug === "earth" ? "6.5" : "4.8",
+          fill: item.color,
+          stroke: "#f3f1eb",
+          "stroke-width": "1.1"
+        });
+        const title = makeSvgElement("title", {});
+        title.textContent = item.name + " · " + number(p.distance, 3) + " AU from the Sun";
+        dot.append(title);
+        markerLayer.append(dot);
+      });
+
+      const body = document.querySelector<HTMLTableSectionElement>(".ephem-table tbody");
+      if (body) {
+        ephemerisElements.forEach((item) => {
+          const p = positions.get(item.slug);
+          const row = body.querySelector<HTMLTableRowElement>('[data-planet="' + item.slug + '"]');
+          if (!p || !row) return;
+          const distanceFromEarth = Math.hypot(p.x - earth.x, p.y - earth.y, p.z - earth.z);
+          const geoLongitude = item.slug === "earth" ? null : wrapPositive(Math.atan2(p.y - earth.y, p.x - earth.x) * 180 / Math.PI);
+          const values: Record<string, string> = {
+            "sun-distance": number(p.distance, 3) + " AU",
+            "earth-distance": item.slug === "earth" ? "Reference" : number(distanceFromEarth, 3) + " AU",
+            "direction": geoLongitude === null ? "—" : number(geoLongitude, 1) + "°",
+            "light-time": item.slug === "earth" ? "—" : lightTime(distanceFromEarth)
+          };
+          Object.entries(values).forEach(([key, value]) => {
+            const cell = row.querySelector<HTMLElement>('[data-value="' + key + '"]');
+            if (cell) cell.textContent = value;
+          });
+        });
+      }
+
+      status.textContent = "Positions calculated";
+      message.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(selectedDate) + " UTC · geometric positions from the JPL approximate-element model.";
+    }
+
+    if (dateField) {
+      dateField.value = localDateTimeValue(new Date());
+      dateField.addEventListener("change", calculate);
+      calculate();
+    }
+  </script>
+
+  <style>
+    .heading-muted{color:#8796ad}
+    .ephem-section{padding-top:45px}
+    .ephem-toolbar{display:grid;grid-template-columns:.8fr 1.2fr;gap:26px;padding:22px;margin-bottom:18px}
+    .ephem-toolbar label,.ephem-toolbar input{display:block;width:100%}
+    .ephem-toolbar label{font-size:.78rem;color:var(--muted);margin:10px 0 7px}
+    .ephem-toolbar input{min-height:45px;padding:10px 12px;color:var(--text);background:#0a1220;border:1px solid var(--line-strong);border-radius:5px;color-scheme:dark}
+    .ephem-status{border-left:1px solid var(--line);padding-left:25px}
+    .ephem-status strong{display:block;margin:8px 0 3px;color:var(--gold-bright);font:600 1.15rem "Space Grotesk",sans-serif}
+    .ephem-status p{margin:0;font-size:.78rem;line-height:1.6}
+    .ephem-layout{display:grid;grid-template-columns:1.18fr .82fr;gap:16px;align-items:stretch}
+    .ephem-map{padding:22px;margin:0;min-width:0}
+    .ephem-map-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+    .ephem-map-head h2,.ephem-summary h2{font-size:1.65rem;margin:8px 0 16px}
+    .ephem-map svg{display:block;width:100%;max-height:600px}
+    .ephem-map figcaption{color:var(--quiet);font-size:.68rem;line-height:1.55;margin-top:5px}
+    .ephem-legend{display:flex;gap:17px;flex-wrap:wrap;color:var(--quiet);font-size:.7rem;margin-top:5px}
+    .ephem-legend span{display:flex;align-items:center;gap:7px}
+    .ephem-legend i,.planet-swatch{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--planet);flex:0 0 auto}
+    .legend-sun{background:#edb966!important}.legend-earth{background:#62a9d8!important}
+    .ephem-summary{padding:25px}
+    .ephem-summary>p{font-size:.84rem;line-height:1.75}
+    .ephem-callout{margin:25px 0;padding:17px;border:1px solid var(--line);border-radius:6px;background:rgba(9,18,31,.6)}
+    .ephem-callout strong{font-size:.82rem;color:var(--gold)}
+    .ephem-callout p{font-size:.76rem;line-height:1.65;margin:7px 0 0}
+    .ephem-summary .text-link{font-size:.77rem}
+    .ephem-table-card{margin-top:18px;padding:25px}
+    .ephem-table-card .section-head{margin-bottom:19px}
+    .ephem-table-card .section-head p{font-size:.76rem}
+    .table-scroll{overflow-x:auto}
+    .ephem-table{width:100%;border-collapse:collapse;min-width:660px;font-size:.78rem}
+    .ephem-table th,.ephem-table td{padding:13px 11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .ephem-table thead th{font-size:.67rem;color:var(--quiet);letter-spacing:.08em;text-transform:uppercase}
+    .ephem-table th:first-child,.ephem-table td:first-child{text-align:left}
+    .ephem-table tbody th{font-weight:600;color:var(--text)}
+    .planet-swatch{margin-right:9px;vertical-align:middle}
+    .ephem-note{font-size:.69rem;color:var(--quiet);margin:15px 0 0}
+    .ephem-method{max-width:850px;margin:48px auto 0}
+    .ephem-method h2{font-size:2rem;margin:12px 0}
+    .ephem-method p{font-size:.86rem;line-height:1.85}
+    .ephem-method a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:850px){.ephem-layout{grid-template-columns:1fr}.ephem-map svg{max-width:570px;margin:auto}}
+    @media(max-width:650px){.ephem-toolbar{grid-template-columns:1fr;gap:17px}.ephem-status{border-left:0;border-top:1px solid var(--line);padding:17px 0 0}.ephem-map,.ephem-summary,.ephem-table-card{padding:17px}.ephem-map-head{flex-direction:column}.ephem-map-head h2,.ephem-summary h2{font-size:1.45rem}.ephem-method h2{font-size:1.7rem}}
+  </style>
+</SiteLayout>
