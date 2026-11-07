@@ -75,6 +75,7 @@ const outer = planets.slice(4);
       <a class="tool-preview" href="/tools/#weight"><span class="tool-index">TOOL 01</span><span class="tool-symbol">↓</span><h3>Your weight on other worlds</h3><p>Your mass stays the same. Your weight changes with local gravity.</p><span class="text-link">Open calculator ↗</span></a>
       <a class="tool-preview" href="/tools/#distance"><span class="tool-index">TOOL 02</span><span class="tool-symbol">↔</span><h3>Cosmic distance converter</h3><p>Convert astronomical units to kilometres and light-travel time.</p><span class="text-link">Open converter ↗</span></a>
       <a class="tool-preview" href="/tools/#compare"><span class="tool-index">TOOL 03</span><span class="tool-symbol">◉</span><h3>Compare planet sizes</h3><p>Compare planetary diameter and mass with Earth.</p><span class="text-link">Open comparison ↗</span></a>
+      <a class="tool-preview" href="/tools/#orbit"><span class="tool-index">TOOL 05</span><span class="tool-symbol">⌁</span><h3>Explore an orbit</h3><p>Move a planet along an ellipse and watch its distance and orbital speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
     </div>
   </section>
   <section class="container home-endcap"><div><span class="eyebrow">Keep looking up</span><h2>Curiosity is a good<br />place to start.</h2><p>Choose a world. Ask a question. Follow the evidence.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
@@ -131,7 +132,7 @@ const outer = planets.slice(4);
     .discover-icon{font-size:1.7rem;color:var(--gold);margin-bottom:20px}
     .discover-card h3{font-size:1.34rem;margin:8px 0}
     .discover-card p{font-size:.82rem;line-height:1.65;margin-bottom:14px}
-    .tool-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .tool-preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .tool-preview{padding:23px;border:1px solid var(--line);border-radius:7px;background:linear-gradient(145deg,#142238,#0b1423);transition:transform .2s,border-color .2s}
     .tool-preview:hover{transform:translateY(-3px);border-color:rgba(230,200,142,.48)}
     .tool-index{font-size:.65rem;letter-spacing:.14em;color:var(--quiet)}
@@ -141,6 +142,7 @@ const outer = planets.slice(4);
     .home-endcap h2{font-size:clamp(2rem,4vw,3rem);margin:10px 0}
     .home-endcap p{margin:0}
     @media(max-width:900px){.home-hero-grid{grid-template-columns:1fr;min-height:auto;padding-top:35px}.home-copy{padding:20px 0 0}.home-art{height:410px;grid-row:1}.home-planet-grid{grid-template-columns:repeat(2,1fr)}.home-outer-band{grid-template-columns:1fr}.outer-mini-grid a{min-height:130px}}
+    @media(max-width:900px){.tool-preview-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:600px){.home-hero-grid{padding-top:20px;gap:0}.home-copy h1{font-size:clamp(3.1rem,15vw,4.5rem)}.home-art{height:300px}.home-sun{width:76px;height:76px}.orbit-a{width:130px;height:80px}.orbit-b{width:195px;height:120px}.orbit-c{width:260px;height:160px}.orbit-d{width:325px;height:200px}.orbit-e{width:390px;height:240px}.home-art-label{top:8px}.home-hero-bottom{gap:7px;flex-wrap:wrap}.home-hero-bottom>span:first-child{display:none}.home-hero-bottom .line{max-width:30px}.home-facts{grid-template-columns:repeat(2,1fr);gap:18px}.home-facts>div{padding:0;border:0}.home-planet-grid{gap:10px}.home-planet-card .planet-card-image{height:140px}.home-outer-band{padding:17px}.outer-mini-grid{grid-template-columns:repeat(2,1fr)}.discover-grid,.tool-preview-grid{grid-template-columns:1fr}.discover-card{min-height:210px}.home-endcap{align-items:flex-start;flex-direction:column;padding:25px}.home-endcap .btn{width:100%}}
   </style>
 </SiteLayout>
