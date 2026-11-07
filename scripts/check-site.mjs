@@ -8,6 +8,8 @@ const problems = [];
 let pagesChecked = 0;
 let linksChecked = 0;
 let imagesChecked = 0;
+let formControlsChecked = 0;
+let buttonsChecked = 0;
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -100,8 +102,44 @@ try {
     if (!/<title>\s*[^<]+\s*<\/title>/i.test(html)) {
       problems.push(label + ": page title is missing or empty.");
     }
-    if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) {
-      problems.push(label + ": page has no level-one heading.");
+    const h1Count = [...html.matchAll(/<h1\\b[^>]*>/gi)].length;
+    if (h1Count !== 1) {
+      problems.push(label + ": expected exactly one level-one heading; found " + h1Count + ".");
+    }
+
+    const labelledIds = new Set();
+    for (const tag of tagsFor(html, "label")) {
+      const attrs = readAttributes(tag);
+      if (attrs.for) labelledIds.add(attrs.for);
+    }
+    for (const tag of [...tagsFor(html, "input"), ...tagsFor(html, "select"), ...tagsFor(html, "textarea")]) {
+      const attrs = readAttributes(tag);
+      if (attrs.type?.toLowerCase() === "hidden") continue;
+      formControlsChecked++;
+      const hasAccessibleName = Boolean(
+        attrs["aria-label"]?.trim()
+        || attrs["aria-labelledby"]?.trim()
+        || (attrs.id && labelledIds.has(attrs.id))
+      );
+      if (!hasAccessibleName) {
+        problems.push(label + ": form control is missing an associated label or accessible name: " + tag);
+      }
+    }
+
+    for (const match of html.matchAll(/<button\\b[^>]*>([\\s\\S]*?)<\\/button>/gi)) {
+      const tag = match[0].slice(0, match[0].indexOf(">") + 1);
+      const attrs = readAttributes(tag);
+      const visibleText = match[1].replace(/<[^>]*>/g, " ").replace(/&(?:nbsp|#\\d+|#x[0-9a-f]+);/gi, " ").replace(/\\s+/g, " ").trim();
+      buttonsChecked++;
+      const hasAccessibleName = Boolean(
+        attrs["aria-label"]?.trim()
+        || attrs["aria-labelledby"]?.trim()
+        || attrs.title?.trim()
+        || visibleText
+      );
+      if (!hasAccessibleName) {
+        problems.push(label + ": button is missing an accessible name: " + tag);
+      }
     }
 
     for (const tag of tagsFor(html, "img")) {
@@ -181,6 +219,8 @@ try {
   console.log("HTML pages checked: " + pagesChecked);
   console.log("Same-site links checked: " + linksChecked);
   console.log("Images checked for alt text: " + imagesChecked);
+  console.log("Form controls checked for labels: " + formControlsChecked);
+  console.log("Buttons checked for accessible names: " + buttonsChecked);
 
   if (problems.length) {
     console.error("\nFound " + problems.length + " issue(s):");
