@@ -26,7 +26,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
           <g id="scatter-grid"></g><g id="scatter-regression"></g><g id="scatter-points"></g><g id="scatter-axes"></g>
         </svg>
         <div class="planet-legend" id="planet-legend" aria-label="Planet colour key"></div>
-        <p class="chart-footnote">The dashed line is a least-squares fit in the currently selected coordinate scale. The coefficient describes linear association in that plotted space.</p>
+        <p class="chart-footnote">The dashed line is a least-squares fit in the currently selected coordinate scale. The coefficient describes linear association in that plotted space.</p>\n      <p class="chart-footnote">Strength labels are descriptive rules of thumb. With only eight planets, do not treat this as a statistical test or evidence of causation.</p>
       </article>
 
       <aside class="card correlation-card" aria-live="polite">
@@ -195,7 +195,14 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       exact.textContent = r.toFixed(3);
       value.textContent = (r >= 0 ? "+" : "") + r.toFixed(2);
       label.textContent = correlationDescription(r);
-      note.textContent = r > .25 ? "The selected properties tend to increase together across these eight planets." : r < -.25 ? "Higher values on one axis tend to accompany lower values on the other in this small dataset." : "There is little linear association between these selected properties across the eight planets.";
+      const orbitalLawPair = (xKey === "distanceAu" && yKey === "periodDays") || (xKey === "periodDays" && yKey === "distanceAu");
+      note.textContent = orbitalLawPair && mode === "log"
+        ? "This near-perfect log–log relationship is expected from Kepler's third law: T² is proportional to a³ for planets orbiting the same central mass. The high r is a known physical pattern, not a new discovery."
+        : r > .25
+          ? "The selected properties tend to increase together across these eight planets."
+          : r < -.25
+            ? "Higher values on one axis tend to accompany lower values on the other in this small dataset."
+            : "There is little linear association between these selected properties across the eight planets.";
       scaleOut.textContent = mode === "log" ? "Logarithmic" : "Linear";
       meter.style.width = Math.max(0, Math.min(100, Math.abs(r) * 100)) + "%";
 
