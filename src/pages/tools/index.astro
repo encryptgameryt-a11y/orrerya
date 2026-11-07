@@ -22,8 +22,8 @@ import { planets } from "../../data/planets";
       </article>
       <article class="card tool-panel" id="compare">
         <span class="eyebrow">Tool 03 · Planetary scale</span><h2>How big is that world?</h2><p>Compare a planet's equatorial diameter with Earth's. The circles use a common scale, capped so the largest planet fits on the card.</p>
-        <div class="field"><label for="size-world">Choose a planet</label><select id="size-world">{planets.map((planet)=><option value={planet.diameterKm} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
-        <div class="size-stage"><div id="size-orb" class="size-orb" style="width:56px;height:56px"></div><div><strong id="size-name">Earth</strong><span id="size-diameter">12,756 km diameter</span><b id="size-ratio">1.00 × Earth's diameter</b></div></div>
+        <div class="field"><label for="size-world">Choose a planet</label><select id="size-world">{planets.map((planet)=><option value={planet.diameterKm} data-name={planet.name} data-mass={planet.mass1024} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+        <div class="size-stage"><div id="size-orb" class="size-orb" style="width:56px;height:56px"></div><div><strong id="size-name">Earth</strong><span id="size-diameter">12,756 km diameter</span><b id="size-ratio">1.00 × Earth's diameter</b><small id="mass-ratio">1.00 × Earth's mass</small></div></div>
         <div class="scale-legend"><span>Relative diameter</span><span>Earth = 1</span></div>
         <div class="scale-track"><span id="scale-fill" style="width:8.9%"></span></div>
         <p class="tool-footnote">Diameter comparison only. It does not represent relative mass, density or surface area. Planet images are not drawn to this scale.</p>
@@ -88,17 +88,21 @@ import { planets } from "../../data/planets";
     const sizeName = document.querySelector<HTMLElement>("#size-name");
     const sizeDiameter = document.querySelector<HTMLElement>("#size-diameter");
     const sizeRatio = document.querySelector<HTMLElement>("#size-ratio");
+    const massRatio = document.querySelector<HTMLElement>("#mass-ratio");
     const scaleFill = document.querySelector<HTMLElement>("#scale-fill");
     function updateSize() {
-      if (!sizeSelect || !sizeOrb || !sizeName || !sizeDiameter || !sizeRatio || !scaleFill) return;
+      if (!sizeSelect || !sizeOrb || !sizeName || !sizeDiameter || !sizeRatio || !massRatio || !scaleFill) return;
       const diameter = Number(sizeSelect.value);
+      const mass = Number(sizeSelect.selectedOptions[0]?.dataset.mass);
       const ratio = diameter / 12756;
+      const massMultiple = mass / 5.97217;
       const visualSize = Math.max(13, Math.min(188, 56 * ratio));
       sizeOrb.style.width = visualSize + "px";
       sizeOrb.style.height = visualSize + "px";
       sizeName.textContent = sizeSelect.selectedOptions[0]?.dataset.name || "Selected world";
       sizeDiameter.textContent = formatter.format(diameter) + " km diameter";
       sizeRatio.textContent = formatter.format(ratio) + " × Earth's diameter";
+      massRatio.textContent = formatter.format(massMultiple) + " × Earth's mass";
       scaleFill.style.width = Math.min(100, (diameter / 142984) * 100) + "%";
     }
     sizeSelect?.addEventListener("change", updateSize);
@@ -117,6 +121,6 @@ import { planets } from "../../data/planets";
     updateYear();
   </script>
   <style>
-    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{font-size:.75rem;color:var(--gold)}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:760px){.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
+    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{display:block;font-size:.75rem;color:var(--gold)}.size-stage small{display:block;color:var(--cyan);font-size:.72rem;margin-top:5px}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:760px){.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
   </style>
 </SiteLayout>

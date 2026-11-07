@@ -27,8 +27,9 @@ const terms = [
   ["Solar day","The time between successive passages of the Sun across the same local meridian; it differs from sidereal rotation because the body also moves along its orbit."],
   ["Solar wind","A continuous outflow of charged particles from the Sun's outer atmosphere."],
   ["Tidal heating","Internal heat generated when gravitational forces flex a body and mechanical energy is dissipated through friction."],
-  ["AU, perihelion and aphelion","Distance and orbit terms that help describe where a body travels around the Sun."]
+  ["Volatile","A substance that readily vaporises or sublimates under the relevant temperature and pressure conditions; water ice and carbon dioxide ice are examples in comet science."]
 ];
+terms.sort((a, b) => a[0].localeCompare(b[0]));
 ---
 <SiteLayout title="Solar System glossary" description="A plain-English glossary of Solar System science: AU, aphelion, eccentricity, heliosphere, magnetosphere, meteoroid, perihelion and more.">
   <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Glossary</span></div>
