@@ -14,9 +14,11 @@ export const EARTH_SIDEREAL_YEAR_DAYS = 365.25635535;
 export const GRAVITATIONAL_CONSTANT_KM3_KG_S2 = 6.67430e-20;
 export const GRAVITATIONAL_CONSTANT_RELATIVE_UNCERTAINTY = 0.00015 / 6.67430;
 export const SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2 = 1.32712440041279419e11;
+export const EARTH_GRAVITATIONAL_PARAMETER_KM3_S2 = 398600.435507;
 
 export const SCIENTIFIC_CONSTANT_SOURCES = {
   astronomicalUnit: "https://www.iau.org/static/resolutions/IAU2012_English.pdf",
   codata2022: "https://physics.nist.gov/constants",
-  solarGravitationalParameter: "https://ssd.jpl.nasa.gov/astro_par.html"
+  solarGravitationalParameter: "https://ssd.jpl.nasa.gov/astro_par.html",
+  planetaryMassParameters: "https://ssd.jpl.nasa.gov/astro_par.html"
 };
