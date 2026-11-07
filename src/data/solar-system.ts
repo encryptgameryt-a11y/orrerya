@@ -1,3 +1,8 @@
+import {
+  GRAVITATIONAL_CONSTANT_KM3_KG_S2,
+  SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2
+} from "../lib/scientific-constants.js";
+
 export const solarSystemSources = {
   sun: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html",
   planets: "https://ssd.jpl.nasa.gov/planets/phys_par.html",
@@ -10,11 +15,14 @@ export const solarSystemSources = {
   kuiperBelt: "https://science.nasa.gov/solar-system/kuiper-belt/facts/",
   oortCloud: "https://science.nasa.gov/solar-system/oort-cloud/",
   heliosphere: "https://science.nasa.gov/heliophysics/",
-  voyager: "https://science.nasa.gov/mission/voyager/"
+  voyager: "https://science.nasa.gov/mission/voyager/",
+  astrodynamicParameters: "https://ssd.jpl.nasa.gov/astro_par.html",
+  codata: "https://physics.nist.gov/constants"
 } as const;
 
 export const sunFacts = {
   massKg: 1.9884e30,
+  gravitationalParameterKm3S2: SOLAR_GRAVITATIONAL_PARAMETER_KM3_S2,
   earthMasses: 332900,
   meanRadiusKm: 695700,
   meanDiameterKm: 1391400,
@@ -117,7 +125,7 @@ export const satellitePhysical: SatellitePhysical[] = [
   {name:"Charon",host:"Pluto",gmKm3S2:105.88,meanRadiusKm:606.0,densityGcm3:1.702,description:"Large Pluto companion; Pluto and Charon orbit a common centre outside Pluto."}
 ];
 
-const G_KM3_KG_S2 = 6.67430e-20;
+const G_KM3_KG_S2 = GRAVITATIONAL_CONSTANT_KM3_KG_S2;
 
 export function satelliteDerived(body: SatellitePhysical) {
   const massKg = body.gmKm3S2 / G_KM3_KG_S2;
