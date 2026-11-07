@@ -1,0 +1,65 @@
+---
+const planets = [
+  { name: "Mercury", type: "Terrestrial", detail: "The smallest planet, racing around the Sun in just 88 Earth days.", color: "#b7a99a", number: "01" },
+  { name: "Venus", type: "Terrestrial", detail: "A world of crushing pressure and the hottest surface in the Solar System.", color: "#d9a56c", number: "02" },
+  { name: "Earth", type: "Terrestrial", detail: "Our ocean-rich home, the only world currently known to support life.", color: "#4e9cbd", number: "03" },
+  { name: "Mars", type: "Terrestrial", detail: "A cold desert world with ancient river valleys and the largest volcano known.", color: "#c66d4d", number: "04" },
+  { name: "Jupiter", type: "Gas giant", detail: "The giant of our planetary system, wrapped in immense bands of cloud.", color: "#c99a72", number: "05" },
+  { name: "Saturn", type: "Gas giant", detail: "A gas giant surrounded by a spectacular system of icy rings.", color: "#d7bd83", number: "06" },
+  { name: "Uranus", type: "Ice giant", detail: "An ice giant that rotates on its side, with a cold, dynamic atmosphere.", color: "#83c5c8", number: "07" },
+  { name: "Neptune", type: "Ice giant", detail: "A distant, deep-blue ice giant swept by supersonic winds.", color: "#527bd0", number: "08" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080d18" />
+    <meta name="description" content="ORRERYA is an approachable, science-first guide to the Sun, planets, moons and small worlds of our Solar System." />
+    <title>ORRERYA — Explore our Solar System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root{color-scheme:dark;--bg:#080d18;--panel:#101a2b;--muted:#9ba9bd;--text:#f4f1e9;--gold:#e8c98a;--line:rgba(219,230,255,.13)}
+      *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 76% 5%,rgba(51,83,133,.22),transparent 36rem),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif}a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 44px));margin:auto}
+      header{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center;position:relative;z-index:2;background:rgba(8,13,24,.78);backdrop-filter:blur(14px)}.nav{display:flex;align-items:center;justify-content:space-between}.brand{font:700 1.22rem "Space Grotesk";letter-spacing:.2em}.brand span{color:var(--gold)}nav{display:flex;gap:27px;color:#c1cada;font-size:.9rem}nav a:hover,.text-link:hover{color:var(--gold)}
+      .hero{min-height:610px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:25px;padding:75px 0 90px}.eyebrow{color:var(--gold);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700}.hero h1{font:600 clamp(3.3rem,7vw,6.4rem)/.98 "Space Grotesk";letter-spacing:-.065em;margin:22px 0}.hero h1 em{font-style:normal;color:var(--gold)}.intro{max-width:550px;color:#b3bfd0;font-size:1.08rem;line-height:1.8}.actions{display:flex;gap:13px;margin-top:32px;flex-wrap:wrap}.button{display:inline-flex;padding:14px 20px;border-radius:5px;background:var(--gold);color:#172033;font-weight:700;font-size:.9rem}.button.secondary{background:transparent;color:var(--text);border:1px solid var(--line)}.hero-art{height:410px;position:relative;display:grid;place-items:center}.orbit{position:absolute;border:1px solid rgba(211,222,242,.2);border-radius:50%;transform:rotate(-22deg)}.orbit.one{width:330px;height:170px}.orbit.two{width:430px;height:235px}.orbit.three{width:520px;height:300px}.sun{width:112px;height:112px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff2c8,#e7b45f 42%,#a95b2d 78%);box-shadow:0 0 45px #e5a34c88,0 0 110px #e5a34c33;z-index:1}.planet-dot{position:absolute;width:18px;height:18px;border-radius:50%;background:#75b7d5;box-shadow:0 0 18px #75b7d577;top:50%;left:5%;}.planet-dot.p2{width:25px;height:25px;background:#d3a36d;left:85%;top:26%}.planet-dot.p3{width:12px;height:12px;background:#d4c18e;left:20%;top:83%}.art-label{position:absolute;bottom:12px;right:3%;font-size:.72rem;color:#8d9bb0;letter-spacing:.12em;text-transform:uppercase}
+      .facts{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:26px 0;margin-bottom:100px}.fact{padding:0 25px;border-right:1px solid var(--line)}.fact:first-child{padding-left:0}.fact:last-child{border:0}.fact strong{display:block;font:600 1.6rem "Space Grotesk";color:var(--gold)}.fact span{color:var(--muted);font-size:.85rem}
+      section{padding:30px 0 85px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font:600 clamp(2rem,4vw,3rem) "Space Grotesk";letter-spacing:-.04em;margin:10px 0 0}.section-head p{max-width:390px;color:var(--muted);line-height:1.65;margin:0}.planet-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.planet{background:linear-gradient(145deg,#142137,#0d1524);border:1px solid var(--line);border-radius:8px;padding:20px;min-height:205px;transition:transform .2s,border-color .2s}.planet:hover{transform:translateY(-4px);border-color:#d8bd83aa}.planet-top{display:flex;justify-content:space-between;color:#8292a9;font-size:.72rem;letter-spacing:.12em}.orb{height:57px;width:57px;border-radius:50%;margin:19px 0 14px;background:radial-gradient(circle at 32% 28%,#fff8,transparent 35%),var(--planet);box-shadow:inset -10px -8px 15px #0005,0 0 24px color-mix(in srgb,var(--planet),transparent 75%)}.planet h3{font:600 1.15rem "Space Grotesk";margin:0 0 7px}.planet p{font-size:.82rem;line-height:1.55;color:var(--muted);margin:0}.explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.explore-card{padding:25px;border:1px solid var(--line);border-radius:8px;background:#0e1726}.explore-card .symbol{font-size:1.5rem;color:var(--gold)}.explore-card h3{font:600 1.15rem "Space Grotesk"}.explore-card p{color:var(--muted);font-size:.9rem;line-height:1.7}.text-link{color:var(--gold);font-size:.86rem;font-weight:600}
+      .note{padding:32px;border:1px solid var(--line);border-radius:9px;background:linear-gradient(110deg,#15243a,#101827);display:flex;justify-content:space-between;align-items:center;gap:25px}.note h2{font:600 1.8rem "Space Grotesk";margin:0 0 8px}.note p{color:var(--muted);margin:0;line-height:1.6}.note .button{white-space:nowrap}footer{border-top:1px solid var(--line);padding:30px 0 40px;color:#8290a4;font-size:.8rem}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+      @media(max-width:800px){nav{gap:13px;font-size:.78rem}.hero{grid-template-columns:1fr;padding:65px 0 55px}.hero-art{height:300px;grid-row:1}.orbit.one{width:260px;height:135px}.orbit.two{width:340px;height:190px}.orbit.three{width:420px;height:240px}.facts{margin-bottom:65px}.planet-grid{grid-template-columns:repeat(2,1fr)}.explore-grid{grid-template-columns:1fr 1fr}.section-head{align-items:start;flex-direction:column}}
+      @media(max-width:480px){.wrap{width:min(100% - 30px,1120px)}header{height:65px}.brand{font-size:1rem}nav{gap:10px}nav a:nth-child(3){display:none}.hero-art{height:250px}.orbit.one{width:205px;height:105px}.orbit.two{width:275px;height:150px}.orbit.three{width:340px;height:195px}.sun{width:80px;height:80px}.facts{grid-template-columns:1fr;gap:18px}.fact{border:0;padding:0}.planet-grid{gap:9px}.planet{padding:15px;min-height:195px}.explore-grid{grid-template-columns:1fr}.note{align-items:start;flex-direction:column;padding:24px}}
+    </style>
+  </head>
+  <body>
+    <header><div class="wrap nav"><a class="brand" href="/">ORRERY<span>A</span></a><nav aria-label="Main navigation"><a href="#planets">Planets</a><a href="#explore">Explore</a><a href="#about">About</a></nav></div></header>
+    <main>
+      <div class="wrap">
+        <section class="hero" id="about">
+          <div><div class="eyebrow">A field guide to our cosmic neighbourhood</div><h1>One star.<br />Eight worlds.<br /><em>Endless wonder.</em></h1><p class="intro">Start with the Sun. Travel across the planets. Meet remarkable moons and ancient icy worlds. ORRERYA is your growing, science-first guide to the Solar System — built to make the extraordinary understandable.</p><div class="actions"><a class="button" href="#planets">Explore the planets ↗</a><a class="button secondary" href="#explore">Discover the Solar System</a></div></div>
+          <div class="hero-art" role="img" aria-label="Stylised orbital paths around a glowing Sun"><div class="orbit one"></div><div class="orbit two"></div><div class="orbit three"></div><div class="sun"></div><div class="planet-dot"></div><div class="planet-dot p2"></div><div class="planet-dot p3"></div><div class="art-label">Not to scale · Conceptual illustration</div></div>
+        </section>
+        <div class="facts"><div class="fact"><strong>~4.6 billion years</strong><span>Approximate age of the Solar System</span></div><div class="fact"><strong>8 planets</strong><span>Four rocky worlds, two gas giants, two ice giants</span></div><div class="fact"><strong>1 star</strong><span>Our Sun holds about 99.8% of the system's mass</span></div></div>
+        <section id="planets">
+          <div class="section-head"><div><div class="eyebrow">The planetary neighbourhood</div><h2>Meet the eight planets</h2></div><p>Four inner rocky planets give way to the giant worlds of the outer Solar System. Each is a world with its own story.</p></div>
+          <div class="planet-grid">{planets.map((planet) => <article class="planet" style={`--planet:${planet.color}`}><div class="planet-top"><span>{planet.number} / 08</span><span>{planet.type}</span></div><div class="orb" aria-hidden="true"></div><h3>{planet.name}</h3><p>{planet.detail}</p></article>)}</div>
+        </section>
+        <section id="explore">
+          <div class="section-head"><div><div class="eyebrow">Beyond the planets</div><h2>There is much more out there</h2></div><p>The Solar System is not just a list of planets. It is a vast, dynamic collection of worlds, debris, fields and forces.</p></div>
+          <div class="explore-grid">
+            <article class="explore-card"><div class="symbol">☼</div><h3>The Sun</h3><p>Explore our star: its layers, nuclear fusion, magnetic activity, solar wind and influence across the heliosphere.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+            <article class="explore-card"><div class="symbol">◌</div><h3>Moons & rings</h3><p>From Earth's Moon to ocean worlds like Europa and Enceladus, discover the satellites and rings orbiting other worlds.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+            <article class="explore-card"><div class="symbol">✧</div><h3>Dwarf planets</h3><p>Meet Pluto, Ceres, Eris and other small worlds — and learn what makes a dwarf planet different.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+            <article class="explore-card"><div class="symbol">☄</div><h3>Comets & asteroids</h3><p>Investigate ancient leftovers, near-Earth objects, meteor showers and the origins of Solar System material.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+            <article class="explore-card"><div class="symbol">◎</div><h3>The outer frontier</h3><p>Journey through the Kuiper Belt, scattered disc, distant trans-Neptunian objects and the hypothesised Oort Cloud.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+            <article class="explore-card"><div class="symbol">⌁</div><h3>How it works</h3><p>Understand gravity, orbits, seasons, eclipses, tides, planetary interiors and the formation of our system.</p><a class="text-link" href="#about">Coming into focus ↗</a></article>
+          </div>
+        </section>
+        <section><div class="note"><div><h2>A universe of things to understand.</h2><p>Start with one question. Follow it as far as curiosity takes you.</p></div><a class="button" href="#planets">Begin exploring ↗</a></div></section>
+      </div>
+    </main>
+    <footer><div class="wrap foot"><span class="brand">ORRERY<span>A</span></span><span>An independent educational project · Built with curiosity and care.</span><span>Science first. Wonder always.</span></div></footer>
+  </body>
+</html>
