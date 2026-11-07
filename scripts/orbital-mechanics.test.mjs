@@ -3,7 +3,7 @@ import {
   escapeSpeedFromGM,
   massFromGM,
   massSharePercent,
-  surfaceGravityFromGM
+  gravityAtRadiusFromGM
 } from "../src/lib/physical-mechanics.js";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -123,7 +123,7 @@ test("satellite physical calculations preserve units and match lunar reference s
   const moonGM = 4902.800; // JPL DE440, km^3 s^-2
   const moonMeanRadiusKm = 1737.4; // JPL equivalent-volume mean radius
   const moonMassKg = massFromGM(moonGM, GRAVITATIONAL_CONSTANT_KM3_KG_S2);
-  const moonGravityMS2 = surfaceGravityFromGM(moonGM, moonMeanRadiusKm);
+  const moonGravityMS2 = gravityAtRadiusFromGM(moonGM, moonMeanRadiusKm);
   const moonEscapeSpeedKmS = escapeSpeedFromGM(moonGM, moonMeanRadiusKm);
 
   assert.ok(moonMassKg > 7.34e22 && moonMassKg < 7.35e22);
@@ -162,7 +162,7 @@ test("Sun mass share uses the explicitly supplied denominator", () => {
 test("physical calculation helpers reject invalid values", () => {
   assert.throws(() => massFromGM(0, GRAVITATIONAL_CONSTANT_KM3_KG_S2), RangeError);
   assert.throws(() => massFromGM(1, 0), RangeError);
-  assert.throws(() => surfaceGravityFromGM(1, -1), RangeError);
+  assert.throws(() => gravityAtRadiusFromGM(1, -1), RangeError);
   assert.throws(() => escapeSpeedFromGM(Number.NaN, 1), RangeError);
   assert.throws(() => massSharePercent(1, [2, -1]), RangeError);
 });
