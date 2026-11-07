@@ -46,7 +46,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     <div class="data-method prose">
       <span class="eyebrow">Dataset notes</span><h2>Measurements used in this comparison.</h2>
       <p>The lab deliberately uses seven physical or orbital properties that can be compared across all eight planets. It does not pair a rocky planet's surface pressure with a gas giant's cloud-level reference pressure: those are not equivalent measurement surfaces. Likewise, giant-planet gravity is a reference-level value, not gravity at a solid surface.</p>
-      <p>Mass is normalised to Earth's mass; density is mean density; gravity is the equatorial reference value; and orbital distance is the semi-major axis represented by the rounded mean-distance values in the profiles. Different rounding and physical definitions can affect the plotted coefficient.</p>
+      <p>Mass is normalised to Earth's mass; density is mean density; gravity is the equatorial reference value. Semi-major axis and eccentricity use the full-precision JPL Table 2a elements referred to the J2000 mean ecliptic and equinox. Orbital period, diameter, mass, density and gravity use the reference values in ORRERYA's profile data, so the plot is an educational comparison rather than a homogeneous precision ephemeris dataset.</p>
       <p><strong>Reference sources:</strong> <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA Planetary Fact Sheet ↗</a> · <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL Planetary Physical Parameters ↗</a>.</p>
     </div>
   </section>
@@ -59,13 +59,13 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       jupiter: "#d6a77b", saturn: "#d7c18e", uranus: "#82c9c6", neptune: "#658fe0"
     };
     const metrics: Record<string, { label: string; unit: string; value: (planet: typeof planets[number]) => number }> = {
-      distanceAu: { label: "Semi-major axis", unit: "AU", value: (p) => p.distanceAu },
+      distanceAu: { label: "Semi-major axis · J2000", unit: "AU", value: (p) => p.semiMajorAxisAu },
       periodDays: { label: "Orbital period", unit: "Earth days", value: (p) => p.orbitDays },
       diameterKm: { label: "Equatorial diameter", unit: "km", value: (p) => p.diameterKm },
       massEarth: { label: "Mass", unit: "Earth masses", value: (p) => p.mass1024 / 5.97217 },
       density: { label: "Mean density", unit: "g/cm³", value: (p) => Number.parseFloat(p.density) },
       gravity: { label: "Equatorial reference gravity", unit: "m/s²", value: (p) => p.gravityValue },
-      eccentricity: { label: "Orbital eccentricity", unit: "", value: (p) => Number.parseFloat(p.eccentricity) }
+      eccentricity: { label: "Orbital eccentricity · J2000", unit: "", value: (p) => p.eccentricityValue }
     };
     const records = planets.map((planet) => ({
       slug: planet.slug, name: planet.name, color: palette[planet.slug],
