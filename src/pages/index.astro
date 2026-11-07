@@ -4,6 +4,12 @@ import { planets } from "../data/planets";
 const featured = planets.slice(0, 4);
 const outer = planets.slice(4);
 const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
+const homeSummaries: Record<string, string> = {
+  mercury: "A small, crater-covered world that races around the Sun.",
+  venus: "A bright world hidden by thick clouds, with crushing pressure and extreme heat.",
+  earth: "Our ocean-covered home, with air, water and the only life we know.",
+  mars: "A cold, red desert with giant volcanoes and signs of ancient rivers."
+};
 ---
 <SiteLayout title="ORRERYA" description="Explore the Sun, all eight planets, the Kuiper Belt and the many icy worlds beyond Neptune with ORRERYA.">
 
@@ -105,10 +111,10 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
   </section>
 
   <section class="home-facts container" aria-label="Solar System at a glance">
-    <div><strong>~4.6 <small>billion years</small></strong><span>The Solar System's approximate age</span></div>
+    <div><strong>~4.6 <small>billion years</small></strong><span>How long ago the Solar System began to form</span></div>
     <div><strong>8 <small>planets</small></strong><span>Four rocky worlds and four giant planets</span></div>
-    <div><strong>99.8% <small>of the mass</small></strong><span>Held by the Sun, approximately</span></div>
-    <div><strong>1 AU <small>≈ 150 million km</small></strong><span>Earth's average distance from the Sun</span></div>
+    <div><strong>99.8% <small>of the mass</small></strong><span>The Sun holds almost all of it</span></div>
+    <div><strong>149.6 <small>million km</small></strong><span>Earth's average distance from the Sun</span></div>
   </section>
 
   <section class="section container">
@@ -117,10 +123,10 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
       <div class="section-side"><p>From small, rocky Mercury to distant Neptune, every planet has its own story.</p><a class="text-link" href="/planets/">View all eight planets ↗</a></div>
     </div>
     <div class="home-planet-grid">
-      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">{planet.order.toString().padStart(2, "0")} · {planet.className}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
+      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{homeSummaries[planet.slug] ?? planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
-      <div class="outer-band-copy"><span class="eyebrow">The giant worlds</span><h3>The outer planets are much bigger than Earth.</h3><p>Jupiter and Saturn are giant balls of gas. Uranus and Neptune are colder worlds with deep layers of icy material.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
+      <div class="outer-band-copy"><span class="eyebrow">The giant worlds</span><h3>The outer planets are much bigger than Earth.</h3><p>Jupiter and Saturn are mostly gas. Uranus and Neptune are colder worlds with large amounts of icy material.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
       <div class="outer-mini-grid">{outer.map((planet) => <a href={"/planets/" + planet.slug + "/"}><img src={planet.image} alt={planet.name} loading="lazy" /><span>{planet.name}</span></a>)}</div>
     </div>
   </section>
@@ -129,11 +135,11 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340
     <div class="container">
       <div class="section-head"><div><div class="eyebrow">02 / Beyond the familiar</div><h2>There is so much<br /><span class="heading-muted">more to discover.</span></h2></div><p>Some moons may hide oceans beneath their ice. Comets preserve clues from the Solar System’s early days. And the Sun sends a steady stream of particles into space.</p></div>
       <div class="discover-grid">
-        <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-number">01</span><span class="discover-icon">☼</span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>Fusion, magnetic storms, the solar wind and the energy source behind almost every environment here.</p><span class="text-link">Meet our star ↗</span></div></a>
-        <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon">◌</span><div><span class="eyebrow">Worlds in orbit</span><h3>Moons & rings</h3><p>Moons with hidden oceans, active volcanoes and rings made from countless small pieces.</p><span class="text-link">Explore the satellites ↗</span></div></a>
+        <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-number">01</span><span class="discover-icon">☼</span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun gives us light and heat. It also creates magnetic storms and sends tiny particles flowing into space.</p><span class="text-link">Meet our star ↗</span></div></a>
+        <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon">◌</span><div><span class="eyebrow">Worlds in orbit</span><h3>Moons & rings</h3><p>Moons with hidden oceans, active volcanoes and rings made from countless small pieces.</p><span class="text-link">Explore the moons ↗</span></div></a>
         <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-number">03</span><span class="discover-icon">✧</span><div><span class="eyebrow">Small worlds</span><h3>Dwarf planets</h3><p>Meet Pluto, Ceres, Haumea, Makemake and Eris, and see what makes each one special.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
-        <a class="discover-card" href="/explore/small-bodies/"><span class="discover-number">04</span><span class="discover-icon">☄</span><div><span class="eyebrow">Ancient leftovers</span><h3>Comets & asteroids</h3><p>Rocky asteroids, icy comets and pieces left over from the birth of the planets.</p><span class="text-link">Explore small bodies ↗</span></div></a>
-        <a class="discover-card" href="/explore/"><span class="discover-number">05</span><span class="discover-icon">◎</span><div><span class="eyebrow">Distant icy worlds</span><h3>Trans-Neptunian Objects</h3><p>Icy worlds that travel around the Sun beyond Neptune. The Kuiper Belt is home to many of them, including Pluto.</p><span class="text-link">Journey outward ↗</span></div></a>
+        <a class="discover-card" href="/explore/small-bodies/"><span class="discover-number">04</span><span class="discover-icon">☄</span><div><span class="eyebrow">Ancient leftovers</span><h3>Comets & asteroids</h3><p>Rocky asteroids, icy comets and pieces left over from the birth of the planets.</p><span class="text-link">Explore asteroids & comets ↗</span></div></a>
+        <a class="discover-card" href="/explore/"><span class="discover-number">05</span><span class="discover-icon">◎</span><div><span class="eyebrow">Distant icy worlds</span><h3>Trans-Neptunian Objects</h3><p>Icy worlds that travel around the Sun beyond Neptune. Many are found in the Kuiper Belt, including Pluto.</p><span class="text-link">Journey outward ↗</span></div></a>
         <a class="discover-card" href="/science/"><span class="discover-number">06</span><span class="discover-icon">⌁</span><div><span class="eyebrow">The hidden rules</span><h3>How it works</h3><p>How gravity moves planets, why seasons change, how tides work and what lies inside the Sun and planets.</p><span class="text-link">Understand the science ↗</span></div></a>
       </div>
     </div>
