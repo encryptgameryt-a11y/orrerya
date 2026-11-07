@@ -194,6 +194,7 @@ import { planets } from "../../data/planets";
     let startingMeanAnomaly = 0;
 
     function stopOrbitAnimation(announce = true) {
+      const wasPlaying = orbitAnimationFrame !== 0;
       if (orbitAnimationFrame) cancelAnimationFrame(orbitAnimationFrame);
       orbitAnimationFrame = 0;
       orbitAnimationStart = null;
@@ -201,7 +202,9 @@ import { planets } from "../../data/planets";
         orbitPlay.textContent = "Play orbit";
         orbitPlay.setAttribute("aria-pressed", "false");
       }
-      if (announce && orbitPlayStatus) orbitPlayStatus.textContent = "Paused. Use the slider or play the orbit again.";
+      if (announce && wasPlaying && orbitPlayStatus) {
+        orbitPlayStatus.textContent = "Paused. Use the slider or play the orbit again.";
+      }
     }
 
     function updateOrbit() {
@@ -283,11 +286,11 @@ import { planets } from "../../data/planets";
     });
 
     orbitSelect?.addEventListener("change", () => {
-      stopOrbitAnimation(false);
+      stopOrbitAnimation(true);
       updateOrbit();
     });
     orbitAngle?.addEventListener("input", () => {
-      if (orbitAnimationFrame) stopOrbitAnimation(false);
+      stopOrbitAnimation(true);
       updateOrbit();
     });
     updateOrbit();
