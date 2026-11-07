@@ -163,8 +163,10 @@ import { ephemerisElements } from "../../data/ephemeris";
         message.textContent = "Enter a valid date between 1 CE and 3000 CE.";
         return;
       }
-      const year = selectedDate.getUTCFullYear();
-      if (year < 1 || year > 3000) {
+      // datetime-local represents the user's local civil date. Using the UTC
+      // year here can incorrectly reject midnight on 1 January in some timezones.
+      const localYear = Number(dateField.value.slice(0, 4));
+      if (!Number.isInteger(localYear) || localYear < 1 || localYear > 3000) {
         clearResults();
         status.textContent = "Date outside model range";
         message.textContent = "The browser date picker supports 1–3000 CE, inside the JPL long-range element fit. Choose a date in that interval.";
