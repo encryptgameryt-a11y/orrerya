@@ -102,7 +102,7 @@ try {
     if (!/<title>\s*[^<]+\s*<\/title>/i.test(html)) {
       problems.push(label + ": page title is missing or empty.");
     }
-    const h1Count = [...html.matchAll(/<h1\\b[^>]*>/gi)].length;
+    const h1Count = [...html.matchAll(/<h1\b[^>]*>/gi)].length;
     if (h1Count !== 1) {
       problems.push(label + ": expected exactly one level-one heading; found " + h1Count + ".");
     }
@@ -126,10 +126,10 @@ try {
       }
     }
 
-    for (const match of html.matchAll(/<button\\b[^>]*>([\\s\\S]*?)<\\/button>/gi)) {
+    for (const match of html.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/gi)) {
       const tag = match[0].slice(0, match[0].indexOf(">") + 1);
       const attrs = readAttributes(tag);
-      const visibleText = match[1].replace(/<[^>]*>/g, " ").replace(/&(?:nbsp|#\\d+|#x[0-9a-f]+);/gi, " ").replace(/\\s+/g, " ").trim();
+      const visibleText = match[1].replace(/<[^>]*>/g, " ").replace(/&(?:nbsp|#\d+|#x[0-9a-f]+);/gi, " ").replace(/\s+/g, " ").trim();
       buttonsChecked++;
       const hasAccessibleName = Boolean(
         attrs["aria-label"]?.trim()
