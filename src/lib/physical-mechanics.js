@@ -36,6 +36,19 @@ export function escapeSpeedFromGM(gmKm3S2, radiusKm) {
   return Math.sqrt((2 * gmKm3S2) / radiusKm);
 }
 
+/**
+ * Bulk density for a spherical body with equivalent-volume mean radius.
+ * Returns g cm^-3. GM is converted to mass using the measured G constant.
+ */
+export function bulkDensityFromGMAndRadius(gmKm3S2, radiusKm, gravitationalConstantKm3KgS2) {
+  requirePositiveFinite(gmKm3S2, "GM");
+  requirePositiveFinite(radiusKm, "Radius");
+  requirePositiveFinite(gravitationalConstantKm3KgS2, "G");
+  const massKg = gmKm3S2 / gravitationalConstantKm3KgS2;
+  const volumeKm3 = (4 / 3) * Math.PI * radiusKm ** 3;
+  return massKg / (volumeKm3 * 1e12);
+}
+
 export function massSharePercent(primaryMassKg, otherMassesKg) {
   requirePositiveFinite(primaryMassKg, "Primary mass");
   if (!Array.isArray(otherMassesKg) || otherMassesKg.some((mass) => !Number.isFinite(mass) || mass < 0)) {
