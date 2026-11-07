@@ -32,7 +32,7 @@ import { planets } from "../../data/planets";
         <span class="eyebrow">Tool 04 · Orbital period</span><h2>How long is a year?</h2><p>A planet's orbital period is the time it takes to complete one orbit around the Sun relative to distant stars.</p>
         <div class="field"><label for="year-world">Choose a planet</label><select id="year-world">{planets.map((planet)=><option value={planet.orbitDays} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="result-box" aria-live="polite"><span>One sidereal orbit</span><strong id="year-result">365.2 days</strong><span id="year-subresult">About 1.00 Earth years.</span></div>
-        <p class="tool-footnote">Uses rounded orbital periods from NASA's planetary fact sheet. A planet's sidereal year and a calendar or seasonal year are related but not always identical definitions.</p>
+        <p class="tool-footnote">Uses NASA/JPL sidereal orbital periods, converted from Julian years using 365.25 days per Julian year. The Earth-year comparison uses Earth's JPL sidereal orbital period. A sidereal orbital period is measured relative to distant stars; it is not a planet's solar day or a seasonal year.</p>
       </article>
     </div>
     <div class="lab-launch-grid" aria-label="Advanced planetary labs">
