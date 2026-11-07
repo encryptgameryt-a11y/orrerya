@@ -76,6 +76,8 @@ const outer = planets.slice(4);
       <a class="tool-preview" href="/tools/#distance"><span class="tool-index">TOOL 02</span><span class="tool-symbol">↔</span><h3>Cosmic distance converter</h3><p>Convert astronomical units to kilometres and light-travel time.</p><span class="text-link">Open converter ↗</span></a>
       <a class="tool-preview" href="/tools/#compare"><span class="tool-index">TOOL 03</span><span class="tool-symbol">◉</span><h3>Compare planet sizes</h3><p>Compare planetary diameter and mass with Earth.</p><span class="text-link">Open comparison ↗</span></a>
       <a class="tool-preview" href="/tools/#orbit"><span class="tool-index">TOOL 05</span><span class="tool-symbol">⌁</span><h3>Explore an orbit</h3><p>Move a planet along an ellipse and watch its distance and orbital speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
+      <a class="tool-preview" href="/tools/ephemeris/"><span class="tool-index">TOOL 06</span><span class="tool-symbol">◎</span><h3>Planet positions today</h3><p>Explore date-based planetary positions with the NASA/JPL approximate ephemeris method.</p><span class="text-link">Open position explorer ↗</span></a>
+      <a class="tool-preview" href="/tools/correlation-lab/"><span class="tool-index">TOOL 07</span><span class="tool-symbol">∿</span><h3>Find planetary patterns</h3><p>Plot orbital and physical properties against one another and inspect their correlations.</p><span class="text-link">Open data lab ↗</span></a>
     </div>
   </section>
   <section class="container home-endcap"><div><span class="eyebrow">Keep looking up</span><h2>Curiosity is a good<br />place to start.</h2><p>Choose a world. Ask a question. Follow the evidence.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
@@ -132,7 +134,7 @@ const outer = planets.slice(4);
     .discover-icon{font-size:1.7rem;color:var(--gold);margin-bottom:20px}
     .discover-card h3{font-size:1.34rem;margin:8px 0}
     .discover-card p{font-size:.82rem;line-height:1.65;margin-bottom:14px}
-    .tool-preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .tool-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .tool-preview{padding:23px;border:1px solid var(--line);border-radius:7px;background:linear-gradient(145deg,#142238,#0b1423);transition:transform .2s,border-color .2s}
     .tool-preview:hover{transform:translateY(-3px);border-color:rgba(230,200,142,.48)}
     .tool-index{font-size:.65rem;letter-spacing:.14em;color:var(--quiet)}
