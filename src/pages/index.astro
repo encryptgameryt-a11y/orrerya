@@ -361,4 +361,95 @@ const homeSummaries: Record<string, string> = {
       .orrery-map-frame{margin-top:16px;padding:14px 12px 12px!important}
     }
   </style>
+
+  <style>
+    /* A less repetitive discovery area: two feature cards, one split banner, one scroll row. */
+    .orrery-home-hero::before,.orrery-home-hero::after{content:none!important}
+    .orrery-hero-intro .hero-actions{align-items:center;gap:12px}
+    .orrery-hero-intro .hero-actions .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px}
+    .orrery-hero-intro .hero-actions .btn span{display:inline-flex;align-items:center;justify-content:center;width:1.2em;height:1.2em;flex:0 0 1.2em;font-size:1em;line-height:1}
+    .home-planets-section .section-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);align-items:end;gap:34px}
+    .home-planets-section .section-side{max-width:440px;justify-self:end;text-align:right}
+    .home-planets-section .section-side p{margin-bottom:10px}
+    .home-discover .discover-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .home-discover .discover-card{min-height:230px;padding:24px;display:grid;grid-template-columns:38px 1fr;align-content:start;column-gap:16px;row-gap:12px}
+    .home-discover .discover-card .discover-number{top:20px;right:22px}
+    .home-discover .discover-card .discover-icon{grid-row:1 / span 2;display:inline-flex;align-items:flex-start;justify-content:center;margin:0;padding-top:2px}
+    .home-discover .discover-card>div{grid-column:2;grid-row:1 / span 2;padding-right:18px}
+    .home-discover .discover-card .discover-icon svg{width:28px;height:28px;stroke-width:1.7}
+    .home-discover .discover-card .eyebrow{display:block;margin-bottom:7px}
+    .home-discover .discover-card h3{margin:0 0 8px}
+    .home-discover .discover-card p{margin:0 0 12px;line-height:1.65}
+    .home-discover .discover-card .text-link{font-weight:650}
+    .comets-banner{
+      display:grid;grid-template-columns:1.05fr .95fr;min-height:265px;margin-top:18px;
+      overflow:hidden;border-radius:10px;border:1px solid rgba(255,255,255,.22);
+      background:linear-gradient(120deg,#f9f8f3,#edf2f5);color:#17334b;
+      box-shadow:0 18px 34px rgba(0,0,0,.15);transition:transform .2s,border-color .2s;
+    }
+    .comets-banner:hover{transform:translateY(-2px);border-color:rgba(218,185,133,.75);color:#17334b}
+    .comets-banner-art{
+      display:grid;place-items:center;min-height:265px;overflow:hidden;
+      background:radial-gradient(ellipse at 76% 28%,rgba(61,101,139,.48),transparent 42%),
+                 radial-gradient(ellipse at 35% 72%,rgba(178,126,69,.22),transparent 40%),
+                 linear-gradient(145deg,#091624,#132b3e 62%,#0b1a2a);
+    }
+    .comets-banner-art svg{width:100%;height:100%;max-height:300px;display:block}
+    .comets-banner-copy{align-self:center;padding:34px 40px}
+    .comets-banner-copy .eyebrow{color:#927044!important}
+    .comets-banner-copy h3{font:500 clamp(1.7rem,3vw,2.35rem)/1.15 Georgia,"Times New Roman",serif;color:#18354d;margin:10px 0}
+    .comets-banner-copy p{color:#52677a;line-height:1.7;margin:0 0 16px}
+    .comets-banner-copy .text-link{color:#1b5d82;font-weight:650}
+    .distant-worlds{margin-top:50px}
+    .distant-worlds-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:18px}
+    .distant-worlds-heading h3{font:500 clamp(1.8rem,3.6vw,2.6rem)/1.1 Georgia,"Times New Roman",serif;color:#f4f2ed;margin:8px 0}
+    .distant-worlds-heading p{max-width:640px;color:#c0ccd5;margin:0;line-height:1.65}
+    .distant-worlds-heading .eyebrow{color:#d0b382!important}
+    .carousel-hint{flex:0 0 auto;color:#d0b382;font-size:.64rem;letter-spacing:.14em;font-weight:700;padding-bottom:4px}
+    .distant-worlds-track{
+      display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 16px;
+      scroll-snap-type:x mandatory;scroll-padding-inline:2px;overscroll-behavior-inline:contain;
+      -webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(211,179,129,.7) rgba(255,255,255,.12)
+    }
+    .distant-world-card{
+      position:relative;display:flex;flex:0 0 270px;min-height:205px;flex-direction:column;
+      align-items:flex-start;gap:10px;padding:24px;border:1px solid rgba(23,47,69,.12);
+      border-radius:8px;background:linear-gradient(145deg,#fff,#edf2f5);color:#18354d;
+      scroll-snap-align:start;transition:transform .2s,border-color .2s,box-shadow .2s
+    }
+    .distant-world-card:hover{transform:translateY(-3px);border-color:#b99a68;box-shadow:0 14px 26px rgba(0,0,0,.15);color:#18354d}
+    .distant-world-card svg{color:#98713e;width:26px;height:26px}
+    .distant-world-number{position:absolute;right:18px;top:16px;color:#8999a8;font-size:.68rem;letter-spacing:.12em}
+    .distant-world-card h4{font:600 1.1rem "Space Grotesk",sans-serif;color:#18354d;margin:2px 0 0}
+    .distant-world-card p{color:#5a6e81;font-size:.82rem;line-height:1.55;margin:0 0 auto}
+    .distant-world-card .text-link{color:#1b5d82;font-size:.76rem;font-weight:650}
+    .tool-preview .tool-symbol{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px}
+    .tool-preview .tool-symbol svg{width:27px;height:27px;stroke-width:1.7}
+    .tool-preview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .outer-mini-grid img{object-fit:contain!important;object-position:center;padding:10px;background:radial-gradient(circle at 50% 50%,rgba(221,232,239,.96),rgba(188,205,216,.9))!important}
+    .home-endcap .btn{background:#f5f3ed!important;color:#18354d!important}
+    .home-endcap .btn:hover{background:#fff!important;color:#102d46!important}
+    .orrery-map-topline{flex-wrap:wrap}
+    @media(max-width:800px){
+      .home-planets-section .section-head{grid-template-columns:1fr;gap:12px}
+      .home-planets-section .section-side{justify-self:start;text-align:left;max-width:620px}
+      .home-discover .discover-card{padding:24px;min-height:220px}
+      .comets-banner{grid-template-columns:1fr}
+      .comets-banner-art{min-height:210px}
+      .comets-banner-copy{padding:28px}
+      .distant-worlds{margin-top:38px}
+      .distant-worlds-heading{align-items:flex-start;flex-direction:column;gap:10px}
+      .distant-world-card{flex-basis:260px}
+    }
+    @media(max-width:600px){
+      .home-discover .discover-grid{grid-template-columns:1fr}
+      .home-discover .discover-card{min-height:0;padding:24px}
+      .comets-banner-copy{padding:24px}
+      .comets-banner-art{min-height:180px}
+      .distant-world-card{flex-basis:250px;padding:24px}
+      .carousel-hint{font-size:.6rem}
+      .tool-preview-grid{grid-template-columns:1fr}
+      .orrery-hero-intro .hero-actions .btn{min-width:0}
+    }
+  </style>
 </SiteLayout>
