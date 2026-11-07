@@ -34,7 +34,6 @@ const homeSummaries: Record<string, string> = {
       <div class="orrery-map-frame">
         <div class="orrery-map-topline">
           <span>OUR SOLAR SYSTEM</span>
-          <span>PLANET SIZES AND DISTANCES ARE SIMPLIFIED</span>
           <span class="orrery-scroll-hint">SWIPE TO EXPLORE →</span>
         </div>
         <div class="orrery-map-scroll">
@@ -102,7 +101,7 @@ const homeSummaries: Record<string, string> = {
           <span><i class="legend-kuiper"></i> Kuiper Belt</span>
           <span class="legend-note">The Kuiper Belt is one part of the region beyond Neptune.</span>
         </div>
-        <p class="orrery-map-note">The planets and their distances are shown for easy viewing, not at their true sizes or spacing.</p>
+        <p class="orrery-map-note">Planet sizes and distances are simplified so you can see the whole system at a glance.</p>
       </div>
       <div class="orrery-hero-bottom">
         <span>START ANYWHERE</span><span class="line"></span>
@@ -451,6 +450,72 @@ const homeSummaries: Record<string, string> = {
       .carousel-hint{font-size:.6rem}
       .tool-preview-grid{grid-template-columns:1fr}
       .orrery-hero-intro .hero-actions .btn{min-width:0}
+    }
+  </style>
+
+  <style>
+    /* Mobile opening: the intro follows the brand instead of being pushed off-screen. */
+    @media (max-width: 800px) {
+      .home-hero.orrery-home-hero .orrery-hero-head {
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: auto auto;
+        align-items: start !important;
+        gap: 15px !important;
+        padding: 4px 0 18px !important;
+      }
+      .home-hero.orrery-home-hero .orrery-brand-feature {
+        grid-column: 1; grid-row: 1; width: 100%; min-width: 0;
+      }
+      .home-hero.orrery-home-hero .orrery-hero-intro {
+        grid-column: 1; grid-row: 2; justify-self: stretch !important;
+        width: 100% !important; max-width: 100% !important; min-width: 0;
+        padding: 0 !important;
+      }
+      .home-hero.orrery-home-hero .orrery-logo-title {
+        font-size: clamp(3.45rem, 14vw, 4.8rem) !important;
+        line-height: .98 !important; letter-spacing: .025em !important;
+        margin: 8px 0 0 !important; white-space: nowrap;
+      }
+      .home-hero.orrery-home-hero .orrery-brand-tag {
+        margin-top: 9px !important; font-size: .68rem !important; letter-spacing: .16em !important;
+      }
+      .home-hero.orrery-home-hero .orrery-hero-line {
+        font-size: 1.22rem !important; margin: 0 0 6px !important;
+      }
+      .home-hero.orrery-home-hero .orrery-hero-description {
+        max-width: 38rem; font-size: .86rem !important; line-height: 1.55 !important;
+      }
+      .home-hero.orrery-home-hero .hero-actions {
+        display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px !important; margin-top: 14px !important;
+      }
+      .home-hero.orrery-home-hero .hero-actions .btn {
+        width: 100%; min-width: 0; min-height: 46px; padding: 10px 9px;
+        gap: 6px; font-size: .78rem; white-space: nowrap;
+      }
+      .home-hero.orrery-home-hero .orrery-home-inner { padding-top: 20px !important; }
+      .home-hero.orrery-home-hero .orrery-map-frame {
+        margin-top: 12px !important; padding: 12px 11px 10px !important;
+      }
+      .home-hero.orrery-home-hero .orrery-map-topline {
+        justify-content: space-between; align-items: center; flex-wrap: nowrap;
+        margin-bottom: 8px; font-size: .59rem; letter-spacing: .11em;
+      }
+      .home-hero.orrery-home-hero .orrery-scroll-hint {
+        display: inline !important; text-align: right;
+      }
+      .home-hero.orrery-home-hero .orrery-map-note {
+        text-align: left; font-size: .66rem !important; line-height: 1.45;
+      }
+      .home-hero.orrery-home-hero .orrery-hero-bottom { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      .home-hero.orrery-home-hero .orrery-logo-title {
+        font-size: clamp(3.2rem, 14vw, 3.45rem) !important;
+      }
+      .home-hero.orrery-home-hero .hero-actions .btn {
+        font-size: .72rem; padding-inline: 6px;
+      }
     }
   </style>
 </SiteLayout>
