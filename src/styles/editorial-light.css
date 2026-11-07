@@ -817,3 +817,400 @@ body.home-nebula .comets-banner-copy .eyebrow {
 body.home-nebula .distant-worlds-heading .eyebrow {
   color: #e0c18f !important;
 }
+
+/* --------------------------------------------------------------------------
+   ORRERYA responsive editorial system
+   Space Grotesk headings + Inter reading text; measured for desktop and phones.
+   -------------------------------------------------------------------------- */
+:root {
+  --reading-measure: 68ch;
+  --page-gutter: clamp(1.25rem, 3.2vw, 2.5rem);
+  --section-space: clamp(3.75rem, 6.5vw, 6rem);
+  --card-gap: clamp(.8rem, 1.6vw, 1.15rem);
+}
+html {
+  font-size: 100%;
+  scroll-padding-top: 5.5rem;
+}
+body {
+  font-size: 1rem;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.container {
+  width: min(var(--max), calc(100% - (var(--page-gutter) * 2)));
+}
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+h1 {
+  font-size: clamp(2.45rem, 5.4vw, 4.9rem);
+  line-height: 1.015;
+  letter-spacing: -.058em;
+  font-weight: 600;
+}
+h2 {
+  font-size: clamp(1.8rem, 3.35vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -.045em;
+  font-weight: 600;
+}
+h3 {
+  font-size: clamp(1.12rem, 1.55vw, 1.32rem);
+  line-height: 1.24;
+  letter-spacing: -.025em;
+}
+h4 {
+  font-size: 1rem;
+  line-height: 1.32;
+}
+p {
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+.lede {
+  max-width: var(--reading-measure);
+  font-size: clamp(1.02rem, 1.25vw, 1.17rem);
+  line-height: 1.72;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: .66rem;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.section {
+  padding-block: var(--section-space);
+}
+.section.compact {
+  padding-block: clamp(2.75rem, 4.5vw, 4rem);
+}
+.section-head {
+  align-items: end;
+  gap: clamp(1rem, 2.8vw, 2.25rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.section-head h2 {
+  line-height: 1.08;
+  margin-top: .55rem;
+}
+.section-head p {
+  max-width: 44ch;
+  font-size: .96rem;
+  line-height: 1.7;
+}
+.page-intro {
+  padding-block: clamp(3.5rem, 6vw, 5.25rem) clamp(2.4rem, 4vw, 3.5rem);
+}
+.page-intro h1 {
+  max-width: 19ch;
+  margin-block: .8rem 1rem;
+}
+.page-intro .lede {
+  max-width: 68ch;
+  margin-bottom: 0;
+}
+.breadcrumbs {
+  gap: .55rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.prose {
+  max-width: 70ch;
+}
+.prose p,
+.prose li {
+  font-size: 1rem;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+.prose p {
+  margin-block: 0 1.1em;
+}
+.prose h2 {
+  margin-block: 2.7em .65em;
+  line-height: 1.12;
+}
+.prose h3 {
+  margin-block: 1.9em .55em;
+  line-height: 1.25;
+}
+.prose li {
+  margin-block: 0 .55em;
+}
+.card,
+.planet-card,
+.list-card,
+.force-card,
+.tool-panel,
+.source-panel,
+.ephem-summary,
+.ephem-table-card,
+.correlation-card,
+.data-table-card,
+.migration-step {
+  border-radius: 14px;
+}
+.grid-2,
+.grid-3,
+.grid-4 {
+  gap: var(--card-gap);
+}
+.card-pad {
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+}
+.planet-card-body {
+  padding: clamp(1rem, 1.55vw, 1.3rem);
+}
+.planet-card p,
+.list-card p,
+.force-card p {
+  line-height: 1.65;
+}
+.stat {
+  padding: clamp(.9rem, 1.7vw, 1.25rem);
+}
+.stat strong {
+  font-variant-numeric: tabular-nums;
+}
+.data-table-wrap,
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.data-table {
+  font-variant-numeric: tabular-nums;
+}
+.btn,
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+.btn {
+  min-height: 46px;
+}
+button,
+input,
+select {
+  min-height: 44px;
+}
+.text-link {
+  line-height: 1.5;
+}
+img {
+  max-width: 100%;
+}
+a,
+button {
+  touch-action: manipulation;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --page-gutter: 1.25rem;
+    --section-space: 3.6rem;
+  }
+  .site-header {
+    height: 68px;
+  }
+  .section {
+    padding-block: var(--section-space);
+  }
+  .section.compact {
+    padding-block: 2.75rem;
+  }
+  .page-intro {
+    padding-block: 3.1rem 2.4rem;
+  }
+  .page-intro h1 {
+    max-width: 18ch;
+    font-size: clamp(2.35rem, 7.4vw, 3.7rem);
+  }
+  .section-head {
+    align-items: flex-start;
+    gap: .75rem;
+    margin-bottom: 1.6rem;
+  }
+  .section-head p {
+    max-width: 62ch;
+  }
+  .prose h2 {
+    margin-top: 2.35em;
+  }
+  .footer-main {
+    gap: 1.75rem;
+  }
+  .primary-nav a {
+    min-height: 44px;
+  }
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-gutter: 1rem;
+    --section-space: 3.1rem;
+    --card-gap: .75rem;
+  }
+  body {
+    font-size: .98rem;
+    line-height: 1.65;
+  }
+  .container {
+    width: calc(100% - 2rem);
+  }
+  h1 {
+    font-size: clamp(2.3rem, 10vw, 3.45rem);
+    line-height: 1.025;
+    letter-spacing: -.052em;
+  }
+  h2 {
+    font-size: clamp(1.72rem, 7.1vw, 2.35rem);
+    line-height: 1.12;
+    letter-spacing: -.04em;
+  }
+  h3 {
+    font-size: 1.12rem;
+  }
+  .lede {
+    font-size: 1.02rem;
+    line-height: 1.68;
+  }
+  .section {
+    padding-block: var(--section-space);
+  }
+  .section.compact {
+    padding-block: 2.5rem;
+  }
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    margin-bottom: 1.35rem;
+  }
+  .section-head h2 {
+    margin-top: .45rem;
+  }
+  .section-head p {
+    max-width: 100%;
+    font-size: .94rem;
+    line-height: 1.65;
+  }
+  .page-intro {
+    padding-block: 2.65rem 2.1rem;
+  }
+  .page-intro h1 {
+    max-width: 16ch;
+    margin-block: .65rem .85rem;
+  }
+  .breadcrumbs {
+    margin-block: 1rem;
+    font-size: .72rem;
+  }
+  .prose {
+    max-width: 100%;
+  }
+  .prose p,
+  .prose li {
+    font-size: .98rem;
+    line-height: 1.72;
+  }
+  .prose h2 {
+    margin-top: 2em;
+    margin-bottom: .6em;
+  }
+  .prose h3 {
+    margin-top: 1.55em;
+  }
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .planet-card-body {
+    padding: .95rem;
+  }
+  .planet-card h3 {
+    font-size: 1.05rem;
+  }
+  .planet-card p {
+    font-size: .84rem;
+    line-height: 1.55;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat {
+    padding: .9rem;
+  }
+  .stat .label {
+    font-size: .63rem;
+    letter-spacing: .08em;
+  }
+  .stat strong {
+    font-size: 1.12rem;
+  }
+  .stat small {
+    font-size: .72rem;
+    line-height: 1.4;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .7rem .75rem;
+  }
+  .btn {
+    min-height: 46px;
+    padding-inline: 1.1rem;
+  }
+  .footer-main {
+    gap: 1.5rem;
+  }
+  .footer-bottom {
+    gap: .8rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 380px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .stat {
+    padding: .8rem;
+  }
+  .home-hero.orrery-home-hero .orrery-logo-title {
+    font-size: clamp(2.9rem, 14vw, 3.4rem) !important;
+  }
+}
+
+/* Prevent narrow screens and long labels from creating page-level overflow. */
+body,
+main,
+section,
+article,
+aside,
+header,
+footer,
+.container {
+  min-width: 0;
+}
+p,
+li,
+td,
+th,
+figcaption,
+a {
+  overflow-wrap: break-word;
+}
