@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:site": "node scripts/check-site.mjs",
-    "verify": "npm run build && npm run check:site"
+    "verify": "npm run test:physics && npm run build && npm run check:site",
+    "test:physics": "node --test scripts/orbital-mechanics.test.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"
