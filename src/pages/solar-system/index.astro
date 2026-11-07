@@ -140,7 +140,7 @@ const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
             <span class="moon-host">{m.host.toUpperCase()}</span>
             <h3>{m.name}</h3>
             <p>{m.description}</p>
-            <dl><div><dt>Mean radius</dt><dd>{fmt(m.meanRadiusKm,1)} km</dd></div><div><dt>Mass (derived)</dt><dd>{sci(derived.massKg)} kg</dd></div><div><dt>Mean density</dt><dd>{fmt(derived.densityGcm3,3)} g/cm³</dd></div><div><dt>Surface gravity (derived)</dt><dd>{fmt(derived.gravityMS2,3)} m/s²</dd></div><div><dt>Escape speed (derived)</dt><dd>{fmt(derived.escapeVelocityKmS,3)} km/s</dd></div></dl>
+            <dl><div><dt>Mean radius</dt><dd>{fmt(m.meanRadiusKm,1)} km</dd></div><div><dt>Mass (derived)</dt><dd>{sci(derived.massKg)} kg</dd></div><div><dt>Mean density (derived)</dt><dd>{fmt(derived.densityGcm3,3)} g/cm³</dd></div><div><dt>Gravity at mean radius (spherical)</dt><dd>{fmt(derived.gravityMS2,3)} m/s²</dd></div><div><dt>Escape speed (spherical)</dt><dd>{fmt(derived.escapeVelocityKmS,3)} km/s</dd></div></dl>
           </article>;
         })}
       </div>
