@@ -35,6 +35,39 @@ import { planets } from "../../data/planets";
         <p class="tool-footnote">Uses rounded orbital periods from NASA's planetary fact sheet. A planet's sidereal year and a calendar or seasonal year are related but not always identical definitions.</p>
       </article>
     </div>
+    <section class="card orbit-lab" id="orbit">
+      <div class="orbit-lab-heading">
+        <div><span class="eyebrow">Tool 05 · Orbital mechanics</span><h2>Take a planet around its orbit.</h2><p>Choose a planet and move it through its orbit. Watch its distance from the Sun and orbital speed change between perihelion and aphelion.</p></div>
+        <span class="tag">Two-body teaching model</span>
+      </div>
+      <div class="orbit-lab-layout">
+        <div class="orbit-canvas">
+          <svg id="orbit-svg" viewBox="0 0 440 300" role="img" aria-labelledby="orbit-title orbit-desc">
+            <title id="orbit-title">Schematic planetary orbit</title>
+            <desc id="orbit-desc">A planet moves along an elliptical orbit around the Sun. The orbit shape changes with eccentricity. This illustration is not to scale across planets.</desc>
+            <ellipse id="orbit-track" cx="122.38" cy="150" rx="140" ry="139.98" fill="none" stroke="rgba(151,184,220,.58)" stroke-width="1.5" />
+            <line id="orbit-radius" x1="120" y1="150" x2="0" y2="150" stroke="rgba(230,200,142,.55)" stroke-width="1" stroke-dasharray="4 4" />
+            <circle id="orbit-sun" cx="120" cy="150" r="10" fill="#edb966" />
+            <circle cx="120" cy="150" r="17" fill="none" stroke="rgba(237,185,102,.2)" />
+            <circle id="orbit-marker" cx="0" cy="150" r="6.5" fill="#8bc9dc" stroke="#e5f3f8" stroke-width="1.5" />
+            <text x="120" y="181" text-anchor="middle" fill="#e6c88e" font-size="10">SUN</text>
+            <text id="orbit-phase-label" x="220" y="24" text-anchor="middle" fill="#9ba9bd" font-size="10" letter-spacing="1">TRUE ANOMALY · 0°</text>
+          </svg>
+          <div class="orbit-legend"><span><i class="legend-sun"></i> Sun · focus</span><span><i class="legend-planet"></i> Planet</span><span>Orbit shape · schematic</span></div>
+        </div>
+        <div class="orbit-controls">
+          <div class="field"><label for="orbit-world">Choose a planet</label><select id="orbit-world">{planets.map((planet)=><option value={planet.distanceAu} data-a={planet.distanceAu} data-e={planet.eccentricity} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+          <div class="field"><label for="orbit-angle">Move around the orbit <output id="orbit-angle-value" for="orbit-angle">0°</output></label><input id="orbit-angle" type="range" min="0" max="360" step="1" value="0" /></div>
+          <div class="orbit-result-grid">
+            <div class="orbit-result"><span>Distance from Sun</span><strong id="orbit-distance">0.983 AU</strong><small id="orbit-distance-km">147.1 million km</small></div>
+            <div class="orbit-result"><span>Orbital speed</span><strong id="orbit-speed">30.3 km/s</strong><small id="orbit-speed-note">Faster near perihelion</small></div>
+          </div>
+          <div class="orbit-endpoints"><div><span>Perihelion · closest</span><strong id="orbit-peri">0.983 AU</strong></div><div><span>Aphelion · farthest</span><strong id="orbit-aphe">1.017 AU</strong></div></div>
+          <p class="orbit-model-note">Uses an idealised two-body orbit with the Sun's standard gravitational parameter. The slider is true anomaly (angle from perihelion). Planet positions and orbital sizes are schematic; this is not a real-time Solar System model.</p>
+        </div>
+      </div>
+      <div class="orbit-equations"><div><span class="eyebrow">Distance along an ellipse</span><strong>r = a(1 − e²) / (1 + e cos ν)</strong></div><div><span class="eyebrow">Vis-viva equation</span><strong>v² = μ(2/r − 1/a)</strong></div></div>
+    </section>
     <div class="callout tools-note"><strong>These are transparent educational models.</strong><p>They use rounded reference values and standard equations. They are not a navigation system, a live ephemeris or a precision engineering tool. Open the linked NASA/JPL references for definitions, uncertainties and higher-precision parameters.</p></div>
     <div class="source-panel"><div><span class="eyebrow">Calculation references</span><h3>Where the constants come from</h3><p>Planetary gravity and orbital values are taken from NASA/JPL and NASA NSSDCA tables.</p></div><ul class="source-list"><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://www.iau.org/public/themes/measuring/" target="_blank" rel="noreferrer">International Astronomical Union — Measuring the Universe ↗</a></li></ul></div>
   </section>
@@ -119,8 +152,70 @@ import { planets } from "../../data/planets";
     }
     yearSelect?.addEventListener("change", updateYear);
     updateYear();
+
+    const orbitSelect = document.querySelector<HTMLSelectElement>("#orbit-world");
+    const orbitAngle = document.querySelector<HTMLInputElement>("#orbit-angle");
+    const orbitAngleValue = document.querySelector<HTMLOutputElement>("#orbit-angle-value");
+    const orbitTrack = document.querySelector<SVGEllipseElement>("#orbit-track");
+    const orbitMarker = document.querySelector<SVGCircleElement>("#orbit-marker");
+    const orbitRadius = document.querySelector<SVGLineElement>("#orbit-radius");
+    const orbitPhaseLabel = document.querySelector<SVGTextElement>("#orbit-phase-label");
+    const orbitDistance = document.querySelector<HTMLElement>("#orbit-distance");
+    const orbitDistanceKm = document.querySelector<HTMLElement>("#orbit-distance-km");
+    const orbitSpeed = document.querySelector<HTMLElement>("#orbit-speed");
+    const orbitSpeedNote = document.querySelector<HTMLElement>("#orbit-speed-note");
+    const orbitPeri = document.querySelector<HTMLElement>("#orbit-peri");
+    const orbitAphe = document.querySelector<HTMLElement>("#orbit-aphe");
+    const AU_KM = 149597870.7;
+    const SOLAR_MU = 1.32712440018e11;
+    const orbitFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
+    function updateOrbit() {
+      if (!orbitSelect || !orbitAngle || !orbitAngleValue || !orbitTrack || !orbitMarker || !orbitRadius || !orbitPhaseLabel || !orbitDistance || !orbitDistanceKm || !orbitSpeed || !orbitSpeedNote || !orbitPeri || !orbitAphe) return;
+      const option = orbitSelect.selectedOptions[0];
+      const aAu = Number(option?.dataset.a);
+      const eccentricity = Number(option?.dataset.e);
+      const degrees = Number(orbitAngle.value);
+      if (!Number.isFinite(aAu) || aAu <= 0 || !Number.isFinite(eccentricity) || eccentricity < 0 || eccentricity >= 1 || !Number.isFinite(degrees)) return;
+      const nu = degrees * Math.PI / 180;
+      const denominator = 1 + eccentricity * Math.cos(nu);
+      const radiusRatio = (1 - eccentricity * eccentricity) / denominator;
+      const rAu = aAu * radiusRatio;
+      const rKm = rAu * AU_KM;
+      const aKm = aAu * AU_KM;
+      const velocity = Math.sqrt(SOLAR_MU * (2 / rKm - 1 / aKm));
+      const periAu = aAu * (1 - eccentricity);
+      const apheAu = aAu * (1 + eccentricity);
+      const scale = 140;
+      const focusX = 120;
+      const focusY = 150;
+      const centerX = focusX + scale * eccentricity;
+      const semiMinor = scale * Math.sqrt(1 - eccentricity * eccentricity);
+      const markerX = focusX - scale * radiusRatio * Math.cos(nu);
+      const markerY = focusY - scale * radiusRatio * Math.sin(nu);
+      orbitTrack.setAttribute("cx", String(centerX));
+      orbitTrack.setAttribute("cy", String(focusY));
+      orbitTrack.setAttribute("rx", String(scale));
+      orbitTrack.setAttribute("ry", String(semiMinor));
+      orbitMarker.setAttribute("cx", String(markerX));
+      orbitMarker.setAttribute("cy", String(markerY));
+      orbitRadius.setAttribute("x1", String(focusX));
+      orbitRadius.setAttribute("y1", String(focusY));
+      orbitRadius.setAttribute("x2", String(markerX));
+      orbitRadius.setAttribute("y2", String(markerY));
+      orbitAngleValue.textContent = degrees + "°";
+      orbitPhaseLabel.textContent = "TRUE ANOMALY · " + degrees + "°";
+      orbitDistance.textContent = orbitFormatter.format(rAu) + " AU";
+      orbitDistanceKm.textContent = orbitFormatter.format(rKm / 1e6) + " million km";
+      orbitSpeed.textContent = orbitFormatter.format(velocity) + " km/s";
+      orbitSpeedNote.textContent = degrees <= 90 || degrees >= 270 ? "Moving toward / near perihelion" : degrees >= 135 && degrees <= 225 ? "Moving toward / near aphelion" : "Speed changes continuously along the orbit";
+      orbitPeri.textContent = orbitFormatter.format(periAu) + " AU";
+      orbitAphe.textContent = orbitFormatter.format(apheAu) + " AU";
+    }
+    orbitSelect?.addEventListener("change", updateOrbit);
+    orbitAngle?.addEventListener("input", updateOrbit);
+    updateOrbit();
   </script>
   <style>
-    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{display:block;font-size:.75rem;color:var(--gold)}.size-stage small{display:block;color:var(--cyan);font-size:.72rem;margin-top:5px}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:760px){.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
+    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{display:block;font-size:.75rem;color:var(--gold)}.size-stage small{display:block;color:var(--cyan);font-size:.72rem;margin-top:5px}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.orbit-lab{margin-top:18px;padding:27px;scroll-margin-top:100px}.orbit-lab-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;margin-bottom:20px}.orbit-lab-heading h2{font-size:1.9rem;margin:8px 0}.orbit-lab-heading p{max-width:690px;font-size:.86rem;line-height:1.75;margin:0}.orbit-lab-layout{display:grid;grid-template-columns:1fr .9fr;gap:22px}.orbit-canvas{border:1px solid var(--line);border-radius:7px;background:radial-gradient(ellipse at 40% 50%,rgba(45,79,119,.2),transparent 62%),#091321;padding:12px;min-width:0}.orbit-canvas svg{width:100%;height:auto;display:block}.orbit-legend{display:flex;flex-wrap:wrap;gap:15px;color:var(--quiet);font-size:.68rem;padding:5px 8px}.orbit-legend span{display:flex;align-items:center;gap:7px}.orbit-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}.legend-sun{background:#edb966;box-shadow:0 0 9px #edb96688}.legend-planet{background:#8bc9dc}.orbit-controls{display:flex;flex-direction:column;justify-content:center}.orbit-controls .field{margin-top:11px}.orbit-controls input[type=range]{accent-color:var(--gold);padding:0;min-height:30px}.orbit-controls output{float:right;color:var(--gold);font-variant-numeric:tabular-nums}.orbit-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.orbit-result{padding:14px;border:1px solid var(--line);border-radius:5px;background:rgba(9,18,31,.7)}.orbit-result span,.orbit-result small{display:block;color:var(--quiet);font-size:.67rem}.orbit-result strong{display:block;color:var(--gold-bright);font:600 1.25rem "Space Grotesk",sans-serif;margin:7px 0 3px}.orbit-endpoints{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.orbit-endpoints div{border-top:1px solid var(--line);padding-top:10px}.orbit-endpoints span{display:block;color:var(--quiet);font-size:.67rem}.orbit-endpoints strong{display:block;color:var(--text);font-size:.85rem;margin-top:3px}.orbit-model-note{font-size:.69rem;line-height:1.6;color:var(--quiet);margin:16px 0 0}.orbit-equations{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}.orbit-equations>div{display:grid;gap:8px}.orbit-equations strong{font:500 clamp(.92rem,2vw,1.18rem) "Space Grotesk",sans-serif;color:var(--cyan)}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:850px){.orbit-lab-layout{grid-template-columns:1fr}}@media(max-width:760px){.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}.orbit-lab{padding:19px}.orbit-lab-heading{flex-direction:column}.orbit-equations{grid-template-columns:1fr}.orbit-result-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
   </style>
 </SiteLayout>
