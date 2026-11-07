@@ -41,6 +41,32 @@ export interface Planet {
   mission: string;
 }
 
+/**
+ * Provenance for the values displayed in planet profiles.
+ * Sources use different conventions; fields are not silently mixed.
+ */
+export const planetDataSources = {
+  physicalParameters: {
+    name: "NASA/JPL Solar System Dynamics — Planetary Physical Parameters",
+    url: "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+    fields: ["mass", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"]
+  },
+  factSheet: {
+    name: "NASA NSSDCA — Planetary Fact Sheet",
+    url: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+    fields: ["equatorial diameter", "mean Sun distance", "perihelion", "aphelion", "rounded orbital period"]
+  },
+  orbitalElements: {
+    name: "NASA/JPL Solar System Dynamics — Approximate Positions of the Planets, Tables 2a and 2b",
+    url: "https://ssd.jpl.nasa.gov/planets/approx_pos.html",
+    epoch: "J2000 mean ecliptic and equinox",
+    fittedInterval: "3000 BCE to 3000 CE",
+    fields: ["semi-major axis", "eccentricity", "inclination", "other Keplerian elements and secular rates"],
+    note: "Table 2b periodic terms must be applied to Jupiter through Neptune. The Earth row is the Earth–Moon barycentre, used as a close proxy for Earth's orbit."
+  },
+  checkedDate: "2026-11-08"
+} as const;
+
 export const planets: Planet[] = [
   {
     slug: "mercury", name: "Mercury", order: 1, className: "Terrestrial planet",
