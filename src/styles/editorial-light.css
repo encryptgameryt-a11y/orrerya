@@ -785,3 +785,35 @@ body.home-nebula .footer-links strong,
 body.home-nebula .footer-bottom a {
   color: #e0c18f !important;
 }
+
+/* Homepage editorial type system: consistent uppercase, widely tracked section kickers. */
+body.home-nebula main .eyebrow {
+  display: inline-block;
+  color: #d9b77f !important;
+  text-transform: uppercase !important;
+  letter-spacing: .17em !important;
+  font-size: .62rem !important;
+  font-weight: 700 !important;
+  line-height: 1.5;
+}
+body.home-nebula .orrery-hero-intro .orrery-hero-line {
+  color: #fff !important;
+  font: italic 500 clamp(1.25rem, 2.3vw, 1.65rem)/1.25 Georgia, "Times New Roman", serif !important;
+  letter-spacing: -.015em;
+}
+body.home-nebula .home-planets-section .section-head h2,
+body.home-nebula .home-discover .section-head h2,
+body.home-nebula .distant-worlds-heading h3 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em !important;
+}
+body.home-nebula .outer-band-copy .eyebrow {
+  color: #80613a !important;
+}
+body.home-nebula .comets-banner-copy .eyebrow {
+  color: #80613a !important;
+}
+body.home-nebula .distant-worlds-heading .eyebrow {
+  color: #e0c18f !important;
+}
