@@ -58,7 +58,7 @@ const next = planets[planet.order];
             <div><dt>Orbital eccentricity · JPL J2000</dt><dd>{planet.eccentricity}</dd></div>
             <div><dt>Inclination to J2000 ecliptic</dt><dd>{planet.inclination}</dd></div>
             <div><dt>Axial tilt</dt><dd>{planet.tilt}</dd></div>
-            <div><dt>Mean temperature</dt><dd>{planet.temperature}</dd></div>
+            <div><dt>{planet.order > 4 ? "Atmospheric temperature · reference level" : "Mean surface temperature"}</dt><dd>{planet.temperature}</dd></div>
           </dl>
         </div>
         <div class="card card-pad">
@@ -69,11 +69,11 @@ const next = planets[planet.order];
             <div><dt>Mean radius · JPL</dt><dd>{physical ? physical.meanRadiusKm.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " km" : "—"}</dd></div>
             <div><dt>Mass · JPL</dt><dd>{planet.mass}</dd></div>
             <div><dt>Mean density</dt><dd>{planet.density}</dd></div>
-            <div><dt>Equatorial gravity</dt><dd>{planet.gravity}</dd></div>
-            <div><dt>Escape velocity</dt><dd>{planet.escapeVelocity}</dd></div>
+            <div><dt>{planet.order > 4 ? "Equatorial gravity · 1-bar reference level" : "Equatorial surface gravity"}</dt><dd>{planet.gravity}</dd></div>
+            <div><dt>{planet.order > 4 ? "Escape speed · reference radius" : "Escape velocity"}</dt><dd>{planet.escapeVelocity}</dd></div>
           </dl>
         </div>
-        <div class="callout"><strong>How to read the temperature</strong><p>For rocky planets, a mean temperature describes a surface average. For giant planets, there is no solid surface; the quoted value refers to a representative atmospheric level. Local conditions vary.</p></div>
+        <div class="callout"><strong>Reference levels matter</strong><p>For Mercury, Venus, Earth and Mars, the quoted temperature is a surface reference. For Jupiter, Saturn, Uranus and Neptune, there is no solid surface: temperature, equatorial gravity, diameter and escape speed refer to a conventional atmospheric reference level (commonly the 1-bar level), not a place where a person could stand. Values vary with latitude, altitude and the convention used.</p></div>
       </aside>
     </div>
     <div class="source-panel">
