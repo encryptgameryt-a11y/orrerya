@@ -24,19 +24,5 @@ const outer = planets.slice(4);
     @media(max-width:850px){.planet-directory{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:500px){.directory-tools{align-items:stretch;flex-direction:column;gap:8px}.directory-tools>span{padding:0}.planet-directory{gap:10px}}
   </style>
-  <script>
-    const input = document.querySelector<HTMLInputElement>("#planet-search");
-    const cards = Array.from(document.querySelectorAll<HTMLElement>(".directory-card"));
-    const count = document.querySelector<HTMLElement>("#planet-count");
-    input?.addEventListener("input", () => {
-      const query = input.value.trim().toLowerCase();
-      let visible = 0;
-      cards.forEach((card) => {
-        const matches = (card.dataset.planet || "").includes(query) || (card.dataset.type || "").includes(query);
-        card.hidden = !matches;
-        if (matches) visible += 1;
-      });
-      if (count) count.textContent = visible + (visible === 1 ? " world" : " worlds");
-    });
-  </script>
+  <script is:inline src="/scripts/planet-directory.js"></script>
 </SiteLayout>
