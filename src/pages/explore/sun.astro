@@ -16,7 +16,7 @@ const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photoj
     <div class="sun-physical-reference card">
       <div><span class="eyebrow">PHYSICAL DATA</span><h2>The Sun in numbers.</h2><p>These are rounded reference values. Mean radius describes an equivalent sphere; equatorial gravity is measured at the equator.</p></div>
       <div class="sun-physical-grid">
-        <div><span>Mass</span><strong>1.9884 × 10³⁰ kg</strong><small>332,900 Earth masses</small></div>
+        <div><span>Mass</span><strong>1.9884 × 10³⁰ kg</strong><small>{sunFacts.earthMasses.toLocaleString("en-US", { maximumFractionDigits: 0 })} Earth masses</small></div>
         <div><span>Mean radius</span><strong>695,700 km</strong><small>Mean diameter 1,391,400 km</small></div>
         <div><span>Mean density</span><strong>1,408 kg/m³</strong><small>0.255 × Earth's mean density</small></div>
         <div><span>Equatorial gravity</span><strong>274.0 m/s²</strong><small>About 28 × Earth's equatorial value</small></div>
@@ -25,7 +25,7 @@ const sunImage = "https://assets.science.nasa.gov/content/dam/science/psd/photoj
         <div><span>Spectral class</span><strong>G2 V</strong><small>G-type main-sequence star</small></div>
         <div><span>Core temperature</span><strong>~15.7 million K</strong><small>Model-dependent central value</small></div>
       </div>
-      <p class="sun-reference-note">The listed mass, 1.9884 × 10³⁰ kg, is NASA's rounded reference value—not an exact, immutable mass. For orbital dynamics, use the more precisely determined solar gravitational parameter, GM☉ = 1.32712440041279419 × 10²⁰ m³/s², published by JPL. Recovering mass from GM requires dividing by G, whose measurement uncertainty limits the mass precision. Sources: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noreferrer">NASA NSSDC Sun Fact Sheet ↗</a> · <a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noreferrer">JPL Astrodynamic Parameters ↗</a>. The Sun rotates differentially: the equator and higher latitudes have different rotation periods.</p>
+      <p class="sun-reference-note">The listed mass, 1.9884 × 10³⁰ kg, is NASA's rounded reference value—not an exact, immutable mass. For orbital dynamics, use the more precisely determined solar gravitational parameter, GM☉ = 1.32712440041279419 × 10²⁰ m³/s², published by JPL. Recovering mass from GM requires dividing by G, whose measurement uncertainty limits the mass precision. The Earth-mass ratio shown above is instead calculated directly from the Sun and Earth GM values in JPL's DE440 reference, so G cancels from the ratio. Sources: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noreferrer">NASA NSSDC Sun Fact Sheet ↗</a> · <a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noreferrer">JPL Astrodynamic Parameters ↗</a>. The Sun rotates differentially: the equator and higher latitudes have different rotation periods.</p>
     </div>
     <div class="sun-content">
       <article class="prose">
