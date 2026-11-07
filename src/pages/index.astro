@@ -24,7 +24,7 @@ const homeSummaries: Record<string, string> = {
         </div>
         <div class="orrery-hero-intro">
           <p class="orrery-hero-line">One star. Eight worlds. Endless wonder.</p>
-          <p class="orrery-hero-description">Start with the Sun and planets. Then head out to the icy worlds beyond Neptune.</p>
+          <p class="orrery-hero-description">Meet the Sun, eight planets and icy worlds beyond Neptune.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
             <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
@@ -496,6 +496,24 @@ const homeSummaries: Record<string, string> = {
       .home-hero.orrery-home-hero .orrery-home-inner { padding-top: 20px !important; }
       .home-hero.orrery-home-hero .orrery-map-frame {
         margin-top: 12px !important; padding: 12px 11px 10px !important;
+      }
+      /* Show a compact cross-section of the orbit diagram on the opening screen. */
+      .home-hero.orrery-home-hero .orrery-map-scroll {
+        height: 144px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .home-hero.orrery-home-hero .orrery-map {
+        transform: translateY(-63px);
+      }
+      .home-hero.orrery-home-hero .orrery-map-legend {
+        padding-top: 8px !important;
+        gap: 10px !important;
+        font-size: .59rem !important;
+      }
+      .home-hero.orrery-home-hero .orrery-map-legend .legend-note {
+        display: inline !important;
+        font-size: .58rem;
       }
       .home-hero.orrery-home-hero .orrery-map-topline {
         justify-content: space-between; align-items: center; flex-wrap: nowrap;
