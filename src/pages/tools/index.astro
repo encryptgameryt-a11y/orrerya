@@ -67,13 +67,17 @@ import { planets } from "../../data/planets";
         </div>
         <div class="orbit-controls">
           <div class="field"><label for="orbit-world">Choose a planet</label><select id="orbit-world">{planets.map((planet)=><option value={planet.distanceAu} data-a={planet.distanceAu} data-e={planet.eccentricity} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
-          <div class="field"><label for="orbit-angle">Move around the orbit <output id="orbit-angle-value" for="orbit-angle">0°</output></label><input id="orbit-angle" type="range" min="0" max="360" step="1" value="0" /></div>
+          <div class="field"><label for="orbit-angle">Move around the orbit <output id="orbit-angle-value" for="orbit-angle">0°</output></label><input id="orbit-angle" type="range" min="0" max="360" step="0.1" value="0" /></div>
+          <div class="orbit-play-row">
+            <button type="button" class="btn small secondary" id="orbit-play" aria-pressed="false">Play orbit</button>
+            <p id="orbit-play-status" class="orbit-play-status" role="status" aria-live="polite">Play to see the planet move faster near perihelion and slower near aphelion.</p>
+          </div>
           <div class="orbit-result-grid">
             <div class="orbit-result"><span>Distance from Sun</span><strong id="orbit-distance">0.983 AU</strong><small id="orbit-distance-km">147.1 million km</small></div>
             <div class="orbit-result"><span>Orbital speed</span><strong id="orbit-speed">30.3 km/s</strong><small id="orbit-speed-note">Faster near perihelion</small></div>
           </div>
           <div class="orbit-endpoints"><div><span>Perihelion · closest</span><strong id="orbit-peri">0.983 AU</strong></div><div><span>Aphelion · farthest</span><strong id="orbit-aphe">1.017 AU</strong></div></div>
-          <p class="orbit-model-note">Uses an idealised two-body orbit with the Sun's standard gravitational parameter. The slider is true anomaly (angle from perihelion). Planet positions and orbital sizes are schematic; this is not a real-time Solar System model.</p>
+          <p class="orbit-model-note">Uses an idealised two-body orbit with the Sun's standard gravitational parameter. The slider is the angle from perihelion. Playback completes one selected orbit in 24 seconds, preserving the changing speed along that ellipse; it does not compare the planets' actual year lengths. Positions and sizes are schematic.</p>
         </div>
       </div>
       <div class="orbit-equations"><div><span class="eyebrow">Distance along an ellipse</span><strong>r = a(1 − e²) / (1 + e cos ν)</strong></div><div><span class="eyebrow">Vis-viva equation</span><strong>v² = μ(2/r − 1/a)</strong></div></div>
@@ -176,9 +180,52 @@ import { planets } from "../../data/planets";
     const orbitSpeedNote = document.querySelector<HTMLElement>("#orbit-speed-note");
     const orbitPeri = document.querySelector<HTMLElement>("#orbit-peri");
     const orbitAphe = document.querySelector<HTMLElement>("#orbit-aphe");
+    const orbitPlay = document.querySelector<HTMLButtonElement>("#orbit-play");
+    const orbitPlayStatus = document.querySelector<HTMLElement>("#orbit-play-status");
     const AU_KM = 149597870.7;
     const SOLAR_MU = 1.32712440018e11;
+    const ORBIT_CYCLE_MS = 24000;
     const orbitFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
+    let orbitAnimationFrame = 0;
+    let orbitAnimationStart: number | null = null;
+    let startingMeanAnomaly = 0;
+
+    function meanAnomalyFromTrueAnomaly(trueAnomalyDegrees: number, eccentricity: number) {
+      const nu = trueAnomalyDegrees * Math.PI / 180;
+      const eccentricAnomaly = 2 * Math.atan2(
+        Math.sqrt(1 - eccentricity) * Math.sin(nu / 2),
+        Math.sqrt(1 + eccentricity) * Math.cos(nu / 2)
+      );
+      return eccentricAnomaly - eccentricity * Math.sin(eccentricAnomaly);
+    }
+
+    function trueAnomalyFromMeanAnomaly(meanAnomaly: number, eccentricity: number) {
+      const twoPi = 2 * Math.PI;
+      const M = ((meanAnomaly % twoPi) + twoPi) % twoPi;
+      let E = M;
+      for (let i = 0; i < 12; i++) {
+        const correction = (E - eccentricity * Math.sin(E) - M) / (1 - eccentricity * Math.cos(E));
+        E -= correction;
+        if (Math.abs(correction) < 1e-10) break;
+      }
+      const nu = 2 * Math.atan2(
+        Math.sqrt(1 + eccentricity) * Math.sin(E / 2),
+        Math.sqrt(1 - eccentricity) * Math.cos(E / 2)
+      );
+      return ((nu * 180 / Math.PI) % 360 + 360) % 360;
+    }
+
+    function stopOrbitAnimation(announce = true) {
+      if (orbitAnimationFrame) cancelAnimationFrame(orbitAnimationFrame);
+      orbitAnimationFrame = 0;
+      orbitAnimationStart = null;
+      if (orbitPlay) {
+        orbitPlay.textContent = "Play orbit";
+        orbitPlay.setAttribute("aria-pressed", "false");
+      }
+      if (announce && orbitPlayStatus) orbitPlayStatus.textContent = "Paused. Use the slider or play the orbit again.";
+    }
+
     function updateOrbit() {
       if (!orbitSelect || !orbitAngle || !orbitAngleValue || !orbitTrack || !orbitMarker || !orbitRadius || !orbitPhaseLabel || !orbitDistance || !orbitDistanceKm || !orbitSpeed || !orbitSpeedNote || !orbitPeri || !orbitAphe) return;
       const option = orbitSelect.selectedOptions[0];
@@ -212,8 +259,8 @@ import { planets } from "../../data/planets";
       orbitRadius.setAttribute("y1", String(focusY));
       orbitRadius.setAttribute("x2", String(markerX));
       orbitRadius.setAttribute("y2", String(markerY));
-      orbitAngleValue.textContent = degrees + "°";
-      orbitPhaseLabel.textContent = "TRUE ANOMALY · " + degrees + "°";
+      orbitAngleValue.textContent = degrees.toFixed(1) + "°";
+      orbitPhaseLabel.textContent = "TRUE ANOMALY · " + degrees.toFixed(1) + "°";
       orbitDistance.textContent = orbitFormatter.format(rAu) + " AU";
       orbitDistanceKm.textContent = orbitFormatter.format(rKm / 1e6) + " million km";
       orbitSpeed.textContent = orbitFormatter.format(velocity) + " km/s";
@@ -221,11 +268,61 @@ import { planets } from "../../data/planets";
       orbitPeri.textContent = orbitFormatter.format(periAu) + " AU";
       orbitAphe.textContent = orbitFormatter.format(apheAu) + " AU";
     }
-    orbitSelect?.addEventListener("change", updateOrbit);
-    orbitAngle?.addEventListener("input", updateOrbit);
+
+    function animateOrbit(timestamp: number) {
+      if (!orbitAnimationStart) orbitAnimationStart = timestamp;
+      const elapsed = (timestamp - orbitAnimationStart) % ORBIT_CYCLE_MS;
+      const option = orbitSelect?.selectedOptions[0];
+      const eccentricity = Number(option?.dataset.e);
+      if (!orbitAngle || !Number.isFinite(eccentricity) || eccentricity < 0 || eccentricity >= 1) {
+        stopOrbitAnimation();
+        return;
+      }
+      const meanAnomaly = startingMeanAnomaly + (2 * Math.PI * elapsed / ORBIT_CYCLE_MS);
+      const trueAnomaly = trueAnomalyFromMeanAnomaly(meanAnomaly, eccentricity);
+      orbitAngle.value = String(Math.round(trueAnomaly * 10) / 10);
+      updateOrbit();
+      orbitAnimationFrame = requestAnimationFrame(animateOrbit);
+    }
+
+    orbitPlay?.addEventListener("click", () => {
+      if (orbitAnimationFrame) {
+        stopOrbitAnimation();
+        return;
+      }
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (orbitPlayStatus) orbitPlayStatus.textContent = "Animation is disabled by your reduced-motion setting. You can still use the slider.";
+        return;
+      }
+      const option = orbitSelect?.selectedOptions[0];
+      const eccentricity = Number(option?.dataset.e);
+      const currentAngle = Number(orbitAngle?.value);
+      if (!orbitAngle || !Number.isFinite(eccentricity) || eccentricity < 0 || eccentricity >= 1 || !Number.isFinite(currentAngle)) return;
+      startingMeanAnomaly = meanAnomalyFromTrueAnomaly(currentAngle, eccentricity);
+      orbitAnimationStart = null;
+      orbitPlay.textContent = "Pause orbit";
+      orbitPlay.setAttribute("aria-pressed", "true");
+      if (orbitPlayStatus) orbitPlayStatus.textContent = "Playing one orbit in 24 seconds. The planet moves faster near perihelion and slower near aphelion.";
+      orbitAnimationFrame = requestAnimationFrame(animateOrbit);
+    });
+
+    orbitSelect?.addEventListener("change", () => {
+      stopOrbitAnimation(false);
+      updateOrbit();
+    });
+    orbitAngle?.addEventListener("input", () => {
+      if (orbitAnimationFrame) stopOrbitAnimation(false);
+      updateOrbit();
+    });
     updateOrbit();
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches && orbitPlay) {
+      orbitPlay.disabled = true;
+      orbitPlay.setAttribute("aria-label", "Orbit animation disabled because reduced motion is enabled");
+      if (orbitPlayStatus) orbitPlayStatus.textContent = "Animation is disabled by your reduced-motion setting. Use the slider to move the planet.";
+    }
   </script>
   <style>
-    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{display:block;font-size:.75rem;color:var(--gold)}.size-stage small{display:block;color:var(--cyan);font-size:.72rem;margin-top:5px}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.orbit-lab{margin-top:18px;padding:27px;scroll-margin-top:100px}.orbit-lab-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;margin-bottom:20px}.orbit-lab-heading h2{font-size:1.9rem;margin:8px 0}.orbit-lab-heading p{max-width:690px;font-size:.86rem;line-height:1.75;margin:0}.orbit-lab-layout{display:grid;grid-template-columns:1fr .9fr;gap:22px}.orbit-canvas{border:1px solid var(--line);border-radius:7px;background:radial-gradient(ellipse at 40% 50%,rgba(45,79,119,.2),transparent 62%),#091321;padding:12px;min-width:0}.orbit-canvas svg{width:100%;height:auto;display:block}.orbit-legend{display:flex;flex-wrap:wrap;gap:15px;color:var(--quiet);font-size:.68rem;padding:5px 8px}.orbit-legend span{display:flex;align-items:center;gap:7px}.orbit-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}.legend-sun{background:#edb966;box-shadow:0 0 9px #edb96688}.legend-planet{background:#8bc9dc}.orbit-controls{display:flex;flex-direction:column;justify-content:center}.orbit-controls .field{margin-top:11px}.orbit-controls input[type=range]{accent-color:var(--gold);padding:0;min-height:30px}.orbit-controls output{float:right;color:var(--gold);font-variant-numeric:tabular-nums}.orbit-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.orbit-result{padding:14px;border:1px solid var(--line);border-radius:5px;background:rgba(9,18,31,.7)}.orbit-result span,.orbit-result small{display:block;color:var(--quiet);font-size:.67rem}.orbit-result strong{display:block;color:var(--gold-bright);font:600 1.25rem "Space Grotesk",sans-serif;margin:7px 0 3px}.orbit-endpoints{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.orbit-endpoints div{border-top:1px solid var(--line);padding-top:10px}.orbit-endpoints span{display:block;color:var(--quiet);font-size:.67rem}.orbit-endpoints strong{display:block;color:var(--text);font-size:.85rem;margin-top:3px}.orbit-model-note{font-size:.69rem;line-height:1.6;color:var(--quiet);margin:16px 0 0}.orbit-equations{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}.orbit-equations>div{display:grid;gap:8px}.orbit-equations strong{font:500 clamp(.92rem,2vw,1.18rem) "Space Grotesk",sans-serif;color:var(--cyan)}.lab-launch-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:30px 0}.lab-launch-card{display:block;padding:24px;border:1px solid var(--line);border-radius:7px;background:linear-gradient(135deg,#142238,#0b1423);transition:transform .2s,border-color .2s}.lab-launch-card:hover{transform:translateY(-3px);border-color:rgba(230,200,142,.48)}.lab-launch-card h2{font-size:1.45rem;margin:10px 0}.lab-launch-card p{font-size:.82rem;line-height:1.7;min-height:56px}.lab-launch-card .text-link{font-size:.76rem}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:850px){.orbit-lab-layout{grid-template-columns:1fr}}@media(max-width:760px){.lab-launch-grid{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}.orbit-lab{padding:19px}.orbit-lab-heading{flex-direction:column}.orbit-equations{grid-template-columns:1fr}.orbit-result-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
+    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{display:block;font-size:.75rem;color:var(--gold)}.size-stage small{display:block;color:var(--cyan);font-size:.72rem;margin-top:5px}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.orbit-lab{margin-top:18px;padding:27px;scroll-margin-top:100px}.orbit-lab-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;margin-bottom:20px}.orbit-lab-heading h2{font-size:1.9rem;margin:8px 0}.orbit-lab-heading p{max-width:690px;font-size:.86rem;line-height:1.75;margin:0}.orbit-lab-layout{display:grid;grid-template-columns:1fr .9fr;gap:22px}.orbit-canvas{border:1px solid var(--line);border-radius:7px;background:radial-gradient(ellipse at 40% 50%,rgba(45,79,119,.2),transparent 62%),#091321;padding:12px;min-width:0}.orbit-canvas svg{width:100%;height:auto;display:block}.orbit-legend{display:flex;flex-wrap:wrap;gap:15px;color:var(--quiet);font-size:.68rem;padding:5px 8px}.orbit-legend span{display:flex;align-items:center;gap:7px}.orbit-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}.legend-sun{background:#edb966;box-shadow:0 0 9px #edb96688}.legend-planet{background:#8bc9dc}.orbit-controls{display:flex;flex-direction:column;justify-content:center}.orbit-controls .field{margin-top:11px}.orbit-controls input[type=range]{accent-color:var(--gold);padding:0;min-height:30px}.orbit-play-row{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}.orbit-play-row .btn{min-height:44px}.orbit-play-status{flex:1;min-width:180px;color:var(--quiet);font-size:.72rem;line-height:1.5;margin:0}.orbit-controls output{float:right;color:var(--gold);font-variant-numeric:tabular-nums}.orbit-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.orbit-result{padding:14px;border:1px solid var(--line);border-radius:5px;background:rgba(9,18,31,.7)}.orbit-result span,.orbit-result small{display:block;color:var(--quiet);font-size:.67rem}.orbit-result strong{display:block;color:var(--gold-bright);font:600 1.25rem "Space Grotesk",sans-serif;margin:7px 0 3px}.orbit-endpoints{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.orbit-endpoints div{border-top:1px solid var(--line);padding-top:10px}.orbit-endpoints span{display:block;color:var(--quiet);font-size:.67rem}.orbit-endpoints strong{display:block;color:var(--text);font-size:.85rem;margin-top:3px}.orbit-model-note{font-size:.69rem;line-height:1.6;color:var(--quiet);margin:16px 0 0}.orbit-equations{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}.orbit-equations>div{display:grid;gap:8px}.orbit-equations strong{font:500 clamp(.92rem,2vw,1.18rem) "Space Grotesk",sans-serif;color:var(--cyan)}.lab-launch-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:30px 0}.lab-launch-card{display:block;padding:24px;border:1px solid var(--line);border-radius:7px;background:linear-gradient(135deg,#142238,#0b1423);transition:transform .2s,border-color .2s}.lab-launch-card:hover{transform:translateY(-3px);border-color:rgba(230,200,142,.48)}.lab-launch-card h2{font-size:1.45rem;margin:10px 0}.lab-launch-card p{font-size:.82rem;line-height:1.7;min-height:56px}.lab-launch-card .text-link{font-size:.76rem}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:850px){.orbit-lab-layout{grid-template-columns:1fr}}@media(max-width:760px){.lab-launch-grid{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}.orbit-lab{padding:19px}.orbit-lab-heading{flex-direction:column}.orbit-equations{grid-template-columns:1fr}.orbit-result-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
   </style>
 </SiteLayout>
