@@ -93,7 +93,8 @@ import { planets } from "../../data/planets";
     } from "../../lib/orbital-mechanics.js";
     import {
       ASTRONOMICAL_UNIT_KM,
-      SPEED_OF_LIGHT_KM_S
+      SPEED_OF_LIGHT_KM_S,
+      EARTH_SIDEREAL_YEAR_DAYS
     } from "../../lib/scientific-constants.js";
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
     const massInput = document.querySelector<HTMLInputElement>("#mass-input");
@@ -171,7 +172,7 @@ import { planets } from "../../data/planets";
       if (!yearSelect || !yearResult || !yearSub) return;
       const days = Number(yearSelect.value);
       yearResult.textContent = formatter.format(days) + " days";
-      yearSub.textContent = "About " + formatter.format(days / 365.256) + " Earth years · " + (yearSelect.selectedOptions[0]?.dataset.name || "selected world");
+      yearSub.textContent = "About " + formatter.format(days / EARTH_SIDEREAL_YEAR_DAYS) + " Earth years · " + (yearSelect.selectedOptions[0]?.dataset.name || "selected world");
     }
     yearSelect?.addEventListener("change", updateYear);
     updateYear();
