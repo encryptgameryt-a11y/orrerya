@@ -51,14 +51,14 @@ export interface SolarBodyPhysical {
 }
 
 export const planetPhysics: SolarBodyPhysical[] = [
-  {name:"Mercury",type:"Terrestrial planet",massKg:3.30103e23,meanRadiusKm:2439.4,densityGcm3:5.4289,equatorialGravityMS2:3.70,escapeVelocityKmS:4.25,meanDistanceAU:0.3871,orbitDays:87.969,siderealRotationDays:58.6462},
-  {name:"Venus",type:"Terrestrial planet",massKg:4.86731e24,meanRadiusKm:6051.8,densityGcm3:5.243,equatorialGravityMS2:8.87,escapeVelocityKmS:10.36,meanDistanceAU:0.7233,orbitDays:224.701,siderealRotationDays:-243.018,note:"Retrograde rotation; negative sign denotes direction."},
-  {name:"Earth",type:"Terrestrial planet",massKg:5.97217e24,meanRadiusKm:6371.0084,densityGcm3:5.5134,equatorialGravityMS2:9.80,escapeVelocityKmS:11.19,meanDistanceAU:1,orbitDays:365.256,siderealRotationDays:0.99726968},
-  {name:"Mars",type:"Terrestrial planet",massKg:6.41691e23,meanRadiusKm:3389.50,densityGcm3:3.9340,equatorialGravityMS2:3.71,escapeVelocityKmS:5.03,meanDistanceAU:1.5237,orbitDays:686.98,siderealRotationDays:1.02595676},
-  {name:"Jupiter",type:"Gas giant",massKg:1.898125e27,meanRadiusKm:69911,densityGcm3:1.3262,equatorialGravityMS2:24.79,escapeVelocityKmS:60.20,meanDistanceAU:5.2028,orbitDays:4332.59,siderealRotationDays:0.41354},
-  {name:"Saturn",type:"Gas giant",massKg:5.68317e26,meanRadiusKm:58232,densityGcm3:0.6871,equatorialGravityMS2:10.44,escapeVelocityKmS:36.09,meanDistanceAU:9.5388,orbitDays:10759.2,siderealRotationDays:0.44401,note:"Very low bulk density; equatorial gravity includes rapid rotation and oblateness."},
-  {name:"Uranus",type:"Ice giant",massKg:8.68099e25,meanRadiusKm:25362,densityGcm3:1.270,equatorialGravityMS2:8.87,escapeVelocityKmS:21.38,meanDistanceAU:19.191,orbitDays:30688.5,siderealRotationDays:-0.71833,note:"Retrograde rotation; axial tilt is close to 98 degrees."},
-  {name:"Neptune",type:"Ice giant",massKg:1.024092e26,meanRadiusKm:24622,densityGcm3:1.638,equatorialGravityMS2:11.15,escapeVelocityKmS:23.56,meanDistanceAU:30.07,orbitDays:60182,siderealRotationDays:0.67125}
+  {name:"Mercury",type:"Terrestrial planet",massKg:3.30103e23,meanRadiusKm:2439.4,densityGcm3:5.4289,equatorialGravityMS2:3.70,escapeVelocityKmS:4.25,meanDistanceAU:0.3871,orbitDays:87.969257175,siderealRotationDays:58.6462},
+  {name:"Venus",type:"Terrestrial planet",massKg:4.86731e24,meanRadiusKm:6051.8,densityGcm3:5.243,equatorialGravityMS2:8.87,escapeVelocityKmS:10.36,meanDistanceAU:0.7233,orbitDays:224.700799215,siderealRotationDays:-243.018,note:"Retrograde rotation; negative sign denotes direction."},
+  {name:"Earth",type:"Terrestrial planet",massKg:5.97217e24,meanRadiusKm:6371.0084,densityGcm3:5.5134,equatorialGravityMS2:9.80,escapeVelocityKmS:11.19,meanDistanceAU:1,orbitDays:365.25635535,siderealRotationDays:0.99726968},
+  {name:"Mars",type:"Terrestrial planet",massKg:6.41691e23,meanRadiusKm:3389.50,densityGcm3:3.9340,equatorialGravityMS2:3.71,escapeVelocityKmS:5.03,meanDistanceAU:1.5237,orbitDays:686.9795859,siderealRotationDays:1.02595676},
+  {name:"Jupiter",type:"Gas giant",massKg:1.898125e27,meanRadiusKm:69911,densityGcm3:1.3262,equatorialGravityMS2:24.79,escapeVelocityKmS:60.20,meanDistanceAU:5.2028,orbitDays:4332.82012875,siderealRotationDays:0.41354},
+  {name:"Saturn",type:"Gas giant",massKg:5.68317e26,meanRadiusKm:58232,densityGcm3:0.6871,equatorialGravityMS2:10.44,escapeVelocityKmS:36.09,meanDistanceAU:9.5388,orbitDays:10755.6986445,siderealRotationDays:0.44401,note:"Very low bulk density; equatorial gravity includes rapid rotation and oblateness."},
+  {name:"Uranus",type:"Ice giant",massKg:8.68099e25,meanRadiusKm:25362,densityGcm3:1.270,equatorialGravityMS2:8.87,escapeVelocityKmS:21.38,meanDistanceAU:19.191,orbitDays:30687.1530015,siderealRotationDays:-0.71833,note:"Retrograde rotation; axial tilt is close to 98 degrees."},
+  {name:"Neptune",type:"Ice giant",massKg:1.024092e26,meanRadiusKm:24622,densityGcm3:1.638,equatorialGravityMS2:11.15,escapeVelocityKmS:23.56,meanDistanceAU:30.07,orbitDays:60190.02963,siderealRotationDays:0.67125}
 ];
 
 /**
