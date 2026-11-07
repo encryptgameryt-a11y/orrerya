@@ -8,8 +8,8 @@
  *
  * Outputs:
  * - mass in kg
- * - surface gravitational acceleration in m s^-2
- * - escape speed in km s^-1
+ * - reference gravitational acceleration at radius r in m s^-2
+ * - idealised spherical escape speed at radius r in km s^-1
  */
 function requirePositiveFinite(value, name) {
   if (!Number.isFinite(value) || value <= 0) {
@@ -26,7 +26,7 @@ export function massFromGM(gmKm3S2, gravitationalConstantKm3KgS2) {
 export function surfaceGravityFromGM(gmKm3S2, radiusKm) {
   requirePositiveFinite(gmKm3S2, "GM");
   requirePositiveFinite(radiusKm, "Radius");
-  // GM/r^2 is km s^-2; multiply by 1000 to return m s^-2.
+  // Spherical reference acceleration GM/r^2 is km s^-2; multiply by 1000 to return m s^-2.
   return (gmKm3S2 / (radiusKm * radiusKm)) * 1000;
 }
 
