@@ -39,7 +39,7 @@ export const sunFacts = {
   luminosityW: 3.828e26,
   spectralType: "G2 V",
   ageYears: 4.6e9,
-  rotation: "Differential; roughly 25 days at the equator and longer toward the poles",
+  rotation: "Differential; about 25 Earth days at the equator and 36 days at the poles",
   coreTemperatureK: 1.57e7
 } as const;
 
