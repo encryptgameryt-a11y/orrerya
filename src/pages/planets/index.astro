@@ -1,0 +1,42 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { planets } from "../../data/planets";
+const inner = planets.slice(0, 4);
+const outer = planets.slice(4);
+---
+<SiteLayout title="The eight planets" description="Explore Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune with NASA imagery, physical data and clear explanations.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Planets</span></div>
+  <header class="page-intro container"><div class="eyebrow">The planetary neighbourhood · 01—08</div><h1>Meet the eight planets.</h1><p class="lede">Eight very different worlds orbit one star. Four are rocky. Two are gas giants. Two are ice giants. Together, they reveal how diverse a planetary system can be.</p></header>
+  <section class="section container">
+    <div class="directory-tools"><div class="field"><label for="planet-search">Find a planet</label><input id="planet-search" type="search" placeholder="Search by name or type…" autocomplete="off" /></div><span id="planet-count" aria-live="polite">8 worlds</span></div>
+    <div class="directory-heading"><span class="eyebrow">The inner Solar System</span><h2>Rocky worlds</h2><p>Small, dense planets with solid surfaces, relatively high densities and metal-silicate interiors.</p></div>
+    <div class="planet-directory" id="inner-planets">
+      {inner.map((planet) => <a class="planet-card directory-card" data-planet={planet.name.toLowerCase()} data-type={planet.className.toLowerCase()} href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">{planet.order.toString().padStart(2, "0")} / 08 · {planet.className}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Open profile ↗</span></div></a>)}
+    </div>
+    <div class="directory-heading" id="outer-planets"><span class="eyebrow">The outer Solar System</span><h2>Giant worlds</h2><p>Vast planets with deep atmospheres, complex internal structures, rings and extensive moon systems.</p></div>
+    <div class="planet-directory">
+      {outer.map((planet) => <a class="planet-card directory-card" data-planet={planet.name.toLowerCase()} data-type={planet.className.toLowerCase()} href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">{planet.order.toString().padStart(2, "0")} / 08 · {planet.className}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Open profile ↗</span></div></a>)}
+    </div>
+    <div class="callout directory-callout"><strong>Why isn't Pluto included?</strong><p>Pluto is a dwarf planet, not one of the eight planets under the International Astronomical Union's 2006 classification. It orbits the Sun and is round, but it has not cleared the neighbourhood around its orbit. <a href="/explore/dwarf-planets/">Explore dwarf planets ↗</a></p></div>
+  </section>
+  <style>
+    .directory-tools{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:42px}.directory-tools .field{width:min(420px,100%);margin:0}.directory-tools>span{color:var(--quiet);font-size:.78rem;padding-bottom:12px}.directory-heading{margin:20px 0 22px}.directory-heading h2{margin:7px 0}.directory-heading p{margin:0;max-width:670px}.planet-directory{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.directory-heading:not(:first-of-type){margin-top:65px}.directory-callout{margin-top:32px}.directory-callout p{margin:8px 0 0}.directory-callout a{color:var(--gold)}
+    @media(max-width:850px){.planet-directory{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.directory-tools{align-items:stretch;flex-direction:column;gap:8px}.directory-tools>span{padding:0}.planet-directory{gap:10px}}
+  </style>
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#planet-search");
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".directory-card"));
+    const count = document.querySelector<HTMLElement>("#planet-count");
+    input?.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches = (card.dataset.planet || "").includes(query) || (card.dataset.type || "").includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (count) count.textContent = visible + (visible === 1 ? " world" : " worlds");
+    });
+  </script>
+</SiteLayout>

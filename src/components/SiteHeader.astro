@@ -1,0 +1,42 @@
+---
+interface Props { currentPath?: string }
+const { currentPath = "/" } = Astro.props;
+const links = [
+  { href: "/planets/", label: "Planets" },
+  { href: "/explore/", label: "Explore" },
+  { href: "/tools/", label: "Tools" },
+  { href: "/science/", label: "The science" }
+];
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/" aria-label="ORRERYA home">
+      <span class="wordmark-mark" aria-hidden="true">O<span>✦</span></span>
+      <span>ORRERY<span class="wordmark-gold">A</span><small>THE SOLAR SYSTEM, EXPLAINED</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+      <span></span><span></span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+      {links.map((link) => <a href={link.href} class:list={{ active: currentPath.startsWith(link.href) }}>{link.label}</a>)}
+      <a class="nav-cta" href="/about/">About ORRERYA <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+  const nav = document.querySelector<HTMLElement>("#primary-nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      toggle.setAttribute("aria-label", expanded ? "Open navigation" : "Close navigation");
+      nav.classList.toggle("is-open", !expanded);
+    });
+    nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open navigation");
+      nav.classList.remove("is-open");
+    }));
+  }
+</script>

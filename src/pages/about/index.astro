@@ -1,0 +1,29 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout title="About ORRERYA" description="About ORRERYA, an independent educational Solar System encyclopedia built around scientific accuracy, transparent sources and curiosity.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>About ORRERYA</span></div>
+  <header class="page-intro container"><div class="eyebrow">An independent learning project</div><h1>Science first.<br />Wonder always.</h1><p class="lede">ORRERYA is a growing Solar System encyclopedia designed to make planetary science clear, visual and trustworthy — without sanding away the interesting complexity.</p></header>
+  <section class="section container">
+    <div class="about-grid">
+      <article class="prose">
+        <h2>What we are building</h2>
+        <p>ORRERYA aims to bring together the Sun, planets, dwarf planets, moons, rings, small Solar System bodies, spacecraft exploration and the physics connecting them. The goal is not just to list facts, but to explain what the facts mean and how scientists know them.</p>
+        <h2>Our editorial principles</h2>
+        <ul><li><strong>Use primary and authoritative sources.</strong> NASA, JPL, the International Astronomical Union and other scientific institutions are starting points for factual claims.</li><li><strong>Show the measurement convention.</strong> Rotation period and solar day are not interchangeable. A gas giant's reference temperature is not a surface temperature.</li><li><strong>Mark uncertainty.</strong> Inferred, hypothesised and provisional ideas should be labelled as such. Moon tallies and mission status can change.</li><li><strong>Do not fake scale.</strong> Diagrams are labelled schematic unless they are built from accurate data and clearly documented assumptions.</li><li><strong>Keep explanations approachable.</strong> Technical terms should be explained, not hidden behind jargon.</li></ul>
+        <h2>Data and update policy</h2>
+        <p>Planetary data are rounded for readability and linked to NASA/JPL reference tables. Different sources may report slightly different values because they use different definitions, reference systems, epochs, measurement methods or rounding. Where that difference matters, the page should say so rather than imply false precision.</p>
+        <h2>Images and attribution</h2>
+        <p>Planet imagery is linked to the relevant NASA Science or NASA Photojournal record. Many NASA images are available for educational and informational use, but not every item hosted on a NASA website is necessarily NASA-owned. Some assets may have third-party rights or special restrictions. Always check the asset's own credit and the <a href="https://www.nasa.gov/nasa-brand-center/images-and-media/" target="_blank" rel="noreferrer">NASA image and media usage guidance</a> before reusing imagery outside this site. NASA insignia and identifiers are protected.</p>
+        <h2>Independence</h2>
+        <p>ORRERYA is an independent educational project and is not affiliated with, endorsed by or sponsored by NASA, JPL, ESA, IAU or any other space agency or scientific organisation. External names and links are used for attribution and further reading.</p>
+      </article>
+      <aside class="about-sidebar">
+        <div class="card card-pad"><span class="eyebrow">The standard</span><h3>Every number should have a trail.</h3><p>Reference tables, source links, image records and explicit caveats are part of the experience — not fine print hidden at the end.</p></div>
+        <div class="card card-pad"><span class="eyebrow">Start exploring</span><p><a class="text-link" href="/planets/">The eight planets ↗</a></p><p><a class="text-link" href="/science/">How the system works ↗</a></p><p><a class="text-link" href="/tools/">Interactive tools ↗</a></p></div>
+      </aside>
+    </div>
+    <div class="source-panel"><div><span class="eyebrow">Core reference library</span><h3>Sources used across ORRERYA</h3><p>These are authoritative starting points. Individual pages link to their specific image and topic sources as well.</p></div><ul class="source-list"><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://www.iau.org/static/resolutions/Resolution_GA26-5-6.pdf" target="_blank" rel="noreferrer">IAU — Resolution B5 (2006) ↗</a></li><li><a href="https://science.nasa.gov/photojournal/" target="_blank" rel="noreferrer">NASA — Photojournal ↗</a></li><li><a href="https://www.nasa.gov/nasa-brand-center/images-and-media/" target="_blank" rel="noreferrer">NASA — Images and media usage ↗</a></li></ul></div>
+  </section>
+  <style>.about-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.65fr);gap:45px;align-items:start}.about-sidebar{display:grid;gap:14px;position:sticky;top:100px}.about-sidebar h3{font:600 1.35rem "Space Grotesk",sans-serif;margin:10px 0}.about-sidebar p{font-size:.84rem;line-height:1.75}.source-panel{margin-top:45px}@media(max-width:800px){.about-grid{grid-template-columns:1fr}.about-sidebar{position:static}}</style>
+</SiteLayout>

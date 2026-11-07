@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://orrerya.pages.dev"
+  site: "https://orrerya.encryptgameryt.workers.dev",
+  output: "static"
 });

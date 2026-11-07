@@ -1,0 +1,61 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+const terms = [
+  ["Astronomical unit (AU)","A unit of length equal to exactly 149,597,870.7 kilometres, approximately Earth's mean distance from the Sun."],
+  ["Aphelion","The point in an object's orbit where it is farthest from the Sun."],
+  ["Asteroid","A small rocky or metallic body orbiting the Sun; asteroids occur in several orbital populations, not only the main belt."],
+  ["Axial tilt / obliquity","The angle between a body's rotation axis and a line perpendicular to its orbital plane. It is a major driver of seasons."],
+  ["Barycentre","The common centre of mass around which two or more gravitationally interacting bodies orbit."],
+  ["Comet","An icy Solar System body that can release gas and dust when heated by the Sun, forming a coma and sometimes tails."],
+  ["Density","Mass divided by volume. Bulk density offers clues about a world’s overall composition and internal structure."],
+  ["Eccentricity","A number describing how much an orbit differs from a circle. Zero is circular; values closer to one are more elongated for bound ellipses."],
+  ["Escape velocity","The minimum initial speed needed to escape a body's gravitational field in an idealised two-body setting, without further propulsion or drag."],
+  ["Exosphere","The extremely thin outer region of an atmosphere, where particles can travel long distances between collisions."],
+  ["Heliosphere","The vast region of space shaped by the solar wind and its interaction with the interstellar medium."],
+  ["Inclination","The tilt of an orbit relative to a chosen reference plane."],
+  ["Light-time","The time electromagnetic radiation takes to travel a distance. In vacuum, light travels at exactly 299,792,458 metres per second."],
+  ["Magnetosphere","The region around a body where its magnetic field strongly influences the motion of charged particles."],
+  ["Meteor","The visible atmospheric phenomenon produced when a meteoroid enters an atmosphere and heats the surrounding gas."],
+  ["Meteorite","A fragment of a meteoroid or larger body that survives passage through an atmosphere and reaches the ground."],
+  ["Meteoroid","A small natural solid object travelling through interplanetary space."],
+  ["Moon / natural satellite","A naturally occurring body that orbits a planet, dwarf planet or other larger body."],
+  ["Orbit","The gravitationally determined path of one body around another, or around a shared centre of mass."],
+  ["Perihelion","The point in an object's orbit where it is closest to the Sun."],
+  ["Resonance","A relationship between orbital or rotational periods that can produce repeated gravitational interactions or other periodic effects."],
+  ["Retrograde rotation","Rotation in the direction opposite to a body's usual or defined prograde direction. Venus rotates retrograde."],
+  ["Sidereal rotation period","The time a body takes to rotate once relative to distant stars."],
+  ["Solar day","The time between successive passages of the Sun across the same local meridian; it differs from sidereal rotation because the body also moves along its orbit."],
+  ["Solar wind","A continuous outflow of charged particles from the Sun's outer atmosphere."],
+  ["Tidal heating","Internal heat generated when gravitational forces flex a body and mechanical energy is dissipated through friction."],
+  ["AU, perihelion and aphelion","Distance and orbit terms that help describe where a body travels around the Sun."]
+];
+---
+<SiteLayout title="Solar System glossary" description="A plain-English glossary of Solar System science: AU, aphelion, eccentricity, heliosphere, magnetosphere, meteoroid, perihelion and more.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Glossary</span></div>
+  <header class="page-intro container"><div class="eyebrow">The language of planetary science</div><h1>Words for the worlds.</h1><p class="lede">A quick reference for the terms used across ORRERYA. Search for a word, then follow it into the explanation where it appears.</p></header>
+  <section class="section container">
+    <div class="field glossary-search"><label for="glossary-search">Search the glossary</label><input id="glossary-search" type="search" placeholder="Try “orbit”, “light-time” or “magnetosphere”…" autocomplete="off" /></div>
+    <p id="glossary-count" class="glossary-count" aria-live="polite">{terms.length} terms</p>
+    <dl class="glossary-list">{terms.map((term)=><div class="glossary-item" data-term={term[0].toLowerCase()} data-definition={term[1].toLowerCase()}><dt>{term[0]}</dt><dd>{term[1]}</dd></div>)}</dl>
+    <div id="glossary-empty" class="empty-state" hidden>No matching terms. Try a shorter search.</div>
+    <div class="callout glossary-note"><strong>Precision note</strong><p>Some terms have specialised meanings that depend on the context or reference frame. These are introductory definitions, not substitutes for formal standards or technical papers.</p></div>
+  </section>
+  <script>
+    const glossaryInput = document.querySelector<HTMLInputElement>("#glossary-search");
+    const glossaryItems = Array.from(document.querySelectorAll<HTMLElement>(".glossary-item"));
+    const glossaryCount = document.querySelector<HTMLElement>("#glossary-count");
+    const glossaryEmpty = document.querySelector<HTMLElement>("#glossary-empty");
+    glossaryInput?.addEventListener("input", () => {
+      const q = glossaryInput.value.trim().toLowerCase();
+      let visible = 0;
+      glossaryItems.forEach((item) => {
+        const match = (item.dataset.term || "").includes(q) || (item.dataset.definition || "").includes(q);
+        item.hidden = !match;
+        if (match) visible += 1;
+      });
+      if (glossaryCount) glossaryCount.textContent = visible + (visible === 1 ? " term" : " terms");
+      if (glossaryEmpty) glossaryEmpty.hidden = visible !== 0;
+    });
+  </script>
+  <style>.glossary-search{max-width:600px;margin:0 0 10px}.glossary-count{color:var(--quiet);font-size:.75rem}.glossary-list{border-top:1px solid var(--line);margin-top:22px}.glossary-item{display:grid;grid-template-columns:.55fr 1.45fr;gap:28px;padding:19px 0;border-bottom:1px solid var(--line)}.glossary-item dt{font:600 1.04rem "Space Grotesk",sans-serif;color:var(--gold-bright)}.glossary-item dd{margin:0;color:var(--muted);font-size:.88rem;line-height:1.8}.glossary-note{margin-top:30px}@media(max-width:600px){.glossary-item{grid-template-columns:1fr;gap:6px}}</style>
+</SiteLayout>

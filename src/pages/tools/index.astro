@@ -1,0 +1,122 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { planets } from "../../data/planets";
+---
+<SiteLayout title="Interactive Solar System tools" description="Try ORRERYA's free planetary weight calculator, AU and light-time converter, planet size comparison and orbital period tool.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Interactive tools</span></div>
+  <header class="page-intro container"><div class="eyebrow">Learn by experimenting · Free tools</div><h1>Make the numbers<br />mean something.</h1><p class="lede">A few small experiments can make planetary science feel real. Change a mass, choose another world or convert an astronomical distance — the calculations run right here in your browser.</p></header>
+  <section class="section container">
+    <div class="tools-grid">
+      <article class="card tool-panel" id="weight">
+        <span class="eyebrow">Tool 01 · Gravity</span><h2>Your weight, elsewhere.</h2><p>Mass is the amount of matter in you. Weight is the gravitational force acting on that mass. Your mass stays the same as you travel; your weight changes with local gravity.</p>
+        <div class="field"><label for="mass-input">Your mass (kilograms)</label><input id="mass-input" type="number" min="0" max="1000000" step="any" value="70" inputmode="decimal" /></div>
+        <div class="field"><label for="gravity-world">Choose a world</label><select id="gravity-world">{planets.map((planet)=><option value={planet.gravityValue} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+        <div class="result-box" aria-live="polite"><span>Gravitational force on you</span><strong id="weight-result">686 N</strong><span id="weight-subresult">Equivalent to about 70 kg on an Earth-calibrated scale.</span></div>
+        <p class="tool-footnote">Model: W = m × g. Uses the listed equatorial gravity values; real local gravity can vary with latitude, altitude and a world's rotation. This is not a prediction of how a spacesuit or spacecraft behaves.</p>
+      </article>
+      <article class="card tool-panel" id="distance">
+        <span class="eyebrow">Tool 02 · Distance & light</span><h2>How far is an AU?</h2><p>An astronomical unit (AU) is defined as exactly 149,597,870.7 kilometres. It is a useful unit for measuring distances within planetary systems.</p>
+        <div class="field"><label for="au-input">Distance (AU)</label><input id="au-input" type="number" min="0" max="1000000" step="any" value="1" inputmode="decimal" /></div>
+        <div class="result-box" aria-live="polite"><span>Distance in kilometres</span><strong id="km-result">149,597,871 km</strong><span id="light-result">Light travel time: 8 min 19 s</span></div>
+        <p class="tool-footnote">Uses the exact AU definition and the speed of light in vacuum, 299,792.458 km/s. Light time is a simple straight-line vacuum calculation.</p>
+      </article>
+      <article class="card tool-panel" id="compare">
+        <span class="eyebrow">Tool 03 · Planetary scale</span><h2>How big is that world?</h2><p>Compare a planet's equatorial diameter with Earth's. The circles use a common scale, capped so the largest planet fits on the card.</p>
+        <div class="field"><label for="size-world">Choose a planet</label><select id="size-world">{planets.map((planet)=><option value={planet.diameterKm} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+        <div class="size-stage"><div id="size-orb" class="size-orb" style="width:56px;height:56px"></div><div><strong id="size-name">Earth</strong><span id="size-diameter">12,756 km diameter</span><b id="size-ratio">1.00 × Earth's diameter</b></div></div>
+        <div class="scale-legend"><span>Relative diameter</span><span>Earth = 1</span></div>
+        <div class="scale-track"><span id="scale-fill" style="width:8.9%"></span></div>
+        <p class="tool-footnote">Diameter comparison only. It does not represent relative mass, density or surface area. Planet images are not drawn to this scale.</p>
+      </article>
+      <article class="card tool-panel" id="year">
+        <span class="eyebrow">Tool 04 · Orbital period</span><h2>How long is a year?</h2><p>A planet's orbital period is the time it takes to complete one orbit around the Sun relative to distant stars.</p>
+        <div class="field"><label for="year-world">Choose a planet</label><select id="year-world">{planets.map((planet)=><option value={planet.orbitDays} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
+        <div class="result-box" aria-live="polite"><span>One sidereal orbit</span><strong id="year-result">365.2 days</strong><span id="year-subresult">About 1.00 Earth years.</span></div>
+        <p class="tool-footnote">Uses rounded orbital periods from NASA's planetary fact sheet. A planet's sidereal year and a calendar or seasonal year are related but not always identical definitions.</p>
+      </article>
+    </div>
+    <div class="callout tools-note"><strong>These are transparent educational models.</strong><p>They use rounded reference values and standard equations. They are not a navigation system, a live ephemeris or a precision engineering tool. Open the linked NASA/JPL references for definitions, uncertainties and higher-precision parameters.</p></div>
+    <div class="source-panel"><div><span class="eyebrow">Calculation references</span><h3>Where the constants come from</h3><p>Planetary gravity and orbital values are taken from NASA/JPL and NASA NSSDCA tables.</p></div><ul class="source-list"><li><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">NASA/JPL — Planetary Physical Parameters ↗</a></li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA NSSDCA — Planetary Fact Sheet ↗</a></li><li><a href="https://www.iau.org/public/themes/measuring/" target="_blank" rel="noreferrer">International Astronomical Union — Measuring the Universe ↗</a></li></ul></div>
+  </section>
+  <script>
+    const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+    const massInput = document.querySelector<HTMLInputElement>("#mass-input");
+    const gravitySelect = document.querySelector<HTMLSelectElement>("#gravity-world");
+    const weightResult = document.querySelector<HTMLElement>("#weight-result");
+    const weightSub = document.querySelector<HTMLElement>("#weight-subresult");
+    function updateWeight() {
+      if (!massInput || !gravitySelect || !weightResult || !weightSub) return;
+      const mass = Number(massInput.value);
+      const gravity = Number(gravitySelect.value);
+      if (!Number.isFinite(mass) || mass < 0 || !Number.isFinite(gravity)) {
+        weightResult.textContent = "Enter a valid mass";
+        weightSub.textContent = "Use a non-negative number in kilograms.";
+        return;
+      }
+      const force = mass * gravity;
+      weightResult.textContent = formatter.format(force) + " N";
+      weightSub.textContent = "About " + formatter.format(force / 9.80665) + " kg-force on an Earth-calibrated scale · " + (gravitySelect.selectedOptions[0]?.dataset.name || "selected world");
+    }
+    massInput?.addEventListener("input", updateWeight);
+    gravitySelect?.addEventListener("change", updateWeight);
+    updateWeight();
+
+    const auInput = document.querySelector<HTMLInputElement>("#au-input");
+    const kmResult = document.querySelector<HTMLElement>("#km-result");
+    const lightResult = document.querySelector<HTMLElement>("#light-result");
+    function updateDistance() {
+      if (!auInput || !kmResult || !lightResult) return;
+      const au = Number(auInput.value);
+      if (!Number.isFinite(au) || au < 0) {
+        kmResult.textContent = "Enter a valid distance";
+        lightResult.textContent = "Use a non-negative number of AU.";
+        return;
+      }
+      const km = au * 149597870.7;
+      const seconds = km / 299792.458;
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remain = Math.round(seconds % 60);
+      kmResult.textContent = formatter.format(km) + " km";
+      lightResult.textContent = hours > 0 ? "Light travel time: " + hours + " h " + minutes + " min " + remain + " s" : "Light travel time: " + minutes + " min " + remain + " s";
+    }
+    auInput?.addEventListener("input", updateDistance);
+    updateDistance();
+
+    const sizeSelect = document.querySelector<HTMLSelectElement>("#size-world");
+    const sizeOrb = document.querySelector<HTMLElement>("#size-orb");
+    const sizeName = document.querySelector<HTMLElement>("#size-name");
+    const sizeDiameter = document.querySelector<HTMLElement>("#size-diameter");
+    const sizeRatio = document.querySelector<HTMLElement>("#size-ratio");
+    const scaleFill = document.querySelector<HTMLElement>("#scale-fill");
+    function updateSize() {
+      if (!sizeSelect || !sizeOrb || !sizeName || !sizeDiameter || !sizeRatio || !scaleFill) return;
+      const diameter = Number(sizeSelect.value);
+      const ratio = diameter / 12756;
+      const visualSize = Math.max(13, Math.min(188, 56 * ratio));
+      sizeOrb.style.width = visualSize + "px";
+      sizeOrb.style.height = visualSize + "px";
+      sizeName.textContent = sizeSelect.selectedOptions[0]?.dataset.name || "Selected world";
+      sizeDiameter.textContent = formatter.format(diameter) + " km diameter";
+      sizeRatio.textContent = formatter.format(ratio) + " × Earth's diameter";
+      scaleFill.style.width = Math.min(100, (diameter / 142984) * 100) + "%";
+    }
+    sizeSelect?.addEventListener("change", updateSize);
+    updateSize();
+
+    const yearSelect = document.querySelector<HTMLSelectElement>("#year-world");
+    const yearResult = document.querySelector<HTMLElement>("#year-result");
+    const yearSub = document.querySelector<HTMLElement>("#year-subresult");
+    function updateYear() {
+      if (!yearSelect || !yearResult || !yearSub) return;
+      const days = Number(yearSelect.value);
+      yearResult.textContent = formatter.format(days) + " days";
+      yearSub.textContent = "About " + formatter.format(days / 365.256) + " Earth years · " + (yearSelect.selectedOptions[0]?.dataset.name || "selected world");
+    }
+    yearSelect?.addEventListener("change", updateYear);
+    updateYear();
+  </script>
+  <style>
+    .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-panel{scroll-margin-top:100px}.tool-panel h2{font-size:1.8rem;margin:10px 0}.tool-panel>p{font-size:.84rem;line-height:1.75;min-height:70px}.tool-footnote{font-size:.71rem!important;color:var(--quiet);line-height:1.65!important;min-height:0!important;margin:14px 0 0}.tool-panel .result-box strong{font-size:1.55rem}.size-stage{display:flex;align-items:center;gap:20px;min-height:155px;padding:20px;margin-top:18px;background:radial-gradient(ellipse at 24% 50%,rgba(67,100,146,.2),transparent 55%),#0a1220;border:1px solid var(--line);border-radius:6px}.size-orb{flex:0 0 auto;max-width:188px;max-height:188px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b4e2ed,#4585ad 45%,#173b63 82%);box-shadow:inset -15px -9px 18px #0006,0 0 25px #5294c455;transition:width .2s,height .2s}.size-stage strong,.size-stage span,.size-stage b{display:block}.size-stage strong{font:600 1.1rem "Space Grotesk",sans-serif}.size-stage span{font-size:.76rem;color:var(--muted);margin:3px 0 10px}.size-stage b{font-size:.75rem;color:var(--gold)}.scale-legend{display:flex;justify-content:space-between;color:var(--quiet);font-size:.7rem;margin:12px 0 6px}.scale-track{height:7px;border-radius:99px;background:#24344b;overflow:hidden}.scale-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9bc6df,#e6c88e);transition:width .2s}.tools-note{margin-top:28px}.source-panel{margin-top:35px}@media(max-width:760px){.tools-grid{grid-template-columns:1fr}.tool-panel>p{min-height:0}}@media(max-width:470px){.tool-panel{padding:19px}.size-stage{gap:12px;padding:12px}.size-stage strong{font-size:1rem}}
+  </style>
+</SiteLayout>

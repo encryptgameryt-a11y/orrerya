@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+import "../styles/components.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  currentPath?: string;
+}
+const {
+  title = "A Solar System encyclopedia",
+  description = "Explore the Sun, eight planets, moons, dwarf planets and the science that connects our Solar System.",
+  image = "https://science.nasa.gov/wp-content/uploads/2023/11/mercury-messenger-globe-pia15162.jpg",
+  currentPath = Astro.url.pathname
+} = Astro.props;
+const fullTitle = title === "ORRERYA" ? title : title + " | ORRERYA";
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080d18" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://science.nasa.gov" />
+    <link rel="preconnect" href="https://assets.science.nasa.gov" />
+    <title>{fullTitle}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ORRERYA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <SiteHeader currentPath={currentPath} />
+    <main id="main"><slot /></main>
+    <SiteFooter />
+  </body>
+</html>

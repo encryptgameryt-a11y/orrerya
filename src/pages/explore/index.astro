@@ -1,0 +1,56 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { planets } from "../../data/planets";
+const first = planets[2];
+---
+<SiteLayout title="Explore the Solar System" description="Navigate the Solar System from the Sun through the eight planets to moons, dwarf planets, asteroids and the distant icy frontier.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><span>Explore</span></div>
+  <header class="page-intro container"><div class="eyebrow">A guided tour · The Solar System</div><h1>One system.<br />Many kinds of worlds.</h1><p class="lede">Start at the Sun, move outward through the planets, and keep going. The planetary system is surrounded by rings, moons, asteroids, comets and distant icy bodies — all shaped by gravity and time.</p></header>
+  <section class="section container">
+    <div class="explore-navigator card">
+      <div class="navigator-copy"><span class="eyebrow">Interactive field guide</span><h2>Choose a world.</h2><p>Select a planet to see its place in the sequence and open its full profile. The order is real; this graphic is intentionally not a scale model.</p>
+        <div class="navigator-buttons">{planets.map((planet) => <button type="button" class:list={{ selected: planet.slug === first.slug }} data-world={planet.slug} data-name={planet.name} data-type={planet.className} data-distance={planet.distance} data-orbit={planet.orbit} data-summary={planet.short}>{planet.order.toString().padStart(2, "0")} <span>{planet.name}</span></button>)}</div>
+      </div>
+      <div class="navigator-visual">
+        <div class="navigator-sun"></div><div class="navigator-line"></div>
+        <div class="navigator-info"><span class="eyebrow" data-selected-type>{first.className}</span><h3 data-selected-name>{first.name}</h3><p data-selected-summary>{first.short}</p><dl><div><dt>Average distance</dt><dd data-selected-distance>{first.distance}</dd></div><div><dt>One orbit</dt><dd data-selected-orbit>{first.orbit}</dd></div></dl><a class="btn" data-selected-link href={"/planets/" + first.slug + "/"}>Open planet profile ↗</a></div>
+      </div>
+      <p class="navigator-note">Schematic sequence only. Planet sizes, distances, orbital eccentricities and positions are not to scale and are not a live ephemeris.</p>
+    </div>
+  </section>
+  <section class="section container">
+    <div class="section-head"><div><div class="eyebrow">The star at the centre</div><h2>Everything begins with the Sun.</h2></div><p>The Sun supplies almost all the system's energy and contains nearly all of its mass. Its gravity governs the broad architecture of planetary orbits.</p></div>
+    <div class="feature-row"><div class="feature-orb sun-orb"></div><div><span class="eyebrow">01 · Our star</span><h3>The Sun</h3><p>A G-type main-sequence star powered by nuclear fusion in its core. Its magnetic field, solar wind and bursts of activity influence space throughout the planetary system.</p><a class="text-link" href="/explore/sun/">Explore the Sun ↗</a></div></div>
+    <div class="feature-row reverse"><div class="feature-orb belt-orb"></div><div><span class="eyebrow">02 · Small worlds</span><h3>The spaces between</h3><p>Rocky asteroids, icy comets and dwarf planets preserve clues to the Solar System's formation. Beyond Neptune, the Kuiper Belt holds many icy bodies.</p><a class="text-link" href="/explore/small-bodies/">Explore small bodies ↗</a></div></div>
+    <div class="feature-row"><div class="feature-orb moon-orb"></div><div><span class="eyebrow">03 · Worlds around worlds</span><h3>Moons and rings</h3><p>Natural satellites range from tiny captured rocks to worlds with atmospheres, active geology and subsurface oceans. Ring systems are made of orbiting particles.</p><a class="text-link" href="/explore/moons/">Explore moons & rings ↗</a></div></div>
+    <div class="feature-row reverse"><div class="feature-orb dwarf-orb"></div><div><span class="eyebrow">04 · Dwarf planets</span><h3>Small enough to be overlooked. Complex enough to surprise.</h3><p>Dwarf planets are round bodies that orbit the Sun but have not gravitationally cleared their orbital neighbourhood.</p><a class="text-link" href="/explore/dwarf-planets/">Explore dwarf planets ↗</a></div></div>
+  </section>
+  <section class="container section end-note"><div class="callout"><strong>How far does the Solar System extend?</strong><p>There is no single boundary that answers every version of that question. The planets occupy the inner region; the Kuiper Belt extends beyond Neptune; the heliosphere marks the changing influence of the solar wind; and the distant Oort Cloud is a hypothesised reservoir of icy bodies. The Sun's gravitational influence extends farther still.</p></div></section>
+  <style>
+    .explore-navigator{display:grid;grid-template-columns:1fr 1fr;gap:25px;padding:30px}.navigator-copy h2{margin:10px 0}.navigator-copy p{font-size:.88rem;line-height:1.7}.navigator-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:22px}.navigator-buttons button{background:#0b1422;border:1px solid var(--line);color:var(--muted);text-align:left;border-radius:5px;padding:11px 12px;cursor:pointer;font-size:.72rem}.navigator-buttons button span{color:var(--text);font-weight:700;margin-left:9px}.navigator-buttons button.selected{border-color:var(--gold);background:rgba(230,200,142,.08)}.navigator-buttons button.selected span{color:var(--gold-bright)}
+    .navigator-visual{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:330px;padding:25px 25px 25px 55px;background:radial-gradient(ellipse at 0% 50%,rgba(232,174,93,.09),transparent 45%),#0a1220;border:1px solid var(--line);border-radius:7px;overflow:hidden}.navigator-sun{position:absolute;left:-22px;top:50%;transform:translateY(-50%);height:50px;width:50px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#fff2bd,#e7ad5b 60%,#a65730);box-shadow:0 0 24px #e7ad5b77}.navigator-line{position:absolute;left:52px;top:0;bottom:0;border-left:1px dashed rgba(196,213,239,.23)}.navigator-info{position:relative}.navigator-info h3{font:600 2.8rem "Space Grotesk",sans-serif;margin:7px 0}.navigator-info p{font-size:.86rem;line-height:1.65}.navigator-info dl{margin:18px 0;display:grid;gap:8px}.navigator-info dl div{display:flex;justify-content:space-between;gap:10px;padding-top:8px;border-top:1px solid var(--line)}.navigator-info dt{color:var(--quiet);font-size:.72rem}.navigator-info dd{margin:0;text-align:right;font-size:.76rem;font-weight:650}.navigator-note{grid-column:1/-1;color:var(--quiet);font-size:.72rem;margin:0}
+    .feature-row{display:grid;grid-template-columns:.6fr 1fr;gap:35px;align-items:center;padding:30px 0;border-top:1px solid var(--line)}.feature-row.reverse{grid-template-columns:1fr .6fr}.feature-row.reverse .feature-orb{order:2}.feature-row h3{font:600 1.8rem "Space Grotesk",sans-serif;margin:8px 0}.feature-row p{max-width:680px;line-height:1.8}.feature-orb{height:175px;border-radius:9px;border:1px solid var(--line);background:radial-gradient(circle at 50% 50%,#213957,#0a1220 68%);position:relative;overflow:hidden}.feature-orb::after{content:"";position:absolute;width:90px;height:90px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:var(--orb);box-shadow:0 0 45px var(--orb)}.sun-orb{--orb:#e8af62}.belt-orb{--orb:#8a9cac}.belt-orb::before{content:"";position:absolute;inset:24px;border:1px dashed #b4bfcf55;border-radius:50%;transform:scaleY(.45) rotate(-20deg)}.moon-orb{--orb:#7d91a7}.dwarf-orb{--orb:#bd967d}
+    .end-note{padding-top:0}.end-note .callout{max-width:900px}
+    @media(max-width:800px){.explore-navigator{grid-template-columns:1fr}.navigator-visual{min-height:280px}.feature-row,.feature-row.reverse{grid-template-columns:1fr;gap:18px}.feature-row.reverse .feature-orb{order:0}.feature-orb{height:150px}}
+    @media(max-width:500px){.explore-navigator{padding:18px}.navigator-buttons{grid-template-columns:1fr 1fr}.navigator-visual{padding:24px 15px 24px 48px}.navigator-info h3{font-size:2.3rem}.navigator-info dl div{align-items:start;flex-direction:column}.navigator-info dd{text-align:left}}
+  </style>
+  <script>
+    const worldButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-world]"));
+    const nameEl = document.querySelector<HTMLElement>("[data-selected-name]");
+    const typeEl = document.querySelector<HTMLElement>("[data-selected-type]");
+    const summaryEl = document.querySelector<HTMLElement>("[data-selected-summary]");
+    const distanceEl = document.querySelector<HTMLElement>("[data-selected-distance]");
+    const orbitEl = document.querySelector<HTMLElement>("[data-selected-orbit]");
+    const linkEl = document.querySelector<HTMLAnchorElement>("[data-selected-link]");
+    worldButtons.forEach((button) => button.addEventListener("click", () => {
+      worldButtons.forEach((item) => item.classList.remove("selected"));
+      button.classList.add("selected");
+      if (nameEl) nameEl.textContent = button.dataset.name || "";
+      if (typeEl) typeEl.textContent = button.dataset.type || "";
+      if (summaryEl) summaryEl.textContent = button.dataset.summary || "";
+      if (distanceEl) distanceEl.textContent = button.dataset.distance || "";
+      if (orbitEl) orbitEl.textContent = button.dataset.orbit || "";
+      if (linkEl) linkEl.href = "/planets/" + button.dataset.world + "/";
+    }));
+  </script>
+</SiteLayout>

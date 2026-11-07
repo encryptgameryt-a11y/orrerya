@@ -1,0 +1,35 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+const moons = [
+  { name:"The Moon", host:"Earth", role:"Our nearest natural satellite", detail:"A differentiated rocky world whose formation is strongly linked to a giant impact early in Earth's history. Its gravity raises ocean tides and its surface preserves an ancient impact record." },
+  { name:"Phobos", host:"Mars", role:"A tiny, close-orbiting moon", detail:"An irregular body that orbits Mars very close to the planet. Tidal forces are slowly changing its orbit, and it may eventually break up or impact Mars." },
+  { name:"Deimos", host:"Mars", role:"A small outer companion", detail:"Smaller and more distant than Phobos, Deimos is an irregular moon with a heavily cratered surface." },
+  { name:"Io", host:"Jupiter", role:"The most volcanically active known world", detail:"Powerful tidal heating driven by Jupiter and orbital resonances with Europa and Ganymede energise hundreds of volcanoes." },
+  { name:"Europa", host:"Jupiter", role:"A leading ocean-world target", detail:"A water-ice shell covers a global salty ocean inferred from magnetic and geological evidence. Its potential habitability is a major scientific question." },
+  { name:"Ganymede", host:"Jupiter", role:"The largest moon in the Solar System", detail:"Ganymede is larger than Mercury and has its own intrinsic magnetic field. Evidence points to a deep subsurface ocean." },
+  { name:"Callisto", host:"Jupiter", role:"An ancient, heavily cratered world", detail:"Its ancient surface preserves an extensive impact record. Data suggest a possible subsurface ocean beneath its icy exterior." },
+  { name:"Titan", host:"Saturn", role:"A moon with a thick atmosphere", detail:"Titan has lakes, seas and rivers of liquid methane and ethane, weather, dunes and a nitrogen-rich atmosphere. It is an extraordinary natural laboratory for prebiotic chemistry." },
+  { name:"Enceladus", host:"Saturn", role:"An active ocean moon", detail:"Jets erupt from fractures near its south pole, carrying water-rich material from a subsurface ocean into space. Cassini sampled the plume." },
+  { name:"Triton", host:"Neptune", role:"A captured-world candidate", detail:"Triton orbits Neptune in a retrograde direction. Its unusual orbit and surface suggest it may have been captured from the outer Solar System." },
+  { name:"Charon", host:"Pluto", role:"A large companion in a binary-like system", detail:"Charon is so large relative to Pluto that the pair orbit a shared centre of mass outside Pluto's body. The system is often described as a binary dwarf-planet system." }
+];
+---
+<SiteLayout title="Moons and rings" description="Meet remarkable Solar System moons: Europa, Titan, Enceladus, Io, Ganymede, Triton and more. Learn how planetary rings work.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/explore/">Explore</a><span aria-hidden="true">/</span><span>Moons & rings</span></div>
+  <header class="page-intro container"><div class="eyebrow">Satellites · Rings · Ocean worlds</div><h1>Worlds around worlds.</h1><p class="lede">Some moons are more like planets than companions: they have weather, volcanoes, magnetic fields, underground oceans and landscapes shaped by tides.</p></header>
+  <section class="section container">
+    <div class="section-head"><div><div class="eyebrow">Selected natural satellites</div><h2>Meet the remarkable moons.</h2></div><p>This is a curated starting set, not a complete moon catalogue. Confirmed moon totals change as new discoveries are announced and objects are re-observed.</p></div>
+    <div class="moon-grid">{moons.map((moon, i) => <article class="card moon-card"><div class="moon-index">{String(i+1).padStart(2,"0")} <span>ORBITING {moon.host.toUpperCase()}</span></div><h3>{moon.name}</h3><span class="tag">{moon.role}</span><p>{moon.detail}</p></article>)}</div>
+    <div class="prose moon-prose">
+      <h2>How do moons form?</h2>
+      <p>Natural satellites have several possible origins. Some formed from discs of material around their host planet while it was assembling. Others may be fragments from giant impacts, captured objects that passed too close, or bodies altered by later collisions. A moon's orbit, composition and geology provide clues to its history.</p>
+      <h2>Tidal heating: turning gravity into geology</h2>
+      <p>When a moon follows an eccentric orbit, the gravitational pull from its planet changes during each orbit. The moon is flexed and squeezed. Internal friction can convert some of that mechanical energy into heat. Orbital resonances can maintain the eccentricity and keep tidal heating going. Io is the dramatic volcanic example; Europa and Enceladus are important ocean-world examples.</p>
+      <h2>What are planetary rings?</h2>
+      <p>Rings are collections of countless particles orbiting a planet, mostly in a thin disc. Saturn's rings are bright and extensive, but Jupiter, Uranus and Neptune also have ring systems. Ring particles may be dust, ice or rocky material, and their distribution is shaped by collisions, gravity and resonances with moons.</p>
+      <div class="callout"><strong>A moon can be a world in its own right.</strong><p>Europa's hidden ocean, Titan's hydrocarbon lakes, Enceladus's plume and Io's volcanoes show why planetary science increasingly treats moons as major destinations rather than footnotes.</p></div>
+    </div>
+    <div class="source-panel"><div><span class="eyebrow">Further reading</span><h3>Explore the primary science sources</h3><p>NASA's mission records and planetary science pages are good starting points for moon and ring research.</p></div><ul class="source-list"><li><a href="https://science.nasa.gov/solar-system/moons/" target="_blank" rel="noreferrer">NASA — Moons of the Solar System ↗</a></li><li><a href="https://science.nasa.gov/jupiter/moons/" target="_blank" rel="noreferrer">NASA — Jupiter's moons ↗</a></li><li><a href="https://science.nasa.gov/saturn/moons/" target="_blank" rel="noreferrer">NASA — Saturn's moons ↗</a></li><li><a href="https://science.nasa.gov/solar-system/rings/" target="_blank" rel="noreferrer">NASA — Planetary rings ↗</a></li></ul></div>
+  </section>
+  <style>.moon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.moon-card{padding:21px}.moon-index{color:var(--gold);font-size:.69rem;letter-spacing:.12em}.moon-index span{color:var(--quiet);margin-left:8px}.moon-card h3{font:600 1.4rem "Space Grotesk",sans-serif;margin:13px 0 10px}.moon-card p{font-size:.83rem;line-height:1.75;margin:13px 0 0}.moon-prose{margin-top:60px}.source-panel{margin-top:40px}@media(max-width:850px){.moon-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.moon-grid{grid-template-columns:1fr}}</style>
+</SiteLayout>

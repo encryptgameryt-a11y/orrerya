@@ -1,0 +1,30 @@
+.source-panel {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 35px;
+  padding: 26px;
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(16, 27, 45, .65);
+}
+.source-panel h3 { margin: 8px 0; font: 600 1.25rem "Space Grotesk", sans-serif; }
+.source-panel p { font-size: .82rem; line-height: 1.7; margin-bottom: 0; }
+.source-panel .source-list { margin: 0; }
+.hero-image .image-credit {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  bottom: 12px;
+  color: #f1f2f4;
+  font-size: .69rem;
+  text-shadow: 0 1px 7px #000;
+}
+.hero-image .image-credit a {
+  color: var(--gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+@media (max-width: 700px) {
+  .source-panel { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
+}
