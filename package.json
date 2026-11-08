@@ -8,8 +8,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:site": "node scripts/check-site.mjs",
-    "verify": "npm run test:physics && npm run test:contrast && npm run build && npm run check:site",
+    "verify": "npm run test:physics && npm run test:catalogue && npm run test:contrast && npm run build && npm run check:site",
     "test:physics": "node --test scripts/orbital-mechanics.test.mjs",
+    "test:catalogue": "node --experimental-strip-types --test scripts/catalogue-data.test.mjs",
     "test:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
