@@ -58,7 +58,9 @@ export const planetDataSources = {
     name: "NASA/JPL Solar System Dynamics — Planetary Physical Parameters",
     url: "https://ssd.jpl.nasa.gov/planets/phys_par.html",
     fields: ["mass", "equatorial radius", "mean radius", "bulk density", "sidereal rotation period", "sidereal orbital period", "equatorial gravity", "escape velocity"],
-    periodConversion: "Sidereal orbital periods are converted from Julian years using 365.25 days per Julian year."
+    periodConversion: "Sidereal orbital periods are converted from Julian years using 365.25 days per Julian year.",
+    gravityConvention: "JPL equatorial gravitational acceleration is derived from GM and equatorial radius; it is not an effective surface acceleration with the centrifugal contribution subtracted. Giant-planet equatorial radii are referenced to the 1-bar level.",
+    escapeVelocityConvention: "JPL's derived escape velocity uses the published volume-equivalent mean radius. For giant planets this is not the same reference radius as the equatorial 1-bar level."
   },
   factSheet: {
     name: "NASA NSSDCA — Planetary Fact Sheet",

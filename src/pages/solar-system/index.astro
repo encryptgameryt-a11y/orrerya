@@ -101,7 +101,7 @@ const moons = satellitePhysical.filter(m => moonShowcase.includes(m.name));
         <article><span class="group-mark gas"></span><h3>Gas giants</h3><p><strong>Jupiter and Saturn.</strong> Mostly hydrogen and helium, with deep atmospheres and no solid surface you could stand on.</p></article>
         <article><span class="group-mark ice"></span><h3>Ice giants</h3><p><strong>Uranus and Neptune.</strong> Their interiors contain large fractions of water-, ammonia- and methane-bearing material beneath hydrogen-rich atmospheres. “Ice” describes planetary-science volatiles, not necessarily ordinary surface ice.</p></article>
       </div>
-      <p class="table-footnote">Mass is total mass. Density is bulk mean density. Equatorial gravity includes the effect of rotation and the planet's shape. Escape velocity is the ideal speed from the reference surface, neglecting atmosphere and further propulsion. <a href={solarSystemSources.planets} target="_blank" rel="noreferrer">NASA/JPL physical parameter tables ↗</a></p>
+      <p class="table-footnote">Mass is total mass. Density is bulk mean density based on the published mean radius. JPL equatorial gravitational acceleration is derived from GM and equatorial radius, without subtracting centrifugal acceleration; for the giant planets the equatorial radius is at the 1-bar level. The escape speed is a separate idealised spherical value derived using JPL's volume-equivalent mean radius, not the gas-giant 1-bar equatorial radius. Neither value is a universal local scale reading. <a href={solarSystemSources.planets} target="_blank" rel="noreferrer">NASA/JPL physical parameter tables ↗</a></p>
     </div>
   </section>
 

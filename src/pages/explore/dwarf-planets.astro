@@ -1,6 +1,12 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { dwarfPlanets } from "../../data/solar-system";
+const formatRadius = (value: number, uncertainty?: number) =>
+  value.toFixed(1) + (uncertainty === undefined ? "" : " ± " + uncertainty.toFixed(1)) + " km";
+const formatMass = (value: number, uncertainty?: number) =>
+  value.toExponential(3) + (uncertainty === undefined ? "" : " ± " + uncertainty.toExponential(1)) + " kg";
+const formatDensity = (value: number, uncertainty?: number) =>
+  value.toFixed(3) + (uncertainty === undefined ? "" : " ± " + uncertainty.toFixed(3)) + " g/cm³";
 const dwarfs = [
   { name:"Ceres", region:"Main asteroid belt", fact:"The only dwarf planet in the inner Solar System. NASA's Dawn spacecraft found bright deposits, evidence of past and possibly present brine-related activity, and a complex icy-rocky history." },
   { name:"Pluto", region:"Kuiper Belt", fact:"A complex icy world with mountains, glaciers, a thin nitrogen-rich atmosphere and five known moons. New Horizons revealed a world far more geologically diverse than expected." },
@@ -18,12 +24,12 @@ const dwarfs = [
     <div class="dwarf-grid">{dwarfs.map((item,i)=><article class="card dwarf-card"><span class="dwarf-symbol">{["◉","●","⬭","◌","✧"][i]}</span><span class="eyebrow">{item.region}</span><h3>{item.name}</h3><p>{item.fact}</p></article>)}</div>
 
     <div class="dwarf-physical-reference">
-      <div class="section-head"><div><span class="eyebrow">MEASURED PHYSICAL PROPERTIES</span><h2>Size and physical properties</h2></div><p>These values use JPL's mean radius, bulk density, equatorial surface gravity and escape velocity. The mass and dimensions of distant bodies can carry larger uncertainties.</p></div>
+      <div class="section-head"><div><span class="eyebrow">PUBLISHED PHYSICAL PARAMETERS</span><h2>Size and physical properties</h2></div><p>These values follow JPL's published dwarf-planet parameter table. The quantities do not all have the same evidential status: JPL marks bulk density, equatorial gravity and escape velocity as derived from referenced measurements and model conventions. The mass and dimensions of distant bodies can carry larger uncertainties.</p></div>
       <div class="table-wrap"><table class="dwarf-physical-table">
-        <thead><tr><th>Object</th><th>Mass (kg)</th><th>Mean radius</th><th>Density</th><th>Equatorial gravity</th><th>Escape velocity</th><th>Rotation</th></tr></thead>
-        <tbody>{dwarfPlanets.map((d) => <tr><th>{d.name}</th><td>{d.massKg.toExponential(3)} kg</td><td>{d.meanRadiusKm.toLocaleString("en-US")} km</td><td>{d.densityGcm3} g/cm³</td><td>{d.equatorialGravityMS2} m/s²</td><td>{d.escapeVelocityKmS} km/s</td><td>{d.siderealRotationDays} days</td></tr>)}</tbody>
+        <thead><tr><th>Object</th><th>Mass (kg)</th><th>Mean radius · volume-equivalent</th><th>Equatorial radius</th><th>Bulk density*</th><th>Equatorial gravity*</th><th>Escape velocity*</th><th>Sidereal rotation</th></tr></thead>
+        <tbody>{dwarfPlanets.map((d) => <tr><th>{d.name}</th><td>{formatMass(d.massKg, d.massUncertaintyKg)}</td><td>{formatRadius(d.meanRadiusKm, d.meanRadiusUncertaintyKm)}</td><td>{d.equatorialRadiusKm === undefined ? "—" : formatRadius(d.equatorialRadiusKm, d.equatorialRadiusUncertaintyKm)}</td><td>{formatDensity(d.densityGcm3, d.densityUncertaintyGcm3)}</td><td>{d.equatorialGravityMS2} m/s²</td><td>{d.escapeVelocityKmS} km/s</td><td>{d.siderealRotationDays} days</td></tr>)}</tbody>
       </table></div>
-      <p class="dwarf-data-note">The JPL table reports an equivalent-volume mean radius. Haumea is markedly elongated; its mean radius is not the length of its longest axis. Values are rounded for display. <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">JPL source table ↗</a></p>
+      <p class="dwarf-data-note">JPL's mean radius is the radius of a sphere with the body's equivalent volume; the equatorial radius is a separate source-table quantity. This distinction is especially important for elongated Haumea (870 km equatorial radius versus 715 km mean radius). Quoted ± uncertainties are shown where JPL reports them; an absent uncertainty means the table does not provide one, not that the value is exact. Values marked with an asterisk are derived from referenced measurements and conventions, not independent direct measurements. <a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">JPL source table ↗</a></p>
     </div>
     <div class="dwarf-real-images">
       <figure><img src="https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA22485.width-1024.jpg" alt="NASA Dawn spacecraft view of Ceres's Occator Crater and bright salt deposits." loading="lazy"/><figcaption>Ceres · NASA Dawn · Occator Crater and bright deposits</figcaption></figure>

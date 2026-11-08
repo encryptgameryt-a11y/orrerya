@@ -34,29 +34,29 @@ import { ephemerisElements } from "../../data/ephemeris";
 
       <aside class="card ephem-summary">
         <span class="eyebrow">At a glance</span><h2>The planets<br />around the Sun.</h2>
-        <p>The geometry is heliocentric: each planet is plotted relative to the Sun. The table also gives each planet's geometric distance and direction as seen from Earth's centre at the selected instant.</p>
+        <p>The geometry is heliocentric: each planet is plotted relative to the Sun. The table also gives each planet's geometric distance and direction relative to the Earth–Moon barycentre (EMB), which JPL supplies as a close proxy for Earth's centre.</p>
         <div class="ephem-callout"><strong>What “today” means here</strong><p>The default instant is your device's current local time. The selected local instant is converted to a Julian date from its UTC timestamp. This educational implementation does not perform a full UTC-to-TDB time-scale conversion.</p></div>
         <a class="text-link" href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">Read the JPL method and accuracy notes ↗</a>
       </aside>
     </div>
 
     <div class="card ephem-table-card">
-      <div class="section-head"><div><div class="eyebrow">Computed coordinates</div><h2>Planet by planet.</h2></div><p>Earth distances are geometric, not light-time corrected apparent positions. “Light time” is a simple one-way vacuum estimate.</p></div>
+      <div class="section-head"><div><div class="eyebrow">Computed coordinates</div><h2>Planet by planet.</h2></div><p>EMB-relative distances are geometric, not light-time-corrected apparent positions. “Light time” is a one-way vacuum estimate from the Earth–Moon barycentre.</p></div>
       <div class="table-scroll">
         <table class="ephem-table">
-          <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">Earth distance</th><th scope="col">Geocentric ecliptic longitude</th><th scope="col">Light time</th></tr></thead>
+          <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">EMB distance*</th><th scope="col">EMB-centred ecliptic longitude*</th><th scope="col">Light time</th></tr></thead>
           <tbody>
             {ephemerisElements.map((planet) => <tr data-planet={planet.slug}><th scope="row"><span class="planet-swatch" style={"--planet:" + planet.color}></span>{planet.name}{planet.slug === "earth" ? "*" : ""}</th><td data-value="sun-distance">—</td><td data-value="earth-distance">—</td><td data-value="direction">—</td><td data-value="light-time">—</td></tr>)}
           </tbody>
         </table>
       </div>
-      <p class="ephem-note">* Earth's orbit uses the Earth–Moon barycentre elements supplied in the JPL source table, so this is a close approximation to Earth's centre rather than a lunar-resolved calculation.</p>
+      <p class="ephem-note">* JPL supplies the Earth–Moon barycentre (EMB), not Earth's centre, in Table 2a. Distances and directions in these columns are therefore EMB-centred geometric proxies; the Moon's position relative to Earth is not resolved.</p>
     </div>
 
     <div class="ephem-method prose">
       <span class="eyebrow">Model notes · Read before using</span>
       <h2>Model accuracy and limitations.</h2>
-      <p>This explorer implements NASA/JPL Solar System Dynamics Tables 2a and 2b: secular rates for the six Keplerian elements, the required periodic mean-anomaly corrections for Jupiter through Neptune, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. Table 2a is fitted for 3000 BCE–3000 CE; this browser date picker accepts 1–3000 CE. JPL's published nominal longitude errors for the long-range approximation vary by planet: about 20 arcseconds for Mercury, 40 for Venus and the Earth–Moon barycentre, 100 for Mars, 600 for Jupiter, 1,000 for Saturn, 2,000 for Uranus and 400 for Neptune. These are nominal model errors, not guaranteed bounds. JPL's formula expects a JDTDB ephemeris date; this browser version converts the selected local civil time to a UTC Julian date but does not apply a full UTC-to-TDB time-scale conversion.</p>
+      <p>This explorer implements NASA/JPL Solar System Dynamics Tables 2a and 2b: secular rates for the six Keplerian elements, the required periodic mean-anomaly corrections for Jupiter through Neptune, Kepler's equation, and a rotation into the J2000 mean ecliptic frame. Table 2a is fitted for 3000 BCE–3000 CE; this browser date picker accepts 1–3000 CE. JPL publishes nominal errors for longitude / latitude / heliocentric distance: Mercury 20″ / 15″ / 1,000 km; Venus 40″ / 30″ / 8,000 km; Earth–Moon barycentre 40″ / 15″ / 15,000 km; Mars 100″ / 40″ / 30,000 km; Jupiter 600″ / 100″ / 1,000,000 km; Saturn 1,000″ / 100″ / 4,000,000 km; Uranus 2,000″ / 30″ / 8,000,000 km; Neptune 400″ / 15″ / 4,000,000 km. These are nominal model errors, not guaranteed bounds. As a code-regression check, the shared calculation library is compared with JPL Horizons DE441 geometric vectors for all eight planets / the EMB at 1950-01-01, J2000, and 2026-11-08 TDB. All 24 position samples are held within a 1.5× guard around JPL's nominal figures; this is a small set of snapshots, not a proof of accuracy at every supported date. JPL's formula expects a JDTDB ephemeris date; this browser version converts the selected local civil time to a UTC Julian date but does not apply a full UTC-to-TDB time-scale conversion.</p>
       <p>The model is suitable for learning orbital geometry and seeing broad configurations. It is not an observational almanac, spacecraft navigation tool, or substitute for a numerically integrated ephemeris. It does not include light-time correction, aberration, perturbation integration or topocentric parallax. For high-precision work, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a>.</p>
       <p><strong>Source:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL Solar System Dynamics — Approximate Positions of the Planets ↗</a>.</p>
     </div>
@@ -68,6 +68,13 @@ import { ephemerisElements } from "../../data/ephemeris";
       ASTRONOMICAL_UNIT_KM,
       SPEED_OF_LIGHT_KM_S
     } from "../../lib/scientific-constants.js";
+    import {
+      elementsAt,
+      orbitalPlaneToEcliptic,
+      positionAt,
+      radians,
+      wrapPositive
+    } from "../../lib/jpl-approx-ephemeris.js";
 
     const dateField = document.querySelector<HTMLInputElement>("#ephemeris-date");
     const nowButton = document.querySelector<HTMLButtonElement>("#ephemeris-now");
@@ -81,57 +88,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     const center = 260;
     const scale = 7.15;
 
-    function radians(degrees: number) { return degrees * Math.PI / 180; }
-    function wrapSigned(degrees: number) { return ((degrees + 180) % 360 + 360) % 360 - 180; }
-    function wrapPositive(degrees: number) { return ((degrees % 360) + 360) % 360; }
     function number(value: number, digits = 3) { return new Intl.NumberFormat("en-US", { maximumFractionDigits: digits }).format(value); }
-
-    function elementsAt(item: typeof ephemerisElements[number], T: number) {
-      return {
-        a: item.a + item.aRate * T,
-        e: item.e + item.eRate * T,
-        inclination: radians(item.inclination + item.inclinationRate * T),
-        meanLongitude: item.meanLongitude + item.meanLongitudeRate * T,
-        perihelion: item.longitudePerihelion + item.longitudePerihelionRate * T,
-        node: item.longitudeNode + item.longitudeNodeRate * T
-      };
-    }
-
-    function orbitalPlaneToEcliptic(a: number, e: number, inclination: number, omega: number, node: number, E: number) {
-      const xPrime = a * (Math.cos(E) - e);
-      const yPrime = a * Math.sqrt(1 - e * e) * Math.sin(E);
-      const cosW = Math.cos(omega), sinW = Math.sin(omega);
-      const cosO = Math.cos(node), sinO = Math.sin(node);
-      const cosI = Math.cos(inclination), sinI = Math.sin(inclination);
-      const x = (cosW * cosO - sinW * sinO * cosI) * xPrime + (-sinW * cosO - cosW * sinO * cosI) * yPrime;
-      const y = (cosW * sinO + sinW * cosO * cosI) * xPrime + (-sinW * sinO + cosW * cosO * cosI) * yPrime;
-      const z = sinW * sinI * xPrime + cosW * sinI * yPrime;
-      return { x, y, z };
-    }
-
-    function solveKepler(meanAnomalyDegrees: number, eccentricity: number) {
-      const M = wrapSigned(meanAnomalyDegrees);
-      const eDegrees = eccentricity * 180 / Math.PI;
-      let E = M + eDegrees * Math.sin(radians(M));
-      for (let i = 0; i < 20; i++) {
-        const deltaM = M - (E - eDegrees * Math.sin(radians(E)));
-        const deltaE = deltaM / (1 - eccentricity * Math.cos(radians(E)));
-        E += deltaE;
-        if (Math.abs(deltaE) <= 1e-6) break;
-      }
-      return radians(E);
-    }
-
-    function positionAt(item: typeof ephemerisElements[number], T: number) {
-      const el = elementsAt(item, T);
-      const omegaDeg = el.perihelion - el.node;
-      const anomalyCorrection = item.b * T * T + item.c * Math.cos(radians(item.f * T)) + item.s * Math.sin(radians(item.f * T));
-      const meanAnomaly = el.meanLongitude - el.perihelion + anomalyCorrection;
-      const E = solveKepler(meanAnomaly, el.e);
-      const point = orbitalPlaneToEcliptic(el.a, el.e, el.inclination, radians(omegaDeg), radians(el.node), E);
-      const distance = Math.hypot(point.x, point.y, point.z);
-      return { ...point, distance, longitude: wrapPositive(Math.atan2(point.y, point.x) * 180 / Math.PI) };
-    }
 
     function makeSvgElement(name: string, attrs: Record<string, string>) {
       const node = document.createElementNS(SVG_NS, name);

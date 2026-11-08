@@ -19,7 +19,7 @@ Build and verify the static site:
 npm run verify
 ```
 
-The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow also runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants.
+The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants; checks key light-theme text colours against WCAG AA contrast; and verifies that every generated public HTML route appears exactly once in the XML sitemap.
 
 ## Site map
 
@@ -52,7 +52,7 @@ The Earth orbital row uses JPL's Earth–Moon barycentre elements as a close pro
 
 Scientific data snapshot: **8 November 2026**. Individual catalogue counts and mission schedules carry their own dates because they change independently.
 
-- Planet mass, equatorial radius, mean radius, bulk density, sidereal rotation, sidereal orbital period, equatorial gravity and escape velocity: [JPL Planetary Physical Parameters](https://ssd.jpl.nasa.gov/planets/phys_par.html). JPL defines mean radius as the radius of a sphere with equivalent volume. For gas giants, NASA's fact-sheet convention places gravity and escape velocity at the 1-bar atmospheric pressure level; it is not a solid surface.
+- Planet mass, equatorial radius, mean radius, bulk density, sidereal rotation, sidereal orbital period, equatorial gravity and escape velocity: [JPL Planetary Physical Parameters](https://ssd.jpl.nasa.gov/planets/phys_par.html). JPL defines mean radius as the radius of a sphere with equivalent volume. The NASA NSSDCA fact-sheet convention reports effective equatorial acceleration and escape velocity at the 1-bar level for gas giants. ORRERYA's JPL physical-parameter values use a different convention: equatorial gravitational acceleration is derived from GM/equatorial radius without subtracting centrifugal acceleration, while escape speed is derived using the volume-equivalent mean radius. The two source conventions are not interchangeable.
 - Mean distance from the Sun, perihelion and aphelion display values: [NASA NSSDCA Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/). These are not interchangeable with the full-precision J2000 semi-major axis used by the orbit tools.
 - Orbital semi-major axis, eccentricity, inclination and other elements: [JPL Approximate Positions, Tables 2a and 2b](https://ssd.jpl.nasa.gov/planets/approx_pos.html), referred to the J2000 mean ecliptic and equinox. Periodic Table 2b corrections are applied to Jupiter through Neptune. The Earth element represents the Earth–Moon barycentre, a close proxy for Earth's orbit.
 - Satellite mass, gravity and escape speed on the moons page are derived from JPL's satellite GM and mean radius. Mass requires division by G; surface gravity and escape speed follow from GM and radius. Those derived values inherit the uncertainties and conventions of their input measurements.
@@ -74,6 +74,20 @@ The mission timeline labels past missions by launch year. Future dates are publi
 
 NASA, JPL, ESA and mission imagery remains credited at the point of use. ORRERYA is an independent project and is not affiliated with or endorsed by those organisations.
 
+## Scientific data standard
+
+The project-wide evidence, unit, uncertainty, and provenance rules are documented in [the scientific data standard](docs/science-data-standard.md). In brief: every important quantity must have a defined unit and measurement convention; derived values must expose their inputs and equations; time-sensitive counts and mission dates must carry a dated snapshot; and hypotheses or model estimates must never be presented as direct observations.
+
+The long-range planetary-position tool must be described as an approximation. Its input elements are JPL Tables 2a and 2b, with the Earth–Moon barycentre used as the Earth-orbit proxy and no full UTC-to-TDB conversion. JPL Horizons remains the reference for high-precision ephemerides.
+
+## Scientific audit and ephemeris benchmark
+
+The page-by-page scientific review, data conventions, completed checks and remaining release gates are recorded in [the scientific and technical audit register](docs/scientific-audit-register.md). The shared JPL approximate ephemeris implementation is independently regression-tested against fixed NASA/JPL Horizons DE441 geometric vectors at 1950, J2000 and 2026 epochs. The exact request conventions, all 24 comparison samples and discrepancy summary are documented in [the ephemeris benchmark](docs/ephemeris-benchmark.md).
+
+The benchmark is a regression check at selected epochs, not a proof of accuracy across the whole 3000 BCE–3000 CE element-fit interval. The browser tool remains an approximate geometric model and does not yet perform a complete UTC-to-TDB conversion.
+
 ## Quality checks
 
-Every push to `main` and every pull request runs the GitHub Actions quality workflow. It installs the project dependencies, builds the static site and runs the generated-site integrity checks.
+Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the 13 orbital-physics tests, 6 catalogue/provenance tests, 2 Horizons ephemeris regression tests, selected WCAG AA colour-contrast checks, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
+
+A committed `package-lock.json` records the dependency graph resolved by Node.js 24/npm 11 in the GitHub Actions environment. CI uses `npm ci` so the build installs the exact dependency tree represented by that lockfile rather than resolving a new compatible tree on every run. Update the lockfile deliberately when changing dependencies and verify the result in CI.

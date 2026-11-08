@@ -215,12 +215,73 @@ try {
     }
   }
 
+
+  // Keep the XML sitemap in sync with every public HTML route. The 404 page
+  // is intentionally excluded because it is not an indexable destination.
+  const sitemapPath = path.join(root, "sitemap.xml");
+  let sitemapUrlsChecked = 0;
+  if (!await isFile(sitemapPath)) {
+    problems.push("sitemap.xml is missing from the generated site.");
+  } else {
+    const sitemapXml = await readFile(sitemapPath, "utf8");
+    if (!/<urlset\b/i.test(sitemapXml)) {
+      problems.push("sitemap.xml is missing the urlset root element.");
+    }
+    const sitemapLocations = [...sitemapXml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)]
+      .map(match => match[1].trim());
+    const actualRoutes = new Set();
+    for (const location of sitemapLocations) {
+      sitemapUrlsChecked++;
+      try {
+        const parsed = new URL(location);
+        if (parsed.origin !== siteOrigin) {
+          problems.push("sitemap.xml contains a non-canonical origin: " + location);
+          continue;
+        }
+        if (parsed.search || parsed.hash) {
+          problems.push("sitemap.xml contains a query or fragment: " + location);
+        }
+        const route = parsed.pathname === "/" ? "/" : parsed.pathname.endsWith("/")
+          ? parsed.pathname : parsed.pathname + "/";
+        if (actualRoutes.has(route)) {
+          problems.push("sitemap.xml contains a duplicate route: " + route);
+        }
+        actualRoutes.add(route);
+      } catch {
+        problems.push("sitemap.xml contains an invalid URL: " + location);
+      }
+    }
+
+    const expectedRoutes = new Set();
+    for (const file of htmlFiles) {
+      const relative = path.relative(root, file).replace(/\\/g, "/");
+      if (relative === "404.html") continue;
+      let route;
+      if (relative === "index.html") route = "/";
+      else if (relative.endsWith("/index.html")) route = "/" + relative.slice(0, -"index.html".length);
+      else if (relative.endsWith(".html")) route = "/" + relative.slice(0, -".html".length) + "/";
+      else continue;
+      expectedRoutes.add(route);
+    }
+    for (const route of expectedRoutes) {
+      if (!actualRoutes.has(route)) {
+        problems.push("sitemap.xml is missing the generated route: " + route);
+      }
+    }
+    for (const route of actualRoutes) {
+      if (!expectedRoutes.has(route)) {
+        problems.push("sitemap.xml includes a route with no generated HTML page: " + route);
+      }
+    }
+  }
+
   console.log("ORRERYA site checks");
   console.log("HTML pages checked: " + pagesChecked);
   console.log("Same-site links checked: " + linksChecked);
   console.log("Images checked for alt text: " + imagesChecked);
   console.log("Form controls checked for labels: " + formControlsChecked);
   console.log("Buttons checked for accessible names: " + buttonsChecked);
+  console.log("Sitemap URLs checked: " + sitemapUrlsChecked);
 
   if (problems.length) {
     console.error("\nFound " + problems.length + " issue(s):");
