@@ -96,12 +96,33 @@ test("JPL long-range orbital element catalogue contains one valid record per pla
     }
   }
 
+  // Exact published Table 2a semi-major axis/eccentricity values and Table
+  // 2b periodic coefficients. These catch accidental mixing of the shorter
+  // 1800–2050 Table 1 fit with the 3000 BCE–3000 CE Table 2a fit.
+  const published = {
+    mercury: [0.38709843, 0.20563661, 0, 0, 0, 0],
+    venus: [0.72332102, 0.00676399, 0, 0, 0, 0],
+    earth: [1.00000018, 0.01673163, 0, 0, 0, 0],
+    mars: [1.52371243, 0.09336511, 0, 0, 0, 0],
+    jupiter: [5.20248019, 0.04853590, -0.00012452, 0.06064060, -0.35635438, 38.35125000],
+    saturn: [9.54149883, 0.05550825, 0.00025899, -0.13434469, 0.87320147, 38.35125000],
+    uranus: [19.18797948, 0.04685740, 0.00058331, -0.97731848, 0.17689245, 7.67025000],
+    neptune: [30.06952752, 0.00895439, -0.00041348, 0.68346318, -0.10162547, 7.67025000]
+  };
+  for (const body of ephemerisElements) {
+    assert.deepEqual(
+      [body.a, body.e, body.b, body.c, body.s, body.f],
+      published[body.slug],
+      body.name + " must match JPL Tables 2a and 2b"
+    );
+  }
+
   const outerCorrections = ephemerisElements.filter(body =>
     ["jupiter", "saturn", "uranus", "neptune"].includes(body.slug)
   );
   assert.equal(outerCorrections.length, 4);
-  assert.ok(outerCorrections.some(body => body.c !== 0 || body.s !== 0),
-    "Jupiter through Neptune must retain non-zero Table 2b periodic corrections");
+  assert.ok(outerCorrections.every(body => body.c !== 0 && body.s !== 0),
+    "Every planet from Jupiter through Neptune must retain both periodic Table 2b coefficients");
 });
 
 test("dwarf-planet catalogue contains the five named reference worlds", () => {
