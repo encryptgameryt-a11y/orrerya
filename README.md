@@ -80,12 +80,14 @@ The project-wide evidence, unit, uncertainty, and provenance rules are documente
 
 The long-range planetary-position tool must be described as an approximation. Its input elements are JPL Tables 2a and 2b, with the Earth–Moon barycentre used as the Earth-orbit proxy and no full UTC-to-TDB conversion. JPL Horizons remains the reference for high-precision ephemerides.
 
-## Audit register
+## Scientific audit and ephemeris benchmark
 
-The verified foundation changes, scientific conventions and outstanding page-level review tasks are tracked in [the scientific and technical audit register](docs/scientific-audit-register.md). The register intentionally distinguishes automated checks from claims that still require expert/source-level review.
+The page-by-page scientific review, data conventions, completed checks and remaining release gates are recorded in [the scientific and technical audit register](docs/scientific-audit-register.md). The shared JPL approximate ephemeris implementation is independently regression-tested against fixed NASA/JPL Horizons DE441 geometric vectors at 1950, J2000 and 2026 epochs. The exact request conventions, all 24 comparison samples and discrepancy summary are documented in [the ephemeris benchmark](docs/ephemeris-benchmark.md).
+
+The benchmark is a regression check at selected epochs, not a proof of accuracy across the whole 3000 BCE–3000 CE element-fit interval. The browser tool remains an approximate geometric model and does not yet perform a complete UTC-to-TDB conversion.
 
 ## Quality checks
 
-Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the physics unit tests, the light-theme contrast audit, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
+Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the 13 orbital-physics tests, 6 catalogue/provenance tests, 2 Horizons ephemeris regression tests, selected WCAG AA colour-contrast checks, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
 
 A committed `package-lock.json` records the dependency graph resolved by Node.js 24/npm 11 in the GitHub Actions environment. CI uses `npm ci` so the build installs the exact dependency tree represented by that lockfile rather than resolving a new compatible tree on every run. Update the lockfile deliberately when changing dependencies and verify the result in CI.
