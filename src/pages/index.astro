@@ -7,10 +7,10 @@ const featured = planets.slice(0, 4);
 const outer = planets.slice(4);
 // Homepage diagram artwork: official NASA/JPL mission images, independent of profile-card assets.
 // Sources: Sun PIA26681 (SDO); Mercury PIA15162 (MESSENGER); Venus PIA23791 Figure B (Mariner 10, contrast-enhanced); Earth PIA18033 (Suomi NPP/VIIRS); Mars PIA00407 (Viking); Jupiter PIA04866 (Cassini); Saturn PIA06193 (Cassini); Uranus PIA18182 (Voyager 2); Neptune PIA01492 (Voyager 2).
-const sunDiagramImage = "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA26681.width-640.jpg";
+const sunDiagramImage = "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26681/PIA26681.jpg";
 const diagramArtwork: Record<string, string> = {
   mercury: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15162/PIA15162.jpg?w=640&h=640&fit=clip",
-  venus: "https://photojournal.jpl.nasa.gov/figures/PIA23791_fig2.jpg",
+  venus: "https://science.nasa.gov/wp-content/uploads/2024/03/venus-mariner-10-pia23791-fig2.jpg",
   earth: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA18033.width-640.jpg",
   mars: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA00407.width-640.jpg",
   jupiter: "https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA04866.jpg",
@@ -79,7 +79,7 @@ const homeSummaries: Record<string, string> = {
               <ellipse class="orrery-kuiper-orbit" cx="110" cy="210" rx="1125" ry="280" />
               <circle class="orrery-sun-halo" cx="110" cy="210" r="112" fill="url(#orrery-sun-halo)" />
               <circle class="orrery-sun-core" cx="110" cy="210" r="49" fill="url(#orrery-sun-fill)" />
-              <image class="orrery-sun-photo" href={sunDiagramImage} x="61" y="161" width="98" height="98" preserveAspectRatio="xMidYMid meet" />
+              <img class="orrery-sun-photo" src={sunDiagramImage} alt="NASA Solar Dynamics Observatory view of the Sun captured on 10 September 2025." loading="eager" decoding="async" fetchpriority="high" />
               <circle class="orrery-sun-edge" cx="110" cy="210" r="54" />
               <g class="orrery-asteroid-points">
                 <circle cx="568" cy="182" r="3.4"/><circle cx="580" cy="198" r="2.3"/><circle cx="592" cy="220" r="3"/>
