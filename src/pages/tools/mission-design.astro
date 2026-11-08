@@ -1,0 +1,146 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { ephemerisElements } from "../../data/ephemeris";
+---
+<SiteLayout title="Hohmann transfer planner" description="Explore an idealised heliocentric Hohmann transfer between planetary orbital radii, with transparent delta-v and flight-time calculations.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Hohmann transfer planner</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">TOOL 08 · MISSION DESIGN</div>
+    <h1>Plan an idealised<br /><span class="heading-muted">planet-to-planet transfer.</span></h1>
+    <p class="lede">Explore how a two-impulse Hohmann transfer connects two circular heliocentric orbits. Change the departure and destination worlds to see the idealised velocity changes, transfer time and launch phase angle.</p>
+  </header>
+  <section class="section container transfer-section">
+    <div class="transfer-controls card">
+      <div class="field"><label for="transfer-origin">Departure orbit</label><select id="transfer-origin">{ephemerisElements.map((planet) => <option value={planet.a} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name} · {planet.a.toFixed(3)} AU</option>)}</select></div>
+      <div class="transfer-arrow" aria-hidden="true">→</div>
+      <div class="field"><label for="transfer-destination">Destination orbit</label><select id="transfer-destination">{ephemerisElements.map((planet) => <option value={planet.a} data-name={planet.name} selected={planet.slug === "mars"}>{planet.name} · {planet.a.toFixed(3)} AU</option>)}</select></div>
+    </div>
+    <p id="transfer-status" class="transfer-status" role="status" aria-live="polite">Earth to Mars · idealised heliocentric transfer</p>
+    <div class="transfer-results">
+      <article class="card transfer-result transfer-result-primary"><span class="eyebrow">Ideal departure impulse</span><strong id="departure-dv">2.95 km/s</strong><p>Change in heliocentric speed at the departure orbit.</p></article>
+      <article class="card transfer-result"><span class="eyebrow">Ideal arrival impulse</span><strong id="arrival-dv">2.65 km/s</strong><p>Change in heliocentric speed to match the destination's circular orbit.</p></article>
+      <article class="card transfer-result"><span class="eyebrow">Total two-impulse Δv</span><strong id="total-dv">5.59 km/s</strong><p>Sum of the two heliocentric impulses only.</p></article>
+      <article class="card transfer-result"><span class="eyebrow">Transfer coast time</span><strong id="transfer-time">259 days</strong><p>Half the period of the transfer ellipse.</p></article>
+    </div>
+    <div class="transfer-diagram card">
+      <div class="transfer-diagram-heading"><div><span class="eyebrow">Transfer geometry</span><h2>From one orbit to another.</h2></div><span class="tag">Not to scale in body size</span></div>
+      <svg id="transfer-svg" viewBox="0 0 620 420" role="img" aria-labelledby="transfer-svg-title transfer-svg-desc">
+        <title id="transfer-svg-title">Idealised Hohmann transfer from Earth to Mars</title>
+        <desc id="transfer-svg-desc">A top-down schematic showing the Sun at one focus, a circular departure orbit, a circular destination orbit, and a half-ellipse transfer path tangent to both orbits.</desc>
+        <defs><radialGradient id="transfer-sun"><stop offset="0" stop-color="#fff0bf"/><stop offset=".7" stop-color="#e7a94e"/><stop offset="1" stop-color="#b56b31"/></radialGradient></defs>
+        <circle cx="310" cy="210" r="10" fill="url(#transfer-sun)"/>
+        <circle id="origin-orbit" cx="310" cy="210" r="75" fill="none" stroke="#73b7d9" stroke-width="1.7" stroke-dasharray="4 5"/>
+        <circle id="destination-orbit" cx="310" cy="210" r="145" fill="none" stroke="#d7a574" stroke-width="1.7" stroke-dasharray="4 5"/>
+        <path id="transfer-path" d="M 385 210 A 110 110 0 0 1 235 210" fill="none" stroke="#f1d8a9" stroke-width="3" stroke-linecap="round"/>
+        <circle id="origin-marker" cx="385" cy="210" r="6" fill="#73b7d9" stroke="#fff" stroke-width="1.5"/>
+        <circle id="destination-marker" cx="165" cy="210" r="6" fill="#d7a574" stroke="#fff" stroke-width="1.5"/>
+        <text x="310" y="236" text-anchor="middle" fill="#e8c98e" font-size="11" letter-spacing="1.3">SUN</text>
+        <text id="origin-label" x="390" y="195" fill="#a9d9ed" font-size="12">Earth</text>
+        <text id="destination-label" x="92" y="195" fill="#e7c29b" font-size="12">Mars</text>
+        <text x="310" y="32" text-anchor="middle" fill="#aab7c6" font-size="10" letter-spacing="1.2">SCHEMATIC HELIOCENTRIC VIEW</text>
+      </svg>
+      <div class="transfer-legend"><span><i class="legend-origin"></i> Departure circular orbit</span><span><i class="legend-destination"></i> Destination circular orbit</span><span><i class="legend-transfer"></i> Transfer ellipse</span></div>
+      <p class="transfer-phase">Ideal departure phase angle: <strong id="phase-angle">44°</strong>. The angle is destination-minus-origin longitude at departure; positive means the destination leads in the direction of orbital motion.</p>
+    </div>
+    <div class="transfer-secondary">
+      <article class="card"><span class="eyebrow">Launch-window rhythm</span><strong id="synodic-period">780 days</strong><p>Approximate synodic period: the time between similar relative alignments of the two planets in this circular-orbit model.</p></article>
+      <article class="card"><span class="eyebrow">Transfer orbit</span><strong id="transfer-axis">1.262 AU</strong><p>Semi-major axis of the idealised transfer ellipse, halfway between the two orbital radii.</p></article>
+    </div>
+    <div class="transfer-method prose">
+      <span class="eyebrow">Method · Assumptions · Sources</span>
+      <h2>What this calculator actually models.</h2>
+      <p>The planner assumes two circular, coplanar heliocentric orbits with radii equal to the selected planets' JPL semi-major axes. It computes the impulsive velocity changes needed to enter and leave a Hohmann transfer ellipse, using the Sun's JPL gravitational parameter. The transfer coast time is half the transfer ellipse's Keplerian period.</p>
+      <p><strong>Important:</strong> these are heliocentric velocity changes between idealised solar orbits. They are not launch-vehicle delta-v from Earth's surface or low Earth orbit, and they do not include escape from a planet's gravity well, capture into a real target orbit, inclination changes, eccentricity matching, finite-duration burns, gravity assists, launch-window constraints, spacecraft mass, propulsion performance or perturbations from other bodies. Real mission design needs a patched-conic or numerical trajectory design and mission-specific boundary conditions.</p>
+      <p>The plotted transfer is a schematic of the half-ellipse. Planet markers indicate the tangency geometry, not the actual planets' simultaneous positions on a selected departure date.</p>
+      <p><strong>References:</strong> <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">NASA/JPL approximate planetary orbital elements ↗</a>; <a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noreferrer">JPL astrodynamic parameters ↗</a>; <a href="https://spsweb.fltops.jpl.nasa.gov/portaldataops/mpg/MPG_Docs/MPG%20Book/Release/Chapter7-OrbitalMechanics.pdf" target="_blank" rel="noreferrer">JPL Fundamentals of Orbital Mechanics ↗</a>.</p>
+    </div>
+  </section>
+  <script>
+    import { hohmannTransfer } from "../../lib/mission-design.js";
+    const origin = document.querySelector<HTMLSelectElement>("#transfer-origin");
+    const destination = document.querySelector<HTMLSelectElement>("#transfer-destination");
+    const status = document.querySelector<HTMLElement>("#transfer-status");
+    const output = (id: string) => document.querySelector<HTMLElement>("#" + id);
+    const number = (value: number, digits = 2) => new Intl.NumberFormat("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value);
+    function update() {
+      if (!origin || !destination) return;
+      const from = Number(origin.value), to = Number(destination.value);
+      const fromName = origin.selectedOptions[0]?.dataset.name ?? "Departure";
+      const toName = destination.selectedOptions[0]?.dataset.name ?? "Destination";
+      if (Math.abs(from - to) < 1e-12) {
+        if (status) status.textContent = "Choose two different orbital radii to calculate a transfer.";
+        ["departure-dv","arrival-dv","total-dv","transfer-time","synodic-period","transfer-axis","phase-angle"].forEach((id) => { const node=output(id); if(node) node.textContent="—"; });
+        return;
+      }
+      const result = hohmannTransfer(from, to);
+      if (status) status.textContent = fromName + " to " + toName + " · idealised heliocentric transfer";
+      const set = (id: string, value: string) => { const node=output(id); if(node) node.textContent=value; };
+      set("departure-dv", number(result.departureDeltaVKmS) + " km/s");
+      set("arrival-dv", number(result.arrivalDeltaVKmS) + " km/s");
+      set("total-dv", number(result.totalDeltaVKmS) + " km/s");
+      set("transfer-time", Math.round(result.transferTimeDays).toLocaleString("en-US") + " days");
+      set("synodic-period", Math.round(result.synodicPeriodDays).toLocaleString("en-US") + " days");
+      set("transfer-axis", number(result.transferSemiMajorAxisAu,3) + " AU");
+      set("phase-angle", number(result.departurePhaseAngleDeg,1) + "°");
+      set("origin-label", fromName);
+      set("destination-label", toName);
+      set("transfer-svg-title", "Idealised Hohmann transfer from " + fromName + " to " + toName);
+      const max = Math.max(from,to);
+      const scale = 155 / max;
+      const r1 = from*scale, r2=to*scale;
+      const originOrbit=output("origin-orbit"), destinationOrbit=output("destination-orbit");
+      originOrbit?.setAttribute("r",String(r1));
+      destinationOrbit?.setAttribute("r",String(r2));
+      const right = to >= from;
+      const path = right
+        ? "M " + (310+r1) + " 210 A " + ((r1+r2)/2) + " " + ((r1+r2)/2) + " 0 0 1 " + (310-r2) + " 210"
+        : "M " + (310+r1) + " 210 A " + ((r1+r2)/2) + " " + ((r1+r2)/2) + " 0 0 0 " + (310-r2) + " 210";
+      output("transfer-path")?.setAttribute("d",path);
+      output("origin-marker")?.setAttribute("cx",String(310+r1));
+      output("destination-marker")?.setAttribute("cx",String(310-r2));
+      output("origin-label")?.setAttribute("x",String(318+r1));
+      output("destination-label")?.setAttribute("x",String(Math.max(20,302-r2-60)));
+      if (originOrbit) originOrbit.setAttribute("stroke", "#73b7d9");
+      if (destinationOrbit) destinationOrbit.setAttribute("stroke", "#d7a574");
+      const desc=output("transfer-svg-desc");
+      if(desc) desc.textContent="Schematic of a two-impulse Hohmann transfer from the " + fromName + " orbital radius to the " + toName + " orbital radius. Planetary sizes and simultaneous positions are not represented.";
+    }
+    origin?.addEventListener("change",update);
+    destination?.addEventListener("change",update);
+    update();
+  </script>
+  <style>
+    .heading-muted{color:#8796ad}
+    .transfer-section{padding-top:22px}
+    .transfer-controls{display:grid;grid-template-columns:1fr 40px 1fr;align-items:end;gap:18px;padding:22px}
+    .transfer-controls .field{margin:0}
+    .transfer-controls label{display:block;margin-bottom:7px;color:var(--muted);font-size:.8rem}
+    .transfer-controls select{width:100%;min-height:48px}
+    .transfer-arrow{display:grid;place-items:center;color:var(--gold-bright);font-size:1.5rem;padding-bottom:5px}
+    .transfer-status{margin:15px 2px;color:var(--gold-bright);font-weight:600;font-size:.82rem}
+    .transfer-results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .transfer-result{padding:20px;min-width:0}
+    .transfer-result strong{display:block;margin:12px 0 6px;color:var(--gold-bright);font:600 clamp(1.35rem,2.3vw,2rem) "Space Grotesk",sans-serif;font-variant-numeric:tabular-nums}
+    .transfer-result p,.transfer-secondary p{margin:0;color:var(--quiet);font-size:.76rem;line-height:1.6}
+    .transfer-result-primary{border-color:rgba(230,200,142,.42)}
+    .transfer-diagram{margin-top:16px;padding:24px}
+    .transfer-diagram-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+    .transfer-diagram-heading h2{font-size:1.65rem;margin:8px 0 0}
+    .transfer-diagram svg{display:block;width:100%;max-width:700px;margin:5px auto 0;max-height:440px}
+    .transfer-legend{display:flex;flex-wrap:wrap;gap:17px;color:var(--quiet);font-size:.7rem}
+    .transfer-legend span{display:flex;align-items:center;gap:7px}
+    .transfer-legend i{width:8px;height:8px;border-radius:50%}
+    .legend-origin{background:#73b7d9}.legend-destination{background:#d7a574}.legend-transfer{height:3px;background:#f1d8a9;border-radius:2px}
+    .transfer-phase{margin:13px 0 0;font-size:.78rem;color:var(--quiet)}
+    .transfer-phase strong{color:var(--gold-bright)}
+    .transfer-secondary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .transfer-secondary article{padding:20px}
+    .transfer-secondary article>strong{display:block;margin:8px 0;color:var(--cyan);font:600 1.45rem "Space Grotesk",sans-serif}
+    .transfer-method{margin:40px auto 0}
+    .transfer-method p{font-size:.91rem;line-height:1.8}
+    .transfer-method a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:850px){.transfer-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.transfer-controls{grid-template-columns:1fr;gap:8px}.transfer-arrow{transform:rotate(90deg);padding:0}.transfer-results{grid-template-columns:1fr 1fr}.transfer-result{padding:15px}.transfer-diagram{padding:17px}.transfer-diagram-heading{flex-direction:column}.transfer-secondary{grid-template-columns:1fr}}
+    @media(max-width:390px){.transfer-results{grid-template-columns:1fr}}
+  </style>
+</SiteLayout>
