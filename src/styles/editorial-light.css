@@ -1247,25 +1247,65 @@ a {
   overflow-wrap: break-word;
 }
 
-/* Compact calculators open as focused dialogs; advanced scientific models remain dedicated pages. */
+/* Compact calculators use native modal dialogs; complex models remain dedicated pages. */
 .calculator-launch-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-bottom:22px; }
 .calculator-launch-card { display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between; gap:12px; min-width:0; min-height:148px; padding:22px; text-align:left; border:1px solid rgba(25,47,70,.16); border-radius:14px; background:#fff; color:#142a40; cursor:pointer; box-shadow:0 12px 30px rgba(25,47,70,.055); transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .calculator-launch-card strong { color:#142a40; font:600 1.15rem/1.28 'Space Grotesk',Inter,sans-serif; }
 .calculator-launch-card .text-link { color:#174c70; font-size:.8rem; }
 .calculator-launch-card:hover { transform:translateY(-3px); border-color:rgba(152,113,62,.5); box-shadow:0 18px 38px rgba(25,47,70,.11); }
 .calculator-launch-card:active { transform:translateY(0); }
-.tool-dialog { position:fixed; z-index:1000; top:50%; left:50%; display:none; width:min(760px,calc(100vw - 32px)); max-width:none; max-height:min(88vh,900px); overflow:auto; margin:0; padding:clamp(20px,4vw,32px); transform:translate(-50%,-50%); border:1px solid rgba(25,47,70,.2); border-radius:18px; color:#142a40; background:#fff; box-shadow:0 28px 90px rgba(0,0,0,.38); }
-.tool-dialog.is-open { display:block; }
-.tool-dialog::before { content:''; position:fixed; z-index:-1; inset:0; background:rgba(4,8,13,.72); backdrop-filter:blur(5px); }
+.tool-dialog {
+  position:fixed; inset:50% auto auto 50%; margin:0; transform:translate(-50%,-50%);
+  width:min(760px,calc(100vw - 32px)); max-width:calc(100vw - 32px);
+  max-height:min(88dvh,900px); overflow:auto; overscroll-behavior:contain;
+  padding:clamp(20px,4vw,32px); border:1px solid rgba(25,47,70,.2);
+  border-radius:18px; color:#142a40; background:#fff;
+  box-shadow:0 28px 90px rgba(0,0,0,.38);
+}
+.tool-dialog:not([open]) { display:none; }
+.tool-dialog[open] { display:block; }
+.tool-dialog::backdrop { background:rgba(4,8,13,.72); backdrop-filter:blur(5px); }
 .tool-dialog-top { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:8px; }
 .tool-dialog-close { display:grid; place-items:center; flex:0 0 44px; width:44px; height:44px; min-height:44px; padding:0; border:1px solid rgba(25,47,70,.16); border-radius:50%; color:#18364f; background:#edf3f7; font-size:1.5rem; line-height:1; cursor:pointer; transition:background .18s ease, transform .18s ease; }
 .tool-dialog-close:hover { background:#e1ebf2; transform:rotate(4deg); }
 .tool-dialog h2 { max-width:25ch; }
 .orbit-model-launch { margin-top:14px; }
+@keyframes orrery-result-feedback {
+  0%, 100% { filter:brightness(1); }
+  42% { filter:brightness(1.13); }
+}
+.result-updated { animation:orrery-result-feedback 420ms ease-out; }
+
+@media (min-width:701px) and (max-width:920px) {
+  .home-facts { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home-planet-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home-outer-band { grid-template-columns:1fr; }
+  .home-planets-section .section-head { grid-template-columns:1fr; gap:12px; }
+  .home-planets-section .section-side { justify-self:start; text-align:left; max-width:620px; }
+  .tools-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
 @media (max-width:600px) {
   .calculator-launch-grid { grid-template-columns:1fr; }
   .calculator-launch-card { min-height:122px; padding:18px; }
-  .tool-dialog { top:auto; left:0; bottom:0; width:100%; max-width:none; height:min(94dvh,900px); max-height:94dvh; padding:20px 18px max(24px,env(safe-area-inset-bottom)); transform:none; border:1px solid rgba(25,47,70,.2); border-bottom:0; border-radius:20px 20px 0 0; }
+  .tool-dialog {
+    inset:auto 0 0; margin:0; transform:none; width:100%; max-width:100%;
+    max-height:min(94dvh,900px); padding:20px 18px max(24px,env(safe-area-inset-bottom));
+    border:1px solid rgba(25,47,70,.2); border-bottom:0; border-radius:20px 20px 0 0;
+  }
   .tool-dialog h2 { font-size:1.5rem; }
 }
-@media (prefers-reduced-motion: reduce) { .calculator-launch-card, .tool-dialog-close { transition:none !important; } }
+@media (max-width:380px) {
+  .container { width:min(var(--max),calc(100% - 28px)); }
+  .home-facts { gap:14px 8px; }
+  .home-facts > div { min-width:0; }
+  .home-facts strong { font-size:clamp(1.2rem,6vw,1.45rem); overflow-wrap:anywhere; }
+  .home-facts span { font-size:.72rem; line-height:1.45; }
+  .planet-card-body { padding:12px; }
+  .planet-card-body p { overflow-wrap:anywhere; }
+  .tool-dialog { padding-inline:16px; }
+  .size-stage { gap:12px; padding:12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .calculator-launch-card, .tool-dialog-close, .result-updated { transition:none !important; animation:none !important; }
+  .calculator-launch-card:hover, .tool-dialog-close:hover { transform:none !important; }
+}
