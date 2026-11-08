@@ -2,7 +2,7 @@ import {
       ASTRONOMICAL_UNIT_KM,
       SPEED_OF_LIGHT_KM_S,
       EARTH_SIDEREAL_YEAR_DAYS
-    } from "../../lib/scientific-constants.js";
+    } from "../lib/scientific-constants.js";
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
     function pulseResult(target) {
       if (!target) return;
