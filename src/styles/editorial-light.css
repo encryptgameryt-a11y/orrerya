@@ -610,24 +610,55 @@ body.home-nebula .orrery-home-hero .orrery-hero-bottom a {
 body.home-nebula .orrery-home-hero .orrery-hero-bottom .line {
   background: rgba(255,255,255,.34) !important;
 }
-/* The atlas remains a bright, precise instrument panel against the dark page. */
+/* The orbital atlas uses a restrained dark field; labels and geometry remain unchanged. */
 body.home-nebula .orrery-map-frame {
-  background: #f7f8f7 !important;
-  border: 1px solid rgba(255,255,255,.22) !important;
+  background: #08090b !important;
+  border: 1px solid rgba(196,177,138,.22) !important;
   border-radius: 12px;
-  box-shadow: 0 18px 46px rgba(0,0,0,.30) !important;
+  box-shadow: 0 18px 42px rgba(0,0,0,.42) !important;
 }
 body.home-nebula .orrery-map {
-  background: linear-gradient(180deg,#fff,#f1f2ef) !important;
+  background:
+    radial-gradient(ellipse at 8% 50%, rgba(196,177,138,.075), transparent 18%),
+    linear-gradient(180deg,#0b0c0f,#08090b) !important;
+  border-block-color: rgba(196,177,138,.13) !important;
+}
+body.home-nebula .orrery-orbits ellipse {
+  stroke: rgba(181,190,198,.48) !important;
+  opacity: .42 !important;
+}
+body.home-nebula .orrery-kuiper-orbit {
+  stroke: #ad9974 !important;
+  opacity: .72 !important;
+}
+body.home-nebula .orrery-map-captions text {
+  fill: #c9c0ae !important;
+}
+body.home-nebula .orrery-map-captions path {
+  stroke: #a99162 !important;
+}
+body.home-nebula .orrery-asteroid-points circle {
+  fill: #b59d79 !important;
+}
+body.home-nebula .orrery-kuiper-points circle {
+  fill: #9aa8b4 !important;
 }
 body.home-nebula .orrery-world span {
-  color: #171717 !important;
-  background: rgba(255,255,255,.94) !important;
+  color: #e5e1d8 !important;
+  background: rgba(8,9,11,.92) !important;
+  border: 1px solid rgba(255,255,255,.10);
 }
 body.home-nebula .orrery-map-topline,
 body.home-nebula .orrery-map-legend,
 body.home-nebula .orrery-map-note {
-  color: #555 !important;
+  color: #b8b1a4 !important;
+}
+body.home-nebula .orrery-map-legend .legend-note {
+  color: #a9a194 !important;
+}
+body.home-nebula .orrery-sun-photo {
+  opacity: .98;
+  mix-blend-mode: screen;
 }
 /* Facts and editorial headings float over the nebula, never over a blue panel. */
 body.home-nebula .home-facts {
