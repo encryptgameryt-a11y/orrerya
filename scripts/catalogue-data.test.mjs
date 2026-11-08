@@ -158,7 +158,9 @@ test("dwarf-planet catalogue contains the five named reference worlds", () => {
   assert.equal(pluto.meanRadiusUncertaintyKm, 1.6);
   assert.equal(pluto.massUncertaintyKg, 6.0e18);
   const makemake = dwarfPlanets.find(body => body.name === "Makemake");
-  assert.equal(makemake.meanRadiusUncertaintyKm, 7);
+  assert.equal(makemake.equatorialRadiusUncertaintyKm, 7);
+  assert.equal(makemake.meanRadiusUncertaintyKm, undefined,
+    "JPL does not quote a ± uncertainty for Makemake's mean radius in this table");
   const eris = dwarfPlanets.find(body => body.name === "Eris");
   assert.equal(eris.meanRadiusUncertaintyKm, 50);
   assert.equal(eris.massUncertaintyKg, 2.0e20);
