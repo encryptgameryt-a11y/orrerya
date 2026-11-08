@@ -31,7 +31,7 @@ The production build is written to `dist/`. `npm run check:site` checks generate
 - `/science/planetary-migration/` — planetary migration explainer
 - `/missions/` — spacecraft and mission history
 - `/glossary/` — searchable astronomy terminology
-- `/tools/` — calculators, orbit visualisation, correlation analysis and planetary positions
+- `/tools/` — calculators, 2D/3D orbital models, Hohmann-transfer planning, spectroscopy, correlation analysis and planetary positions
 - `/about/` — editorial policy, image attribution and corrections
 
 ## Scientific methods and limitations
@@ -60,6 +60,12 @@ Scientific data snapshot: **8 November 2026**. Individual catalogue counts and m
 - The Sun's **99.87%** figure on the homepage is calculated from the Sun plus the eight planets only. It excludes moons and minor bodies. NASA's approximate **99.85%** whole-Solar-System mass share is a separate inventory estimate. The two values intentionally have different denominators.
 - The age **4.56730 ± 0.00016 billion years** refers to the dated formation interval of calcium–aluminium-rich inclusions (CAIs) in primitive meteorites, among the earliest known solids. It does not mean all planets finished forming at that instant. NASA's general Solar System age is commonly rounded to about 4.6 billion years.
 - The moon-page total of 461 recognised planetary satellites is a dated catalogue snapshot (JPL catalogue checked 4 November 2026; NASA page checked October 2026). It is not a count of every moon orbiting every asteroid or other small body.
+
+The 3D orbital explorer uses the same JPL approximate Keplerian elements to show inclinations and positions in a WebGL scene. Its compressed mode uses logarithmic radial mapping; its linear AU mode preserves relative orbital distances but intentionally exaggerates planet diameters. Camera controls orbit, pan and zoom; this is not a six-degree-of-freedom flight camera or a multi-body integrator.
+
+The Hohmann transfer planner is an idealised heliocentric, two-impulse calculation between circular coplanar orbits. Its delta-v values are not a launch-from-surface or low-Earth-orbit mission budget. It omits planetary gravity assists, inclination changes, finite burns, launch-window constraints and N-body perturbations.
+
+The spectroscopy lab initially presents NASA's published JWST/NIRSpec PRISM spectrum of WASP-39 b with wavelength intervals from NASA's annotated asset page and detection significances from the associated Nature paper. It does not digitise spectral points or infer new abundances. Raw public JWST products and associated research data remain available through [MAST](https://archive.stsci.edu/missions-and-data/jwst) and [Zenodo](https://doi.org/10.5281/zenodo.7388032).
 
 The mission timeline labels past missions by launch year. Future dates are published agency plans, not guarantees; check the linked NASA, ESA or JAXA mission page before relying on a schedule.
 
