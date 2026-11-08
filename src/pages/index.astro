@@ -79,7 +79,6 @@ const homeSummaries: Record<string, string> = {
               <ellipse class="orrery-kuiper-orbit" cx="110" cy="210" rx="1125" ry="280" />
               <circle class="orrery-sun-halo" cx="110" cy="210" r="112" fill="url(#orrery-sun-halo)" />
               <circle class="orrery-sun-core" cx="110" cy="210" r="49" fill="url(#orrery-sun-fill)" />
-              <img class="orrery-sun-photo" src={sunDiagramImage} alt="NASA Solar Dynamics Observatory view of the Sun captured on 10 September 2025." loading="eager" decoding="async" fetchpriority="high" />
               <circle class="orrery-sun-edge" cx="110" cy="210" r="54" />
               <g class="orrery-asteroid-points">
                 <circle cx="568" cy="182" r="3.4"/><circle cx="580" cy="198" r="2.3"/><circle cx="592" cy="220" r="3"/>
@@ -105,6 +104,7 @@ const homeSummaries: Record<string, string> = {
                 <text x="1265" y="382" text-anchor="middle">KUIPER BELT</text>
               </g>
             </svg>
+            <img class="orrery-sun-photo" src={sunDiagramImage} alt="NASA Solar Dynamics Observatory view of the Sun captured on 10 September 2025." loading="eager" decoding="async" fetchpriority="high" />
             {orbitalDisplay.map((item) => <div class="orrery-world" data-world={item.slug} style={"--world-x:" + (item.x / 14) + "%;--world-size:" + item.size + "px"}>
               <img src={item.diagramImage} alt={item.imageAlt} loading="eager" decoding="async" />
               <span>{item.name}</span>
@@ -303,6 +303,7 @@ const homeSummaries: Record<string, string> = {
     .orrery-orbits ellipse{fill:none;stroke:#8297a8;stroke-width:1.15;opacity:.34;vector-effect:non-scaling-stroke}
     .orrery-kuiper-orbit{fill:none;stroke:#9a825d;stroke-width:1.35;stroke-dasharray:4 7;opacity:.62;vector-effect:non-scaling-stroke}
     .orrery-sun-halo{opacity:1}.orrery-sun-core{filter:drop-shadow(0 0 14px rgba(221,157,79,.34))}.orrery-sun-edge{fill:none;stroke:#c28d4c;stroke-width:1.2;opacity:.42}
+    .orrery-sun-photo{position:absolute;left:7.857143%;top:50%;width:7%;aspect-ratio:1;display:block;object-fit:cover;object-position:center;border:1px solid rgba(194,141,76,.62);border-radius:50%;outline:3px solid rgba(194,141,76,.18);transform:translate(-50%,-50%);z-index:1;pointer-events:none;mix-blend-mode:screen}
     .orrery-asteroid-points circle{fill:#8f7654;opacity:.75}.orrery-kuiper-points circle{fill:#8196a7;opacity:.7}
     .orrery-map-captions text{fill:#52677a;font-family:Inter,Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px}
     .orrery-map-captions path{fill:none;stroke:#98713e;stroke-width:1;opacity:.7}
