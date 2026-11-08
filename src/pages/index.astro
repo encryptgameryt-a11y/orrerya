@@ -5,7 +5,20 @@ import { solarMassDistribution } from "../data/solar-system";
 import LineIcon from "../components/LineIcon.astro";
 const featured = planets.slice(0, 4);
 const outer = planets.slice(4);
-const orbitalDisplay = planets.map((planet, index) => ({ ...planet, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
+// Homepage diagram artwork: official NASA/JPL mission images, independent of profile-card assets.
+// Sources: Sun PIA26681 (SDO); Mercury PIA15162 (MESSENGER); Venus PIA23791 Figure B (Mariner 10, contrast-enhanced); Earth PIA18033 (Suomi NPP/VIIRS); Mars PIA00407 (Viking); Jupiter PIA04866 (Cassini); Saturn PIA06193 (Cassini); Uranus PIA18182 (Voyager 2); Neptune PIA01492 (Voyager 2).
+const sunDiagramImage = "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA26681.width-640.jpg";
+const diagramArtwork: Record<string, string> = {
+  mercury: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia15/pia15162/PIA15162.jpg?w=640&h=640&fit=clip",
+  venus: "https://photojournal.jpl.nasa.gov/figures/PIA23791_fig2.jpg",
+  earth: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA18033.width-640.jpg",
+  mars: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA00407.width-640.jpg",
+  jupiter: "https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA04866.jpg",
+  saturn: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA06193.width-1024.jpg",
+  uranus: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA18182.width-640.jpg",
+  neptune: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA01492.width-640.jpg"
+};
+const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage: diagramArtwork[planet.slug] ?? planet.image, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
 const homeSummaries: Record<string, string> = {
   mercury: "The smallest planet, with a heavily cratered surface and the shortest year.",
   venus: "A planet hidden by thick clouds, with a dense atmosphere and extreme surface heat.",
@@ -52,6 +65,7 @@ const homeSummaries: Record<string, string> = {
                   <stop offset="62%" stop-color="#e7a653" stop-opacity=".08" />
                   <stop offset="100%" stop-color="#e7a653" stop-opacity="0" />
                 </radialGradient>
+                <clipPath id="orrery-sun-photo-clip"><circle cx="110" cy="210" r="49" /></clipPath>
               </defs>
               <g class="orrery-orbits">
                 <ellipse cx="110" cy="210" rx="165" ry="50" />
@@ -66,6 +80,7 @@ const homeSummaries: Record<string, string> = {
               <ellipse class="orrery-kuiper-orbit" cx="110" cy="210" rx="1125" ry="280" />
               <circle class="orrery-sun-halo" cx="110" cy="210" r="112" fill="url(#orrery-sun-halo)" />
               <circle class="orrery-sun-core" cx="110" cy="210" r="49" fill="url(#orrery-sun-fill)" />
+              <image class="orrery-sun-photo" href={sunDiagramImage} x="61" y="161" width="98" height="98" preserveAspectRatio="xMidYMid slice" clip-path="url(#orrery-sun-photo-clip)" />
               <circle class="orrery-sun-edge" cx="110" cy="210" r="54" />
               <g class="orrery-asteroid-points">
                 <circle cx="568" cy="182" r="3.4"/><circle cx="580" cy="198" r="2.3"/><circle cx="592" cy="220" r="3"/>
@@ -92,7 +107,7 @@ const homeSummaries: Record<string, string> = {
               </g>
             </svg>
             {orbitalDisplay.map((item) => <div class="orrery-world" data-world={item.slug} style={"--world-x:" + (item.x / 14) + "%;--world-size:" + item.size + "px"}>
-              <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" />
+              <img src={item.diagramImage} alt={item.imageAlt} loading="eager" decoding="async" />
               <span>{item.name}</span>
             </div>)}
           </div>
