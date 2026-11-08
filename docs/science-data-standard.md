@@ -37,9 +37,9 @@ A generic institutional homepage is not field-level provenance. Prefer the under
 
 ### Mass and gravitational parameter
 
-Mass (M) is expressed in kilograms. The gravitational parameter is `μ = GM` and is commonly published in km³ s⁻² for Solar System dynamics. Do not confuse (M) with (GM).
+Mass `M` is expressed in kilograms. The gravitational parameter is `μ = GM` and is commonly published in km³ s⁻² for Solar System dynamics. Do not confuse `M` with `GM`.
 
-When a high-quality (GM) is available, use it directly for orbital dynamics. Recovering mass through (M=GM/G) introduces the uncertainty of the measured gravitational constant (G). Do not reconstruct a precise (GM) from a rounded mass and (G).
+When a high-quality `GM` is available, use it directly for orbital dynamics. Recovering mass through `M = GM/G` introduces the uncertainty of the measured gravitational constant `G`. Do not reconstruct a precise `GM` from a rounded mass and (G).
 
 ### Radius, diameter and shape
 
@@ -49,7 +49,7 @@ Distinguish equatorial radius, polar radius, mean radius and equivalent-volume r
 
 Bulk density is total mass divided by total volume. If mass or radius is derived, say so and carry the input convention through the calculation.
 
-Distinguish gravitational acceleration from apparent/effective surface gravity. Equatorial gravity can include rotation and the body's figure. A calculation using (GM/r^2) is a spherical reference value and must be labelled as such; do not imply it reproduces local gravity on an oblate or irregular body.
+Distinguish gravitational acceleration from apparent/effective surface gravity. Equatorial gravity can include rotation and the body's figure. A calculation using `GM/r²` is a spherical reference value and must be labelled as such; do not imply it reproduces local gravity on an oblate or irregular body.
 
 ### Giant-planet reference levels
 

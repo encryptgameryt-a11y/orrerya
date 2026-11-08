@@ -41,7 +41,7 @@ function tokenColour(name) {
 function selectorColour(selector) {
   const pattern = new RegExp(escapeRegExp(selector) + "\\s*\\{([^}]*)\\}", "g");
   const matches = [...css.matchAll(pattern)].map(match => match[1]);
-  const declarations = matches.reverse().find(block => /(?:^|;)\\s*color\\s*:/i.test(block));
+  const declarations = matches.reverse().find(block => /(?:^|;)\s*color\s*:/i.test(block));
   const value = declarations?.match(/(?:^|;)\s*color\s*:\s*(#[0-9a-f]{6})/i)?.[1];
   if (!value) throw new Error("Missing explicit text colour for selector " + selector);
   return value;
