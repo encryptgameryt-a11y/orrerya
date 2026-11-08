@@ -91,15 +91,23 @@ import { ephemerisElements } from "../../data/ephemeris";
       const originOrbit=output("origin-orbit"), destinationOrbit=output("destination-orbit");
       originOrbit?.setAttribute("r",String(r1));
       destinationOrbit?.setAttribute("r",String(r2));
-      const right = to >= from;
-      const path = right
-        ? "M " + (310+r1) + " 210 A " + ((r1+r2)/2) + " " + ((r1+r2)/2) + " 0 0 1 " + (310-r2) + " 210"
-        : "M " + (310+r1) + " 210 A " + ((r1+r2)/2) + " " + ((r1+r2)/2) + " 0 0 0 " + (310-r2) + " 210";
-      output("transfer-path")?.setAttribute("d",path);
-      output("origin-marker")?.setAttribute("cx",String(310+r1));
-      output("destination-marker")?.setAttribute("cx",String(310-r2));
-      output("origin-label")?.setAttribute("x",String(318+r1));
-      output("destination-label")?.setAttribute("x",String(Math.max(20,302-r2-60)));
+      const transferA=(r1+r2)/2;
+      const transferE=Math.abs(r2-r1)/(r1+r2);
+      const semiLatus=transferA*(1-transferE*transferE);
+      const pathPoints:string[]=[];
+      for(let step=0;step<=120;step++){
+        const fraction=step/120;
+        const nu=to>=from ? fraction*Math.PI : Math.PI+fraction*Math.PI;
+        const radius=semiLatus/(1+transferE*Math.cos(nu));
+        const x=310+radius*Math.cos(nu);
+        const y=210+radius*Math.sin(nu);
+        pathPoints.push((step===0?"M ":"L ")+x.toFixed(2)+" "+y.toFixed(2));
+      }
+      output("transfer-path")?.setAttribute("d",pathPoints.join(" "));
+      output("origin-marker")?.setAttribute("cx",String(to>=from?310+r1:310-r1));
+      output("destination-marker")?.setAttribute("cx",String(to>=from?310-r2:310+r2));
+      output("origin-label")?.setAttribute("x",String(to>=from?318+r1:Math.max(20,302-r1-60)));
+      output("destination-label")?.setAttribute("x",String(to>=from?Math.max(20,302-r2-60):318+r2));
       if (originOrbit) originOrbit.setAttribute("stroke", "#73b7d9");
       if (destinationOrbit) destinationOrbit.setAttribute("stroke", "#d7a574");
       const desc=output("transfer-svg-desc");
