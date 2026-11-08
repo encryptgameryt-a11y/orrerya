@@ -19,7 +19,7 @@ Build and verify the static site:
 npm run verify
 ```
 
-The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow also runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants.
+The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants; checks key light-theme text colours against WCAG AA contrast; and verifies that every generated public HTML route appears exactly once in the XML sitemap.
 
 ## Site map
 
@@ -73,6 +73,12 @@ The mission timeline labels past missions by launch year. Future dates are publi
 - [NASA NSSDC planetary fact sheets](https://nssdc.gsfc.nasa.gov/planetary/factsheet/)
 
 NASA, JPL, ESA and mission imagery remains credited at the point of use. ORRERYA is an independent project and is not affiliated with or endorsed by those organisations.
+
+## Scientific data standard
+
+The project-wide evidence, unit, uncertainty, and provenance rules are documented in [the scientific data standard](docs/science-data-standard.md). In brief: every important quantity must have a defined unit and measurement convention; derived values must expose their inputs and equations; time-sensitive counts and mission dates must carry a dated snapshot; and hypotheses or model estimates must never be presented as direct observations.
+
+The long-range planetary-position tool must be described as an approximation. Its input elements are JPL Tables 2a and 2b, with the Earth–Moon barycentre used as the Earth-orbit proxy and no full UTC-to-TDB conversion. JPL Horizons remains the reference for high-precision ephemerides.
 
 ## Quality checks
 
