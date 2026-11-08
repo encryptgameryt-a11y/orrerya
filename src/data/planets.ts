@@ -81,7 +81,7 @@ export const planetDataSources = {
 export const planets: Planet[] = [
   {
     slug: "mercury", name: "Mercury", order: 1, className: "Terrestrial planet",
-    short: "The smallest planet. Its heavily cratered surface records impacts across billions of years.",
+    short: "A 3:2 spin–orbit resonance makes its solar day 176 Earth days long; permanently shadowed polar craters can preserve water ice.",
     image: "https://science.nasa.gov/wp-content/uploads/2023/11/mercury-messenger-globe-pia15162.jpg",
     imageAlt: "Global mosaic of Mercury showing its heavily cratered grey surface.",
     imageSource: "https://science.nasa.gov/mercury/",
@@ -103,7 +103,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "venus", name: "Venus", order: 2, className: "Terrestrial planet",
-    short: "Thick clouds hide Venus's surface. Its dense carbon-dioxide atmosphere makes it hotter than Mercury.",
+    short: "Its surface is hotter than Mercury’s, beneath a roughly 92-bar carbon-dioxide atmosphere and sulfuric-acid clouds.",
     image: "https://science.nasa.gov/wp-content/uploads/2024/03/venus-mariner-10-pia23791-fig2.jpg",
     imageAlt: "Cloud-covered Venus shown in a spacecraft image.",
     imageSource: "https://science.nasa.gov/venus/",
@@ -125,7 +125,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "earth", name: "Earth", order: 3, className: "Terrestrial planet",
-    short: "The only world known to support life, with liquid oceans and an active atmosphere.",
+    short: "The only world known to host life, with surface oceans, active plate tectonics and a global magnetic field.",
     image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001016/GSFC_20171208_Archive_e001016~large.jpg",
     imageAlt: "Earth seen from space, with its blue oceans, clouds and land.",
     imageSource: "https://science.nasa.gov/earth/",
@@ -147,7 +147,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "mars", name: "Mars", order: 4, className: "Terrestrial planet",
-    short: "A cold, rocky desert with giant volcanoes, ancient river valleys and two small moons.",
+    short: "Ancient deltas and water-altered minerals preserve evidence of wetter environments on this cold, thin-aired world.",
     image: "https://assets.science.nasa.gov/content/dam/science/psd/mars/resources/detail_files/7/7668_Mars-viking-2-orbiter-global-view-partial-valles-marinares-PIA04304-full2.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     imageAlt: "Global view of Mars showing its reddish surface and surface features.",
     imageSource: "https://science.nasa.gov/mars/",
@@ -169,7 +169,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "jupiter", name: "Jupiter", order: 5, className: "Gas giant",
-    short: "The largest planet, made mostly of hydrogen and helium, with giant storms and many moons.",
+    short: "More massive than all the other planets combined, Jupiter has a deep hydrogen-rich interior and an immense magnetosphere.",
     image: "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/4204/Jupiter_against_black_background_of_space.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     imageAlt: "Jupiter with its banded atmosphere and swirling cloud systems.",
     imageSource: "https://science.nasa.gov/jupiter/",
@@ -191,7 +191,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "saturn", name: "Saturn", order: 6, className: "Gas giant",
-    short: "A gas giant with a low average density and a broad ring system made mostly of ice.",
+    short: "Its average density is below water’s, while its bright rings consist of countless ice-rich particles.",
     image: "https://science.nasa.gov/wp-content/uploads/2023/05/saturn-farewell-pia21345-sse-banner-1920x640-1.jpg",
     imageAlt: "Saturn and its broad ring system seen by the Cassini spacecraft.",
     imageSource: "https://science.nasa.gov/saturn/",
@@ -213,7 +213,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "uranus", name: "Uranus", order: 7, className: "Ice giant",
-    short: "An ice giant with an axial tilt of about 98 degrees and unusual seasons.",
+    short: "Its rotation axis is tilted by about 98°, leaving the ice giant with extreme seasons.",
     image: "https://images-assets.nasa.gov/image/PIA18182/PIA18182~orig.jpg",
     imageAlt: "Uranus as observed by NASA's Voyager 2 spacecraft.",
     imageSource: "https://science.nasa.gov/uranus/",
@@ -235,7 +235,7 @@ export const planets: Planet[] = [
   },
   {
     slug: "neptune", name: "Neptune", order: 8, className: "Ice giant",
-    short: "A distant ice giant with fast winds and large, changing storms.",
+    short: "A distant ice giant with fast winds, changing dark storms and Triton, a large moon on a retrograde orbit.",
     image: "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/p/i/a/0/PIA01492-1.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     imageAlt: "Neptune's blue atmosphere as photographed by Voyager 2.",
     imageSource: "https://science.nasa.gov/neptune/",
