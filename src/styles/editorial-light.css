@@ -658,6 +658,7 @@ body.home-nebula .orrery-map-legend .legend-note {
 }
 body.home-nebula .orrery-sun-photo {
   opacity: .98;
+  mix-blend-mode: screen;
 }
 /* Facts and editorial headings float over the nebula, never over a blue panel. */
 body.home-nebula .home-facts {
