@@ -11,6 +11,10 @@ import { ephemerisElements } from "../../data/ephemeris";
   </header>
 
   <section class="section container ephem-section">
+    <div class="horizons-access card">
+      <div><span class="eyebrow">Higher-precision ephemerides</span><strong>Need a live JPL calculation?</strong><p>Open NASA/JPL Horizons directly for selectable targets, epochs, coordinate centres and output tables. This browser tool remains the documented long-range approximation below.</p></div>
+      <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">Open JPL Horizons ↗</a>
+    </div>
     <div class="ephem-toolbar card">
       <div class="ephemeris-date-control"><span class="eyebrow">Choose an instant</span><label for="ephemeris-date">Date and local time</label><input id="ephemeris-date" type="datetime-local" min="0001-01-01T00:00" max="3000-12-31T23:59" /><button type="button" class="btn ephemeris-now-button" id="ephemeris-now" aria-label="Return to the current date and time">↻ Use current time</button></div>
       <div class="ephem-status"><span class="eyebrow">Calculation status</span><strong id="ephemeris-status">Preparing planetary positions…</strong><p id="ephemeris-message" role="status">The browser date picker accepts dates from 1 CE through 3000 CE.</p></div>
@@ -218,6 +222,10 @@ import { ephemerisElements } from "../../data/ephemeris";
   <style>
     .heading-muted{color:#8796ad}
     .ephem-section{padding-top:45px}
+    .horizons-access{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:14px;padding:17px 20px;border-color:rgba(230,200,142,.3)}
+    .horizons-access strong{display:block;margin:4px 0;color:var(--text);font:600 1.02rem "Space Grotesk",sans-serif}
+    .horizons-access p{max-width:68ch;margin:0;color:var(--quiet);font-size:.75rem;line-height:1.6}
+    .horizons-access a{flex:0 0 auto;color:var(--gold-bright);font-size:.78rem;text-decoration:underline;text-underline-offset:3px}
     .ephem-toolbar{display:grid;grid-template-columns:.8fr 1.2fr;gap:26px;padding:22px;margin-bottom:18px}
     .ephem-toolbar label,.ephem-toolbar input{display:block;width:100%}.ephemeris-date-control .ephemeris-now-button{display:flex;width:100%;align-items:center;justify-content:center;margin-top:11px;min-height:43px;padding:10px 14px;font-size:.8rem;font-weight:800;letter-spacing:.01em;box-shadow:0 0 0 1px rgba(230,200,142,.12)}
     .ephem-toolbar label{font-size:.78rem;color:var(--muted);margin:10px 0 7px}
@@ -257,6 +265,6 @@ import { ephemerisElements } from "../../data/ephemeris";
     .ephem-method p{font-size:.86rem;line-height:1.85}
     .ephem-method a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
     @media(max-width:850px){.ephem-layout{grid-template-columns:1fr}.ephem-map svg{max-width:570px;margin:auto}}
-    @media(max-width:650px){.ephem-toolbar{grid-template-columns:1fr;gap:17px}.ephem-status{border-left:0;border-top:1px solid var(--line);padding:17px 0 0}.ephem-map,.ephem-summary,.ephem-table-card{padding:17px}.ephem-map-head{flex-direction:column}.ephem-map-head h2,.ephem-summary h2{font-size:1.45rem}.ephem-method h2{font-size:1.7rem}}
+    @media(max-width:650px){.horizons-access{align-items:flex-start;flex-direction:column;padding:16px}.ephem-toolbar{grid-template-columns:1fr;gap:17px}.ephem-status{border-left:0;border-top:1px solid var(--line);padding:17px 0 0}.ephem-map,.ephem-summary,.ephem-table-card{padding:17px}.ephem-map-head{flex-direction:column}.ephem-map-head h2,.ephem-summary h2{font-size:1.45rem}.ephem-method h2{font-size:1.7rem}}
   </style>
 </SiteLayout>
