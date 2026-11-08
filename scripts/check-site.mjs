@@ -224,10 +224,10 @@ try {
     problems.push("sitemap.xml is missing from the generated site.");
   } else {
     const sitemapXml = await readFile(sitemapPath, "utf8");
-    if (!/<urlset\\b/i.test(sitemapXml)) {
+    if (!/<urlset\b/i.test(sitemapXml)) {
       problems.push("sitemap.xml is missing the urlset root element.");
     }
-    const sitemapLocations = [...sitemapXml.matchAll(/<loc>\\s*([^<]+?)\\s*<\\/loc>/gi)]
+    const sitemapLocations = [...sitemapXml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)]
       .map(match => match[1].trim());
     const actualRoutes = new Set();
     for (const location of sitemapLocations) {
@@ -254,7 +254,7 @@ try {
 
     const expectedRoutes = new Set();
     for (const file of htmlFiles) {
-      const relative = path.relative(root, file).replace(/\\\\/g, "/");
+      const relative = path.relative(root, file).replace(/\\/g, "/");
       if (relative === "404.html") continue;
       let route;
       if (relative === "index.html") route = "/";
