@@ -23,6 +23,19 @@ const expectedDwarfPlanets = [
   "Ceres", "Pluto", "Haumea", "Makemake", "Eris"
 ];
 
+// Source-reported ± values from the JPL Planetary Physical Parameters table,
+// converted to the units used by ORRERYA (kg for mass).
+const expectedPlanetUncertainties = {
+  Mercury: [0.04, 0.1, 2.1e19, 0.0007],
+  Venus: [1.0, 1.0, 2.3e20, 0.003],
+  Earth: [0.0001, 0.0001, 2.8e20, 0.0003],
+  Mars: [0.1, 0.2, 3.0e19, 0.0007],
+  Jupiter: [4, 6, 8.8e22, 0.0003],
+  Saturn: [4, 6, 2.6e22, 0.0002],
+  Uranus: [4, 7, 4.0e21, 0.001],
+  Neptune: [15, 19, 4.8e21, 0.004]
+};
+
 const expectedSatellites = [
   "Moon", "Phobos", "Deimos", "Io", "Europa", "Ganymede", "Callisto",
   "Amalthea", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan",
@@ -60,6 +73,12 @@ test("planet physical catalogue contains exactly the eight planets in order", ()
       "massUncertaintyKg", "densityUncertaintyGcm3"]) {
       assertPositiveFinite(body[field], body.name + " quoted " + field);
     }
+    assert.deepEqual(
+      [body.equatorialRadiusUncertaintyKm, body.meanRadiusUncertaintyKm,
+        body.massUncertaintyKg, body.densityUncertaintyGcm3],
+      expectedPlanetUncertainties[body.name],
+      body.name + " JPL source-table uncertainties and units"
+    );
   }
 
   const neptune = planetPhysics.find(body => body.name === "Neptune");
