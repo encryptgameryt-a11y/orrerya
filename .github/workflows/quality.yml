@@ -22,5 +22,12 @@ jobs:
           package-manager-cache: false
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Upload generated lockfile candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: orrerya-package-lock
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 2
       - name: Build and verify site
         run: npm run verify
