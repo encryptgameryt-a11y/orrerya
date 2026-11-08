@@ -72,12 +72,12 @@ const next = planets[planet.order];
             <div><dt>Mean radius · JPL</dt><dd>{physical ? physical.meanRadiusKm.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " km" : "—"}</dd></div>
             <div><dt>Mass · JPL</dt><dd>{planet.mass}</dd></div>
             <div><dt>Mean density</dt><dd>{planet.density}</dd></div>
-            <div><dt>{planet.order > 4 ? "Equatorial gravity · 1-bar level" : "Equatorial surface gravity"}</dt><dd>{planet.gravity}</dd></div>
-            <div><dt>{planet.order > 4 ? "Escape velocity · 1-bar level" : "Escape velocity"}</dt><dd>{planet.escapeVelocity}</dd></div>
+            <div><dt>{planet.order > 4 ? "Equatorial gravitational acceleration · 1 bar" : "Equatorial gravitational acceleration"}</dt><dd>{planet.gravity}</dd></div>
+            <div><dt>Spherical escape speed · JPL mean radius</dt><dd>{planet.escapeVelocity}</dd></div>
           </dl>
           <p class="source-uncertainty-note">{physicalUncertaintyText}</p>
         </div>
-        <div class="callout"><strong>Reference levels matter</strong><p>For Mercury, Venus, Earth and Mars, the temperature is a surface reference. For Jupiter, Saturn, Uranus and Neptune, there is no solid surface: NASA's fact-sheet convention reports their mean temperatures at the 1-bar pressure level, and the quoted gas-giant gravity and escape velocity are also referenced to the 1-bar level. These are atmospheric reference quantities, not conditions on solid ground. Values also depend on latitude, altitude and the reference figure used.</p><p><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/planetfact_notes.html" target="_blank" rel="noreferrer">NASA NSSDCA — definitions of planetary fact-sheet quantities ↗</a></p></div>
+        <div class="callout"><strong>Reference levels and gravity conventions matter</strong><p>For Mercury, Venus, Earth and Mars, the temperature is a surface reference. For Jupiter, Saturn, Uranus and Neptune, there is no solid surface: the quoted mean temperatures and equatorial radii use the 1-bar pressure level. JPL's equatorial gravitational acceleration is derived from GM divided by the square of the equatorial radius; it is the gravitational field, not the effective acceleration a scale would register after the centrifugal effect of rotation. JPL's escape speed is a separate spherical value derived using its volume-equivalent mean radius, not the equatorial 1-bar radius. These are reference quantities, not conditions on solid ground. Local effective gravity also depends on latitude, rotation and altitude.</p><p><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/planetfact_notes.html" target="_blank" rel="noreferrer">NASA NSSDCA — definitions of planetary fact-sheet quantities ↗</a></p></div>
       </aside>
     </div>
     <div class="source-panel">
