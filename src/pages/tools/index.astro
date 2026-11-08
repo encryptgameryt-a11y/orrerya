@@ -12,7 +12,7 @@ import { planets } from "../../data/planets";
         <div class="field"><label for="mass-input">Your mass (kilograms)</label><input id="mass-input" type="number" min="0" max="1000000" step="any" value="70" inputmode="decimal" /></div>
         <div class="field"><label for="gravity-world">Choose a world</label><select id="gravity-world">{planets.map((planet)=><option value={planet.gravityValue} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="result-box" aria-live="polite"><span>Gravitational force on you</span><strong id="weight-result">686 N</strong><span id="weight-subresult">Equivalent to about 70 kg on an Earth-calibrated scale.</span></div>
-        <p class="tool-footnote">Model: W = m × g. Uses the listed equatorial gravity values; real local gravity can vary with latitude, altitude and a world's rotation. This is not a prediction of how a spacesuit or spacecraft behaves.</p>
+        <p class="tool-footnote">Model: W = m × g. Uses JPL's equatorial gravitational acceleration (GM/r²); it does not subtract centrifugal acceleration from rotation. A real scale reading is effective gravity and varies with latitude, altitude, rotation and local mass distribution. For giant planets, the equatorial reference is the 1-bar level. This is a gravity-only teaching estimate, not a prediction of how a spacesuit or spacecraft behaves.</p>
       </article>
       <article class="card tool-panel" id="distance">
         <span class="eyebrow">Tool 02 · Distance & light</span><h2>How far is an AU?</h2><p>An astronomical unit (AU) is defined as exactly 149,597,870.7 kilometres. It is a useful unit for measuring distances within planetary systems.</p>
