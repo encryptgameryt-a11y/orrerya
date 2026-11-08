@@ -80,6 +80,10 @@ The project-wide evidence, unit, uncertainty, and provenance rules are documente
 
 The long-range planetary-position tool must be described as an approximation. Its input elements are JPL Tables 2a and 2b, with the Earth–Moon barycentre used as the Earth-orbit proxy and no full UTC-to-TDB conversion. JPL Horizons remains the reference for high-precision ephemerides.
 
+## Audit register
+
+The verified foundation changes, scientific conventions and outstanding page-level review tasks are tracked in [the scientific and technical audit register](docs/scientific-audit-register.md). The register intentionally distinguishes automated checks from claims that still require expert/source-level review.
+
 ## Quality checks
 
 Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the physics unit tests, the light-theme contrast audit, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
