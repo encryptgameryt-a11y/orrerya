@@ -12,33 +12,33 @@ import { planets } from "../../data/planets";
       <button class="calculator-launch-card" type="button" data-open-tool="compare" aria-haspopup="dialog" aria-controls="compare"><span class="eyebrow">Tool 03 · Planetary scale</span><strong>Compare planet sizes.</strong><span class="text-link">Open calculator ↗</span></button>
       <button class="calculator-launch-card" type="button" data-open-tool="year" aria-haspopup="dialog" aria-controls="year"><span class="eyebrow">Tool 04 · Orbital period</span><strong>How long is a year?</strong><span class="text-link">Open calculator ↗</span></button>
     </div>
-    <dialog class="tool-dialog" id="weight" aria-labelledby="weight-title"><article class="card tool-panel tool-dialog-panel">
+    <div class="tool-dialog" id="weight" role="dialog" aria-modal="true" aria-labelledby="weight-title" aria-hidden="true" hidden><article class="card tool-panel tool-dialog-panel">
         <div class="tool-dialog-top"><span class="eyebrow">Tool 01 · Gravity</span><button type="button" class="tool-dialog-close" data-close-tool aria-label="Close calculator">×</button></div><h2 id="weight-title">How much would you weigh on other worlds?</h2><p>Mass is the amount of matter in you. Weight is the gravitational force acting on that mass. Your mass stays the same as you travel; your weight changes with local gravity.</p>
         <div class="field"><label for="mass-input">Your mass (kilograms)</label><input id="mass-input" type="number" min="0" max="1000000" step="any" value="70" inputmode="decimal" /></div>
         <div class="field"><label for="gravity-world">Choose a world</label><select id="gravity-world">{planets.map((planet)=><option value={planet.gravityValue} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="result-box" aria-live="polite"><span>Gravitational force on you</span><strong id="weight-result">686 N</strong><span id="weight-subresult">Equivalent to about 70 kg on an Earth-calibrated scale.</span></div>
         <p class="tool-footnote">Model: W = m × g. Uses JPL's equatorial gravitational acceleration (GM/r²); it does not subtract centrifugal acceleration from rotation. A real scale reading is effective gravity and varies with latitude, altitude, rotation and local mass distribution. For giant planets, the equatorial reference is the 1-bar level. This is a gravity-only teaching estimate, not a prediction of how a spacesuit or spacecraft behaves.</p>
-      </article></dialog>
-    <dialog class="tool-dialog" id="distance" aria-labelledby="distance-title"><article class="card tool-panel tool-dialog-panel">
+      </article></div>
+    <div class="tool-dialog" id="distance" role="dialog" aria-modal="true" aria-labelledby="distance-title" aria-hidden="true" hidden><article class="card tool-panel tool-dialog-panel">
         <div class="tool-dialog-top"><span class="eyebrow">Tool 02 · Distance & light</span><button type="button" class="tool-dialog-close" data-close-tool aria-label="Close calculator">×</button></div><h2 id="distance-title">How far is an AU?</h2><p>An astronomical unit (AU) is defined as exactly 149,597,870.7 kilometres. It is a useful unit for measuring distances within planetary systems.</p>
         <div class="field"><label for="au-input">Distance (AU)</label><input id="au-input" type="number" min="0" max="1000000" step="any" value="1" inputmode="decimal" /></div>
         <div class="result-box" aria-live="polite"><span>Distance in kilometres</span><strong id="km-result">149,597,871 km</strong><span id="light-result">Light travel time: 8 min 19 s</span></div>
         <p class="tool-footnote">Uses the exact AU definition and the speed of light in vacuum, 299,792.458 km/s. Light time is a simple straight-line vacuum calculation.</p>
-      </article></dialog>
-    <dialog class="tool-dialog" id="compare" aria-labelledby="compare-title"><article class="card tool-panel tool-dialog-panel">
+      </article></div>
+    <div class="tool-dialog" id="compare" role="dialog" aria-modal="true" aria-labelledby="compare-title" aria-hidden="true" hidden><article class="card tool-panel tool-dialog-panel">
         <div class="tool-dialog-top"><span class="eyebrow">Tool 03 · Planetary scale</span><button type="button" class="tool-dialog-close" data-close-tool aria-label="Close calculator">×</button></div><h2 id="compare-title">Compare planet sizes.</h2><p>Compare a planet's equatorial diameter with Earth's. The circles use a common scale, capped so the largest planet fits on the card.</p>
         <div class="field"><label for="size-world">Choose a planet</label><select id="size-world">{planets.map((planet)=><option value={planet.diameterKm} data-name={planet.name} data-mass={planet.mass1024} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="size-stage"><div id="size-orb" class="size-orb" style="width:56px;height:56px"></div><div><strong id="size-name">Earth</strong><span id="size-diameter">12,756 km diameter</span><b id="size-ratio">1.00 × Earth's diameter</b><small id="mass-ratio">1.00 × Earth's mass</small></div></div>
         <div class="scale-legend"><span>Relative diameter</span><span>Earth = 1</span></div>
         <div class="scale-track"><span id="scale-fill" style="width:8.9%"></span></div>
         <p class="tool-footnote">The circle represents diameter only. The labels compare diameter and mass with Earth; the circle does not encode mass, density or surface area. Planet images are not drawn to this scale.</p>
-      </article></dialog>
-    <dialog class="tool-dialog" id="year" aria-labelledby="year-title"><article class="card tool-panel tool-dialog-panel">
+      </article></div>
+    <div class="tool-dialog" id="year" role="dialog" aria-modal="true" aria-labelledby="year-title" aria-hidden="true" hidden><article class="card tool-panel tool-dialog-panel">
         <div class="tool-dialog-top"><span class="eyebrow">Tool 04 · Orbital period</span><button type="button" class="tool-dialog-close" data-close-tool aria-label="Close calculator">×</button></div><h2 id="year-title">How long is a year?</h2><p>A planet's orbital period is the time it takes to complete one orbit around the Sun relative to distant stars.</p>
         <div class="field"><label for="year-world">Choose a planet</label><select id="year-world">{planets.map((planet)=><option value={planet.orbitDays} data-name={planet.name} selected={planet.slug === "earth"}>{planet.name}</option>)}</select></div>
         <div class="result-box" aria-live="polite"><span>One sidereal orbit</span><strong id="year-result">365.2 days</strong><span id="year-subresult">About 1.00 Earth years.</span></div>
         <p class="tool-footnote">Uses NASA/JPL sidereal orbital periods, converted from Julian years using 365.25 days per Julian year. The Earth-year comparison uses Earth's JPL sidereal orbital period. A sidereal orbital period is measured relative to distant stars; it is not a planet's solar day or a seasonal year.</p>
-      </article></dialog>
+      </article></div>
     <div class="lab-launch-grid" aria-label="Advanced planetary labs">
       <a class="lab-launch-card" href="/tools/ephemeris/">
         <span class="eyebrow">Tool 06 · JPL approximate ephemeris</span><h2>Planet position explorer</h2>
@@ -154,33 +154,57 @@ import {
     }
     yearSelect?.addEventListener("change", () => updateYear(true));
     updateYear();
-    const calculatorDialogs = Array.from(document.querySelectorAll<HTMLDialogElement>(".tool-dialog"));
+    const calculatorDialogs = Array.from(document.querySelectorAll(".tool-dialog"));
+    let activeCalculator = null;
+    let calculatorReturnFocus = null;
+    function closeCalculator(dialog, updateHistory = true) {
+      if (!dialog || dialog.hidden) return;
+      const wasActive = activeCalculator === dialog;
+      dialog.hidden = true;
+      dialog.classList.remove("is-open");
+      dialog.setAttribute("aria-hidden", "true");
+      if (wasActive) activeCalculator = null;
+      if (updateHistory && location.hash === "#" + dialog.id) {
+        if (history.state && history.state.orreryaCalculator === dialog.id) history.back();
+        else history.replaceState(history.state, "", location.pathname + location.search);
+      }
+      if (wasActive && calculatorReturnFocus && calculatorReturnFocus.focus) calculatorReturnFocus.focus();
+    }
     function openCalculator(id, addHistory = true) {
       const dialog = calculatorDialogs.find((item) => item.id === id);
       if (!dialog) return;
-      if (!dialog.open) dialog.showModal();
-      if (addHistory && location.hash !== "#" + id) {
-        history.pushState({ ...(history.state || {}), orreryaCalculator: id }, "", location.pathname + location.search + "#" + id);
+      calculatorDialogs.forEach((item) => { if (item !== dialog && !item.hidden) closeCalculator(item, false); });
+      if (dialog.hidden) {
+        calculatorReturnFocus = document.activeElement;
+        dialog.hidden = false;
+        dialog.classList.add("is-open");
+        dialog.setAttribute("aria-hidden", "false");
       }
-      const focusTarget = dialog.querySelector<HTMLElement>('input:not([type="hidden"]), select, button');
+      activeCalculator = dialog;
+      if (addHistory && location.hash !== "#" + id) history.pushState({ orreryaCalculator: id }, "", location.pathname + location.search + "#" + id);
+      const focusTarget = dialog.querySelector('input:not([type="hidden"]), select, button');
       if (focusTarget) requestAnimationFrame(() => focusTarget.focus({ preventScroll: true }));
     }
-    document.querySelectorAll<HTMLButtonElement>("[data-open-tool]").forEach((button) => {
+    document.querySelectorAll("[data-open-tool]").forEach((button) => {
       button.addEventListener("click", () => openCalculator(button.dataset.openTool || ""));
     });
     calculatorDialogs.forEach((dialog) => {
-      dialog.querySelector<HTMLButtonElement>("[data-close-tool]")?.addEventListener("click", () => dialog.close());
-      dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
-      dialog.addEventListener("close", () => {
-        if (location.hash === "#" + dialog.id) {
-          if (history.state?.orreryaCalculator === dialog.id) history.back();
-          else history.replaceState(history.state, "", location.pathname + location.search);
-        }
-      });
+      dialog.querySelector("[data-close-tool]")?.addEventListener("click", () => closeCalculator(dialog));
+      dialog.addEventListener("click", (event) => { if (event.target === dialog) closeCalculator(dialog); });
+    });
+    document.addEventListener("keydown", (event) => {
+      if (!activeCalculator) return;
+      if (event.key === "Escape") { event.preventDefault(); closeCalculator(activeCalculator); return; }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(activeCalculator.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
     function syncCalculatorFromUrl() {
       const id = decodeURIComponent(location.hash.slice(1));
-      calculatorDialogs.forEach((dialog) => { if (dialog.id !== id && dialog.open) dialog.close(); });
+      calculatorDialogs.forEach((dialog) => { if (dialog.id !== id && !dialog.hidden) closeCalculator(dialog, false); });
       if (id && calculatorDialogs.some((dialog) => dialog.id === id)) openCalculator(id, false);
     }
     window.addEventListener("popstate", syncCalculatorFromUrl);
