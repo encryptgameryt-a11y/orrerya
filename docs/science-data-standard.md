@@ -49,11 +49,11 @@ Distinguish equatorial radius, polar radius, mean radius and equivalent-volume r
 
 Bulk density is total mass divided by total volume. If mass or radius is derived, say so and carry the input convention through the calculation.
 
-Distinguish gravitational acceleration from apparent/effective surface gravity. Equatorial gravity can include rotation and the body's figure. A calculation using `GM/r²` is a spherical reference value and must be labelled as such; do not imply it reproduces local gravity on an oblate or irregular body.
+Distinguish gravitational acceleration from apparent/effective surface acceleration. In JPL's Planetary Physical Parameters table, the derived "equatorial gravity" value is the gravitational field calculated from `GM/r_eq²`; it does **not** subtract the centrifugal acceleration due to rotation. It is therefore not the effective acceleration a scale at the equator would register. For giant planets, the equatorial reference radius is at the 1-bar pressure level. JPL's derived escape speed is calculated using the volume-equivalent mean radius, which is not the same as the equatorial 1-bar radius for the giant planets. Keep these values distinct. A spherical `GM/r²` reference must not be presented as a detailed local gravity field for an oblate or irregular body.
 
 ### Giant-planet reference levels
 
-Gas and ice giants do not have a solid surface comparable to Earth's. When a source gives temperature, gravity or escape speed at a 1-bar pressure level, identify that reference level. Never describe it as a solid planetary surface.
+Gas and ice giants do not have a solid surface comparable to Earth's. Identify which quantities use the 1-bar atmospheric reference. In the JPL physical-parameter table used by ORRERYA, the equatorial radius (and the derived equatorial gravitational field evaluated there) uses the 1-bar level; JPL's escape speed is instead derived using the volume-equivalent mean radius. NASA NSSDCA fact sheets may use a different convention for effective equatorial acceleration and escape speed at 1 bar. Do not silently mix the two datasets or describe a pressure level as a solid planetary surface.
 
 ## 4. Orbital quantities and time
 
