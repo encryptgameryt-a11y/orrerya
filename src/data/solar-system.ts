@@ -110,7 +110,7 @@ export const dwarfPlanets: SolarBodyPhysical[] = [
   {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent.",equatorialRadiusKm:1188.3,equatorialRadiusUncertaintyKm:1.6,meanRadiusUncertaintyKm:1.6,massUncertaintyKg:6.0e18,densityUncertaintyGcm3:0.004},
   {name:"Haumea",type:"Dwarf planet · trans-Neptunian region",massKg:4.006e21,meanRadiusKm:715,densityGcm3:2.6,equatorialGravityMS2:0.35,escapeVelocityKmS:0.78,meanDistanceAU:43.13,orbitDays:103774,siderealRotationDays:0.1631,note:"Fast rotation makes Haumea strongly elongated; a single spherical diameter hides its triaxial shape.",equatorialRadiusKm:870,massUncertaintyKg:4.0e19},
   {name:"Makemake",type:"Dwarf planet · Kuiper Belt",massKg:3.1e21,meanRadiusKm:714,densityGcm3:2.1,equatorialGravityMS2:0.40,escapeVelocityKmS:0.76,meanDistanceAU:45.43,orbitDays:112897,siderealRotationDays:0.937,note:"Radius, mass and density are less tightly constrained than for Pluto or Ceres.",equatorialRadiusKm:717,equatorialRadiusUncertaintyKm:7,meanRadiusUncertaintyKm:7},
-  {name:"Eris",type:"Dwarf planet · scattered disc",massKg:1.66e22,meanRadiusKm:1200,densityGcm3:2.3,equatorialGravityMS2:0.77,escapeVelocityKmS:1.36,meanDistanceAU:67.7,orbitDays:203830,siderealRotationDays:1.079,note:"Most massive of the five widely recognised dwarf planets; its diameter uncertainty overlaps Pluto's."}
+  {name:"Eris",type:"Dwarf planet · scattered disc",massKg:1.66e22,meanRadiusKm:1200,densityGcm3:2.3,equatorialGravityMS2:0.77,escapeVelocityKmS:1.36,meanDistanceAU:67.7,orbitDays:203830,siderealRotationDays:1.079,note:"Most massive of the five widely recognised dwarf planets; its diameter uncertainty overlaps Pluto's.",equatorialRadiusKm:1200,equatorialRadiusUncertaintyKm:50,meanRadiusUncertaintyKm:50,massUncertaintyKg:2.0e20,densityUncertaintyGcm3:0.3}
 ];
 
 export interface SatellitePhysical {
@@ -124,7 +124,7 @@ export interface SatellitePhysical {
 }
 
 export const satellitePhysical: SatellitePhysical[] = [
-  {name:"Moon",host:"Earth",gmReference:"DE440",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts.",equatorialRadiusKm:1200,equatorialRadiusUncertaintyKm:50,meanRadiusUncertaintyKm:50,massUncertaintyKg:2.0e20,densityUncertaintyGcm3:0.3},
+  {name:"Moon",host:"Earth",gmReference:"DE440",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts."},
   {name:"Phobos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0007087,meanRadiusKm:11.08,description:"Small irregular inner moon; orbital evolution is driven by Mars tides."},
   {name:"Deimos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0000962,meanRadiusKm:6.2,description:"Small irregular outer moon of Mars."},
   {name:"Io",host:"Jupiter",gmReference:"JUP365",gmKm3S2:5959.91547,meanRadiusKm:1821.49,description:"Extremely volcanically active; heated by tidal flexing."},
