@@ -84,4 +84,4 @@ The long-range planetary-position tool must be described as an approximation. It
 
 Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the physics unit tests, the light-theme contrast audit, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
 
-The repository does not yet contain a generated `package-lock.json`. Until a lockfile is committed, dependency resolution is not fully reproducible and CI continues to use `npm install`; add a lockfile before switching the workflow to `npm ci`.
+A committed `package-lock.json` records the dependency graph resolved by Node.js 24/npm 11 in the GitHub Actions environment. CI uses `npm ci` so the build installs the exact dependency tree represented by that lockfile rather than resolving a new compatible tree on every run. Update the lockfile deliberately when changing dependencies and verify the result in CI.
