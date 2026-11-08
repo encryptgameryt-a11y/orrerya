@@ -20,13 +20,13 @@ const diagramArtwork: Record<string, string> = {
 };
 const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage: diagramArtwork[planet.slug] ?? planet.image, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
 const homeSummaries: Record<string, string> = {
-  mercury: "The smallest planet, with a heavily cratered surface and the shortest year.",
-  venus: "A planet hidden by thick clouds, with a dense atmosphere and extreme surface heat.",
-  earth: "The only known planet with life, liquid oceans and a protective atmosphere.",
-  mars: "A cold, rocky desert with giant volcanoes, ancient river valleys and two small moons."
+  mercury: "It completes an orbit in 88 Earth days; its almost nonexistent atmosphere leaves the surface exposed to fierce temperature swings.",
+  venus: "Its thick carbon-dioxide atmosphere traps heat so effectively that the surface is hotter than Mercury’s.",
+  earth: "The only world where life is known to exist; oceans cover most of its surface.",
+  mars: "Iron-oxide dust gives Mars its rusty colour, while ancient valley networks preserve evidence of flowing water."
 };
 ---
-<SiteLayout title="ORRERYA" description="Explore the Sun, all eight planets, the Kuiper Belt and the many icy worlds beyond Neptune with ORRERYA.">
+<SiteLayout title="ORRERYA" description="A field guide to the Sun, eight planets, moons, dwarf planets, comets and the icy populations beyond Neptune.">
 
   <section class="home-hero orrery-home-hero">
     <div class="container orrery-home-inner">
@@ -34,11 +34,11 @@ const homeSummaries: Record<string, string> = {
         <div class="orrery-brand-feature">
           <span class="eyebrow">SOLAR SYSTEM FIELD GUIDE</span>
           <h1 class="orrery-logo-title">ORRERYA</h1>
-          <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
+          <p class="orrery-brand-tag">THE SUN, ITS PLANETS & SMALL BODIES</p>
         </div>
         <div class="orrery-hero-intro">
-          <p class="orrery-hero-line">How the Solar System works.</p>
-          <p class="orrery-hero-description">Explore the Sun, eight planets, moons, rings and icy bodies beyond Neptune.</p>
+          <p class="orrery-hero-line">Start with the Sun. Keep going.</p>
+          <p class="orrery-hero-description">Eight planets are only part of the story. Follow the moons, dwarf planets, comets and trans-Neptunian objects that share the Sun’s neighbourhood.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
             <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
@@ -132,7 +132,7 @@ const homeSummaries: Record<string, string> = {
     <div><strong>149.6 <small>million km</small></strong><span>Earth's average distance from the Sun</span></div>
   </section>
   <p class="home-facts-note">The value refers to calcium–aluminium-rich inclusions (CAIs) in primitive meteorites: the earliest accurately dated solids. Planetesimals and planets assembled over the following millions of years. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
-  <p class="home-facts-note">Calculated from NASA’s rounded Sun reference mass and JPL masses for the eight planets: {solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(3)}% before the homepage rounds it to two decimal places. This denominator excludes planetary satellites and smaller Solar System bodies; NASA’s separate broad Solar System inventory estimate is approximately 99.85%.</p>
+  <p class="home-facts-note">This percentage compares the Sun with the eight planets only. Planetary satellites, dwarf planets and smaller bodies are outside this denominator; broader Solar System inventories use a different one.</p>
 
   <section class="section container home-planets-section">
     <div class="section-head">
@@ -202,20 +202,20 @@ const homeSummaries: Record<string, string> = {
   </section>
 
   <section class="section container">
-    <div class="section-head"><div><div class="eyebrow">06 / INTERACTIVE TOOLS</div><h2>Try the science yourself</h2></div><p>Use the calculators to compare gravity, distance, planet sizes and orbital motion.</p></div>
+    <div class="section-head"><div><div class="eyebrow">INTERACTIVE WORKBENCH</div><h2>Change a value. Watch what changes.</h2></div><p>Test gravity, move through an orbit, inspect the geometry of the planetary paths or read an actual JWST spectrum.</p></div>
 
     <div class="tool-preview-grid">
-      <a class="tool-preview" href="/tools/#weight"><span class="tool-index">TOOL 01</span><span class="tool-symbol"><LineIcon name="scale" size={27} /></span><h3>Your weight on other worlds</h3><p>See how your weight would change under another world's gravity.</p><span class="text-link">Open calculator ↗</span></a>
-      <a class="tool-preview" href="/tools/#distance"><span class="tool-index">TOOL 02</span><span class="tool-symbol"><LineIcon name="ruler" size={27} /></span><h3>Space distance converter</h3><p>Turn huge space distances into kilometres and light-travel time.</p><span class="text-link">Open converter ↗</span></a>
-      <a class="tool-preview" href="/tools/#compare"><span class="tool-index">TOOL 03</span><span class="tool-symbol"><LineIcon name="planet" size={27} /></span><h3>Compare planet sizes</h3><p>See how big each planet is compared with Earth.</p><span class="text-link">Open comparison ↗</span></a>
-      <a class="tool-preview" href="/tools/#year"><span class="tool-index">TOOL 04</span><span class="tool-symbol"><LineIcon name="calendar" size={27} /></span><h3>How long is a year?</h3><p>Compare how long each planet takes to travel around the Sun.</p><span class="text-link">Open year calculator ↗</span></a>
-      <a class="tool-preview" href="/tools/orbit-model/"><span class="tool-index">TOOL 05</span><span class="tool-symbol"><LineIcon name="orbit" size={27} /></span><h3>Orbit model</h3><p>Move a planet along its orbit and see how its distance and speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
-      <a class="tool-preview" href="/tools/ephemeris/"><span class="tool-index">TOOL 06</span><span class="tool-symbol"><LineIcon name="compass" size={27} /></span><h3>Approximate planet positions</h3><p>Choose a date to see the planets' approximate positions around the Sun.</p><span class="text-link">Open position explorer ↗</span></a>
+      <a class="tool-preview" href="/tools/#weight"><span class="tool-index">GRAVITY</span><span class="tool-symbol"><LineIcon name="scale" size={27} /></span><h3>Same mass, different weight</h3><p>Keep your mass fixed and see how the gravitational pull changes from world to world.</p><span class="text-link">Try the gravity calculator ↗</span></a>
+      <a class="tool-preview" href="/tools/orbit-model/"><span class="tool-index">ORBITAL MECHANICS</span><span class="tool-symbol"><LineIcon name="orbit" size={27} /></span><h3>Move through a planet’s orbit</h3><p>Follow the changes in orbital speed and distance between perihelion and aphelion.</p><span class="text-link">Open the orbit model ↗</span></a>
+      <a class="tool-preview" href="/tools/3d-orbit/"><span class="tool-index">3D ORBITAL GEOMETRY</span><span class="tool-symbol"><LineIcon name="compass" size={27} /></span><h3>See the orbital planes in 3D</h3><p>Rotate the view and compare inclined paths in compressed or linear-AU mode.</p><span class="text-link">Open the 3D explorer ↗</span></a>
+      <a class="tool-preview" href="/tools/spectroscopy/"><span class="tool-index">JWST SPECTRUM</span><span class="tool-symbol"><LineIcon name="planet" size={27} /></span><h3>Read the light from WASP-39 b</h3><p>Inspect wavelength regions associated with sodium, water and other molecules.</p><span class="text-link">Open the spectroscopy lab ↗</span></a>
     </div>
+    <p class="tool-preview-more"><a class="text-link" href="/tools/">All calculators and labs ↗</a></p>
     </div>
   </section>
   <section class="container home-endcap"><div><span class="eyebrow">START EXPLORING</span><h2>Explore the Solar System</h2><p>Start with a planet, moon or small body. Every page includes sources and further reading.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
   <style>
+    .tool-preview-more{margin:20px 0 0;text-align:right}.tool-preview-more .text-link{font-size:.82rem}
     .home-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 77% 47%,rgba(33,66,111,.34),transparent 37rem),linear-gradient(180deg,rgba(13,23,39,.25),transparent)}
     .home-hero-grid{display:grid;grid-template-columns:1.03fr .97fr;gap:25px;align-items:center;min-height:610px;padding-top:35px;padding-bottom:35px}
     .home-copy{position:relative;z-index:2;padding:30px 0}
