@@ -110,34 +110,36 @@ export const dwarfPlanets: SolarBodyPhysical[] = [
 export interface SatellitePhysical {
   name: string;
   host: string;
+  /** JPL ephemeris solution supplying the satellite GM value. */
+  gmReference: string;
   gmKm3S2: number;
   meanRadiusKm: number;
   description: string;
 }
 
 export const satellitePhysical: SatellitePhysical[] = [
-  {name:"Moon",host:"Earth",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts."},
-  {name:"Phobos",host:"Mars",gmKm3S2:0.0007087,meanRadiusKm:11.08,description:"Small irregular inner moon; orbital evolution is driven by Mars tides."},
-  {name:"Deimos",host:"Mars",gmKm3S2:0.0000962,meanRadiusKm:6.2,description:"Small irregular outer moon of Mars."},
-  {name:"Io",host:"Jupiter",gmKm3S2:5959.91547,meanRadiusKm:1821.49,description:"Extremely volcanically active; heated by tidal flexing."},
-  {name:"Europa",host:"Jupiter",gmKm3S2:3202.71210,meanRadiusKm:1560.80,description:"Water-ice shell above a global salty ocean inferred from multiple lines of evidence."},
-  {name:"Ganymede",host:"Jupiter",gmKm3S2:9887.83275,meanRadiusKm:2631.20,description:"Largest moon; intrinsic magnetic field and evidence for a deep ocean."},
-  {name:"Callisto",host:"Jupiter",gmKm3S2:7179.28340,meanRadiusKm:2410.30,description:"Ancient, heavily cratered icy-rocky moon."},
-  {name:"Amalthea",host:"Jupiter",gmKm3S2:0.16456,meanRadiusKm:83.50,description:"Small, irregular inner moon; porous and low-density."},
-  {name:"Mimas",host:"Saturn",gmKm3S2:2.50349,meanRadiusKm:198.20,description:"Small icy moon dominated visually by the Herschel impact crater."},
-  {name:"Enceladus",host:"Saturn",gmKm3S2:7.21037,meanRadiusKm:252.10,description:"Active south-polar water-rich plumes; strong evidence for a subsurface ocean."},
-  {name:"Tethys",host:"Saturn",gmKm3S2:41.21353,meanRadiusKm:531.10,description:"Low-density icy moon with large impact structures."},
-  {name:"Dione",host:"Saturn",gmKm3S2:73.11607,meanRadiusKm:561.40,description:"Icy moon with bright fracture terrain and evidence of internal activity."},
-  {name:"Rhea",host:"Saturn",gmKm3S2:153.94175,meanRadiusKm:763.50,description:"Saturn's second-largest moon; ice-rich composition."},
-  {name:"Titan",host:"Saturn",gmKm3S2:8978.13710,meanRadiusKm:2574.76,description:"Dense nitrogen atmosphere; methane and ethane lakes, seas and rainfall."},
-  {name:"Iapetus",host:"Saturn",gmKm3S2:120.51511,meanRadiusKm:734.30,description:"Two-toned surface and an unusual equatorial ridge."},
-  {name:"Ariel",host:"Uranus",gmKm3S2:83.5,meanRadiusKm:578.9,description:"Heavily fractured icy moon with evidence for resurfacing."},
-  {name:"Umbriel",host:"Uranus",gmKm3S2:85.1,meanRadiusKm:584.7,description:"Dark, heavily cratered icy moon."},
-  {name:"Titania",host:"Uranus",gmKm3S2:226.9,meanRadiusKm:788.9,description:"Largest Uranian moon; ancient impact and canyon terrain."},
-  {name:"Oberon",host:"Uranus",gmKm3S2:205.3,meanRadiusKm:761.4,description:"Distant major Uranian moon with heavily cratered terrain."},
-  {name:"Miranda",host:"Uranus",gmKm3S2:4.3,meanRadiusKm:235.8,description:"Small moon with dramatic cliffs and patchwork terrain."},
-  {name:"Triton",host:"Neptune",gmKm3S2:1428.49546,meanRadiusKm:1352.6,description:"Large retrograde moon, likely captured; active nitrogen geysers observed by Voyager 2."},
-  {name:"Charon",host:"Pluto",gmKm3S2:106.1,meanRadiusKm:606.0,description:"Large Pluto companion; Pluto and Charon orbit a common centre outside Pluto."}
+  {name:"Moon",host:"Earth",gmReference:"DE440",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts."},
+  {name:"Phobos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0007087,meanRadiusKm:11.08,description:"Small irregular inner moon; orbital evolution is driven by Mars tides."},
+  {name:"Deimos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0000962,meanRadiusKm:6.2,description:"Small irregular outer moon of Mars."},
+  {name:"Io",host:"Jupiter",gmReference:"JUP365",gmKm3S2:5959.91547,meanRadiusKm:1821.49,description:"Extremely volcanically active; heated by tidal flexing."},
+  {name:"Europa",host:"Jupiter",gmReference:"JUP365",gmKm3S2:3202.71210,meanRadiusKm:1560.80,description:"Water-ice shell above a global salty ocean inferred from multiple lines of evidence."},
+  {name:"Ganymede",host:"Jupiter",gmReference:"JUP365",gmKm3S2:9887.83275,meanRadiusKm:2631.20,description:"Largest moon; intrinsic magnetic field and evidence for a deep ocean."},
+  {name:"Callisto",host:"Jupiter",gmReference:"JUP365",gmKm3S2:7179.28340,meanRadiusKm:2410.30,description:"Ancient, heavily cratered icy-rocky moon."},
+  {name:"Amalthea",host:"Jupiter",gmReference:"JUP365",gmKm3S2:0.16456,meanRadiusKm:83.50,description:"Small, irregular inner moon; porous and low-density."},
+  {name:"Mimas",host:"Saturn",gmReference:"SAT441",gmKm3S2:2.50349,meanRadiusKm:198.20,description:"Small icy moon dominated visually by the Herschel impact crater."},
+  {name:"Enceladus",host:"Saturn",gmReference:"SAT441",gmKm3S2:7.21037,meanRadiusKm:252.10,description:"Active south-polar water-rich plumes; strong evidence for a subsurface ocean."},
+  {name:"Tethys",host:"Saturn",gmReference:"SAT441",gmKm3S2:41.21353,meanRadiusKm:531.10,description:"Low-density icy moon with large impact structures."},
+  {name:"Dione",host:"Saturn",gmReference:"SAT441",gmKm3S2:73.11607,meanRadiusKm:561.40,description:"Icy moon with bright fracture terrain and evidence of internal activity."},
+  {name:"Rhea",host:"Saturn",gmReference:"SAT441",gmKm3S2:153.94175,meanRadiusKm:763.50,description:"Saturn's second-largest moon; ice-rich composition."},
+  {name:"Titan",host:"Saturn",gmReference:"SAT441",gmKm3S2:8978.13710,meanRadiusKm:2574.76,description:"Dense nitrogen atmosphere; methane and ethane lakes, seas and rainfall."},
+  {name:"Iapetus",host:"Saturn",gmReference:"SAT441",gmKm3S2:120.51511,meanRadiusKm:734.30,description:"Two-toned surface and an unusual equatorial ridge."},
+  {name:"Ariel",host:"Uranus",gmReference:"URA111",gmKm3S2:83.5,meanRadiusKm:578.9,description:"Heavily fractured icy moon with evidence for resurfacing."},
+  {name:"Umbriel",host:"Uranus",gmReference:"URA111",gmKm3S2:85.1,meanRadiusKm:584.7,description:"Dark, heavily cratered icy moon."},
+  {name:"Titania",host:"Uranus",gmReference:"URA111",gmKm3S2:226.9,meanRadiusKm:788.9,description:"Largest Uranian moon; ancient impact and canyon terrain."},
+  {name:"Oberon",host:"Uranus",gmReference:"URA111",gmKm3S2:205.3,meanRadiusKm:761.4,description:"Distant major Uranian moon with heavily cratered terrain."},
+  {name:"Miranda",host:"Uranus",gmReference:"URA111",gmKm3S2:4.3,meanRadiusKm:235.8,description:"Small moon with dramatic cliffs and patchwork terrain."},
+  {name:"Triton",host:"Neptune",gmReference:"NEP097",gmKm3S2:1428.49546,meanRadiusKm:1352.6,description:"Large retrograde moon, likely captured; active nitrogen geysers observed by Voyager 2."},
+  {name:"Charon",host:"Pluto",gmReference:"PLU060",gmKm3S2:106.1,meanRadiusKm:606.0,description:"Large Pluto companion; Pluto and Charon orbit a common centre outside Pluto."}
 ];
 
 const G_KM3_KG_S2 = GRAVITATIONAL_CONSTANT_KM3_KG_S2;
