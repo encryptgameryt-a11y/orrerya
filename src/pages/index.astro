@@ -19,14 +19,8 @@ const diagramArtwork: Record<string, string> = {
   neptune: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA01492.width-640.jpg"
 };
 const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage: diagramArtwork[planet.slug] ?? planet.image, x: [275, 340, 405, 470, 650, 815, 975, 1135][index], size: [29, 34, 38, 31, 66, 62, 49, 49][index] }));
-const homeSummaries: Record<string, string> = {
-  mercury: "The smallest planet, with a heavily cratered surface and the shortest year.",
-  venus: "A planet hidden by thick clouds, with a dense atmosphere and extreme surface heat.",
-  earth: "The only known planet with life, liquid oceans and a protective atmosphere.",
-  mars: "A cold, rocky desert with giant volcanoes, ancient river valleys and two small moons."
-};
 ---
-<SiteLayout title="ORRERYA" description="Explore the Sun, all eight planets, the Kuiper Belt and the many icy worlds beyond Neptune with ORRERYA.">
+<SiteLayout title="ORRERYA" description="A measured guide to the Sun, planets, moons and smaller bodies of the Solar System, with planetary data, mission history and interactive models.">
 
   <section class="home-hero orrery-home-hero">
     <div class="container orrery-home-inner">
@@ -37,8 +31,8 @@ const homeSummaries: Record<string, string> = {
           <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
         <div class="orrery-hero-intro">
-          <p class="orrery-hero-line">How the Solar System works.</p>
-          <p class="orrery-hero-description">Explore the Sun, eight planets, moons, rings and icy bodies beyond Neptune.</p>
+          <p class="orrery-hero-line">Start with the Sun. Follow the evidence outward.</p>
+          <p class="orrery-hero-description">Compare planetary worlds, follow their orbits and examine the rocky and icy material left from the system’s formation.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
             <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
@@ -132,7 +126,7 @@ const homeSummaries: Record<string, string> = {
     <div><strong>149.6 <small>million km</small></strong><span>Earth's average distance from the Sun</span></div>
   </section>
   <p class="home-facts-note">The value refers to calcium–aluminium-rich inclusions (CAIs) in primitive meteorites: the earliest accurately dated solids. Planetesimals and planets assembled over the following millions of years. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
-  <p class="home-facts-note">Calculated from NASA’s rounded Sun reference mass and JPL masses for the eight planets: {solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(3)}% before the homepage rounds it to two decimal places. This denominator excludes planetary satellites and smaller Solar System bodies; NASA’s separate broad Solar System inventory estimate is approximately 99.85%.</p>
+  <p class="home-facts-note">The 99.87% figure uses the Sun and eight planets only. NASA’s broader estimate for the whole Solar System is about 99.85% because it uses a different inventory and denominator.</p>
 
   <section class="section container home-planets-section">
     <div class="section-head">
@@ -140,7 +134,7 @@ const homeSummaries: Record<string, string> = {
       <div class="section-side"><p>Mercury, Venus, Earth and Mars have solid surfaces and metal-rich interiors.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
     </div>
     <div class="home-planet-grid">
-      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{homeSummaries[planet.slug] ?? planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
+      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
       <div class="outer-band-copy"><span class="eyebrow">02 / THE OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are gas giants, made mostly of hydrogen and helium. Uranus and Neptune are ice giants, with larger amounts of water-, ammonia- and methane-bearing material inside.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
@@ -201,17 +195,34 @@ const homeSummaries: Record<string, string> = {
     </div>
   </section>
 
-  <section class="section container">
-    <div class="section-head"><div><div class="eyebrow">06 / INTERACTIVE TOOLS</div><h2>Try the science yourself</h2></div><p>Use the calculators to compare gravity, distance, planet sizes and orbital motion.</p></div>
+  <section class="section container home-tools-section">
+    <div class="section-head">
+      <div><div class="eyebrow">06 / INTERACTIVE LAB</div><h2>Put the physics to work</h2></div>
+      <p>Start with a question, change a variable and inspect what the model predicts. <a class="text-link" href="/tools/">Browse the full lab ↗</a></p>
+    </div>
 
     <div class="tool-preview-grid">
-      <a class="tool-preview" href="/tools/#weight"><span class="tool-index">TOOL 01</span><span class="tool-symbol"><LineIcon name="scale" size={27} /></span><h3>Your weight on other worlds</h3><p>See how your weight would change under another world's gravity.</p><span class="text-link">Open calculator ↗</span></a>
-      <a class="tool-preview" href="/tools/#distance"><span class="tool-index">TOOL 02</span><span class="tool-symbol"><LineIcon name="ruler" size={27} /></span><h3>Space distance converter</h3><p>Turn huge space distances into kilometres and light-travel time.</p><span class="text-link">Open converter ↗</span></a>
-      <a class="tool-preview" href="/tools/#compare"><span class="tool-index">TOOL 03</span><span class="tool-symbol"><LineIcon name="planet" size={27} /></span><h3>Compare planet sizes</h3><p>See how big each planet is compared with Earth.</p><span class="text-link">Open comparison ↗</span></a>
-      <a class="tool-preview" href="/tools/#year"><span class="tool-index">TOOL 04</span><span class="tool-symbol"><LineIcon name="calendar" size={27} /></span><h3>How long is a year?</h3><p>Compare how long each planet takes to travel around the Sun.</p><span class="text-link">Open year calculator ↗</span></a>
-      <a class="tool-preview" href="/tools/orbit-model/"><span class="tool-index">TOOL 05</span><span class="tool-symbol"><LineIcon name="orbit" size={27} /></span><h3>Orbit model</h3><p>Move a planet along its orbit and see how its distance and speed change.</p><span class="text-link">Open orbit lab ↗</span></a>
-      <a class="tool-preview" href="/tools/ephemeris/"><span class="tool-index">TOOL 06</span><span class="tool-symbol"><LineIcon name="compass" size={27} /></span><h3>Approximate planet positions</h3><p>Choose a date to see the planets' approximate positions around the Sun.</p><span class="text-link">Open position explorer ↗</span></a>
-    </div>
+      <a class="tool-preview" href="/tools/#weight">
+        <span class="tool-index">GRAVITY</span>
+        <span class="tool-symbol"><LineIcon name="scale" size={27} /></span>
+        <h3>Same mass, different weight</h3>
+        <p>Keep the mass fixed and compare the gravitational force acting on it at each world’s surface.</p>
+        <span class="text-link">Compare surface gravity ↗</span>
+      </a>
+      <a class="tool-preview" href="/tools/orbit-model/">
+        <span class="tool-index">ORBITAL MECHANICS</span>
+        <span class="tool-symbol"><LineIcon name="orbit" size={27} /></span>
+        <h3>Why does a planet speed up?</h3>
+        <p>Move a planet along an elliptical orbit and compare its distance and speed at different points.</p>
+        <span class="text-link">Explore an orbit ↗</span>
+      </a>
+      <a class="tool-preview" href="/tools/correlation-lab/">
+        <span class="tool-index">PLANETARY DATA</span>
+        <span class="tool-symbol"><LineIcon name="planet" size={27} /></span>
+        <h3>Do planetary properties track together?</h3>
+        <p>Plot mass, density, gravity and orbital distance to look for relationships across the planets.</p>
+        <span class="text-link">Open the data lab ↗</span>
+      </a>
     </div>
   </section>
   <section class="container home-endcap"><div><span class="eyebrow">START EXPLORING</span><h2>Explore the Solar System</h2><p>Start with a planet, moon or small body. Every page includes sources and further reading.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
