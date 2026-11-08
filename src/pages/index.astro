@@ -65,7 +65,6 @@ const homeSummaries: Record<string, string> = {
                   <stop offset="62%" stop-color="#e7a653" stop-opacity=".08" />
                   <stop offset="100%" stop-color="#e7a653" stop-opacity="0" />
                 </radialGradient>
-                <clipPath id="orrery-sun-photo-clip"><circle cx="110" cy="210" r="49" /></clipPath>
               </defs>
               <g class="orrery-orbits">
                 <ellipse cx="110" cy="210" rx="165" ry="50" />
@@ -80,7 +79,7 @@ const homeSummaries: Record<string, string> = {
               <ellipse class="orrery-kuiper-orbit" cx="110" cy="210" rx="1125" ry="280" />
               <circle class="orrery-sun-halo" cx="110" cy="210" r="112" fill="url(#orrery-sun-halo)" />
               <circle class="orrery-sun-core" cx="110" cy="210" r="49" fill="url(#orrery-sun-fill)" />
-              <image class="orrery-sun-photo" href={sunDiagramImage} x="61" y="161" width="98" height="98" preserveAspectRatio="xMidYMid slice" clip-path="url(#orrery-sun-photo-clip)" />
+              <image class="orrery-sun-photo" href={sunDiagramImage} x="61" y="161" width="98" height="98" preserveAspectRatio="xMidYMid meet" />
               <circle class="orrery-sun-edge" cx="110" cy="210" r="54" />
               <g class="orrery-asteroid-points">
                 <circle cx="568" cy="182" r="3.4"/><circle cx="580" cy="198" r="2.3"/><circle cx="592" cy="220" r="3"/>
