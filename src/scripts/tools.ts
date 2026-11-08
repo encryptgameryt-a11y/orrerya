@@ -29,7 +29,8 @@ import {
       weightSub.textContent = "About " + formatter.format(force / 9.80665) + " kg-force on an Earth-calibrated scale · " + (gravitySelect.selectedOptions[0]?.dataset.name || "selected world");
       if (animate) pulseResult(weightBox);
     }
-    massInput?.addEventListener("input", () => updateWeight(true));
+    massInput?.addEventListener("input", () => updateWeight());
+    massInput?.addEventListener("change", () => updateWeight(true));
     gravitySelect?.addEventListener("change", () => updateWeight(true));
     updateWeight();
 
@@ -54,7 +55,8 @@ import {
       lightResult.textContent = hours > 0 ? "Light travel time: " + hours + " h " + minutes + " min " + remain + " s" : "Light travel time: " + minutes + " min " + remain + " s";
       if (animate) pulseResult(distanceBox);
     }
-    auInput?.addEventListener("input", () => updateDistance(true));
+    auInput?.addEventListener("input", () => updateDistance());
+    auInput?.addEventListener("change", () => updateDistance(true));
     updateDistance();
 
     const sizeSelect = document.querySelector<HTMLSelectElement>("#size-world");
@@ -97,58 +99,60 @@ import {
     }
     yearSelect?.addEventListener("change", () => updateYear(true));
     updateYear();
-    const calculatorDialogs = Array.from(document.querySelectorAll(".tool-dialog"));
-    let activeCalculator = null;
-    let calculatorReturnFocus = null;
-    function closeCalculator(dialog, updateHistory = true) {
-      if (!dialog || dialog.hidden) return;
-      const wasActive = activeCalculator === dialog;
-      dialog.hidden = true;
-      dialog.classList.remove("is-open");
-      dialog.setAttribute("aria-hidden", "true");
-      if (wasActive) activeCalculator = null;
-      if (updateHistory && location.hash === "#" + dialog.id) {
-        if (history.state && history.state.orreryaCalculator === dialog.id) history.back();
+    const calculatorDialogs = Array.from(document.querySelectorAll<HTMLDialogElement>("dialog.tool-dialog"));
+    let activeCalculator: HTMLDialogElement | null = null;
+
+    function closeCalculator(dialog: HTMLDialogElement | null, updateHistory = true) {
+      if (!dialog?.open) return;
+      const id = dialog.id;
+      if (activeCalculator === dialog) activeCalculator = null;
+      dialog.close();
+      if (updateHistory && location.hash === "#" + id) {
+        if (history.state?.orreryaCalculator === id) history.back();
         else history.replaceState(history.state, "", location.pathname + location.search);
       }
-      if (wasActive && calculatorReturnFocus && calculatorReturnFocus.focus) calculatorReturnFocus.focus();
     }
-    function openCalculator(id, addHistory = true) {
+
+    function openCalculator(id: string, addHistory = true) {
       const dialog = calculatorDialogs.find((item) => item.id === id);
       if (!dialog) return;
-      calculatorDialogs.forEach((item) => { if (item !== dialog && !item.hidden) closeCalculator(item, false); });
-      if (dialog.hidden) {
-        calculatorReturnFocus = document.activeElement;
-        dialog.hidden = false;
-        dialog.classList.add("is-open");
-        dialog.setAttribute("aria-hidden", "false");
-      }
+      calculatorDialogs.forEach((item) => {
+        if (item !== dialog && item.open) closeCalculator(item, false);
+      });
+      if (!dialog.open) dialog.showModal();
       activeCalculator = dialog;
-      if (addHistory && location.hash !== "#" + id) history.pushState({ orreryaCalculator: id }, "", location.pathname + location.search + "#" + id);
-      const focusTarget = dialog.querySelector('input:not([type="hidden"]), select, button');
+      if (addHistory && location.hash !== "#" + id) {
+        history.pushState({ orreryaCalculator: id }, "", location.pathname + location.search + "#" + id);
+      }
+      const focusTarget = dialog.querySelector<HTMLElement>('input:not([type="hidden"]), select, button');
       if (focusTarget) requestAnimationFrame(() => focusTarget.focus({ preventScroll: true }));
     }
-    document.querySelectorAll("[data-open-tool]").forEach((button) => {
+
+    document.querySelectorAll<HTMLButtonElement>("[data-open-tool]").forEach((button) => {
       button.addEventListener("click", () => openCalculator(button.dataset.openTool || ""));
     });
+
     calculatorDialogs.forEach((dialog) => {
-      dialog.querySelector("[data-close-tool]")?.addEventListener("click", () => closeCalculator(dialog));
-      dialog.addEventListener("click", (event) => { if (event.target === dialog) closeCalculator(dialog); });
+      dialog.querySelector<HTMLButtonElement>("[data-close-tool]")?.addEventListener("click", () => closeCalculator(dialog));
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeCalculator(dialog);
+      });
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeCalculator(dialog);
+      });
+      dialog.addEventListener("close", () => {
+        if (activeCalculator === dialog) activeCalculator = null;
+      });
     });
-    document.addEventListener("keydown", (event) => {
-      if (!activeCalculator) return;
-      if (event.key === "Escape") { event.preventDefault(); closeCalculator(activeCalculator); return; }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(activeCalculator.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
-      if (!focusable.length) return;
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    });
+
     function syncCalculatorFromUrl() {
-      const id = decodeURIComponent(location.hash.slice(1));
-      calculatorDialogs.forEach((dialog) => { if (dialog.id !== id && !dialog.hidden) closeCalculator(dialog, false); });
+      const id = location.hash.slice(1);
+      calculatorDialogs.forEach((dialog) => {
+        if (dialog.id !== id && dialog.open) closeCalculator(dialog, false);
+      });
       if (id && calculatorDialogs.some((dialog) => dialog.id === id)) openCalculator(id, false);
     }
+
     window.addEventListener("popstate", syncCalculatorFromUrl);
     syncCalculatorFromUrl();
