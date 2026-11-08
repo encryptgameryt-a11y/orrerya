@@ -1,0 +1,148 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout title="Planetary spectroscopy lab" description="Explore a NASA-published JWST transmission spectrum of WASP-39 b and the wavelength regions associated with atmospheric molecules.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Planetary spectroscopy lab</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">TOOL 10 · PLANETARY SPECTROSCOPY</div>
+    <h1>Read the light.<br /><span class="heading-muted">Identify an atmosphere.</span></h1>
+    <p class="lede">Explore how astronomers use a planet's filtered starlight to identify molecules in its atmosphere. This first case study uses a real JWST transmission spectrum of the hot gas giant WASP-39 b.</p>
+  </header>
+  <section class="section container spectroscopy-section">
+    <div class="spectrum-intro">
+      <div><span class="eyebrow">JWST · NIRSpec PRISM · 0.5–5.5 μm</span><h2>WASP-39 b transmission spectrum.</h2><p>As WASP-39 b passes in front of its star, some wavelengths are absorbed more strongly by atmospheric gases than others. The resulting wavelength-dependent transit depth carries molecular fingerprints.</p></div>
+      <a class="source-link" href="https://science.nasa.gov/asset/webb/exoplanet-wasp-39-b-transmission-spectra/" target="_blank" rel="noreferrer">Open the original NASA spectrum asset ↗</a>
+    </div>
+    <figure class="spectrum-figure card">
+      <div class="spectrum-image-wrap"><img src="https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2022/11/STScI-01H32P2N5S5JQQZRM7MEYZ.png/jcr:content/renditions/PRISM%20Spectrum,%20%20Full%20Res%20(For%20Display).jpg" alt="NASA-published JWST NIRSpec PRISM transmission spectrum of WASP-39 b, plotting transit depth against wavelength from about 0.5 to 5.5 micrometres, with atmospheric absorption features annotated." loading="lazy" />
+      </div>
+      <figcaption>Observed spectrum image: NASA, ESA, CSA, Joseph Olmsted (STScI). The plotted spectrum is the published data visual; the wavelength-band explorer below is a separate annotation aid, not a digitisation of its plotted points.</figcaption>
+    </figure>
+
+    <div class="molecule-lab card">
+      <div class="molecule-heading"><div><span class="eyebrow">Interactive wavelength guide</span><h2>Which molecules leave a fingerprint?</h2><p>Select a molecule to highlight the wavelength intervals where its reported spectral features occur in the NASA spectrum guide.</p></div><span class="tag">Wavelength · μm</span></div>
+      <div class="molecule-filters" role="group" aria-label="Select a molecule to highlight">
+        <button type="button" data-molecule-filter="all" class="is-active" aria-pressed="true">All features</button>
+        <button type="button" data-molecule-filter="Na" aria-pressed="false">Sodium (Na)</button>
+        <button type="button" data-molecule-filter="H2O" aria-pressed="false">Water (H₂O)</button>
+        <button type="button" data-molecule-filter="CO" aria-pressed="false">Carbon monoxide (CO)</button>
+        <button type="button" data-molecule-filter="CO2" aria-pressed="false">Carbon dioxide (CO₂)</button>
+        <button type="button" data-molecule-filter="SO2" aria-pressed="false">Sulfur dioxide (SO₂)</button>
+      </div>
+      <div class="spectrum-ruler-wrap">
+        <svg class="spectrum-ruler" viewBox="0 0 1000 205" role="img" aria-labelledby="ruler-title ruler-desc">
+          <title id="ruler-title">Wavelength intervals for atmospheric features in WASP-39 b</title>
+          <desc id="ruler-desc">A wavelength ruler from 0.5 to 5.5 micrometres, showing NASA-reported wavelength intervals for sodium, water, carbon monoxide, carbon dioxide and sulfur dioxide.</desc>
+          <g stroke="rgba(168,185,200,.25)" stroke-width="1">
+            <path d="M0 18V176 M100 18V176 M200 18V176 M300 18V176 M400 18V176 M500 18V176 M600 18V176 M700 18V176 M800 18V176 M900 18V176 M1000 18V176"/>
+          </g>
+          <g fill="#99aabd" font-size="15" text-anchor="middle">
+            <text x="0" y="197" text-anchor="start">0.5</text><text x="100" y="197">1.0</text><text x="200" y="197">1.5</text><text x="300" y="197">2.0</text><text x="400" y="197">2.5</text><text x="500" y="197">3.0</text><text x="600" y="197">3.5</text><text x="700" y="197">4.0</text><text x="800" y="197">4.5</text><text x="900" y="197">5.0</text><text x="1000" y="197" text-anchor="end">5.5 μm</text>
+          </g>
+          <g class="feature-lane" data-molecule="Na"><text x="0" y="13" fill="#e9bd78" font-size="13">Na</text><rect x="4" y="25" width="36" height="20" rx="4" fill="#d7a35e"><title>Sodium: 0.52–0.70 micrometres</title></rect></g>
+          <g class="feature-lane" data-molecule="H2O"><text x="0" y="58" fill="#80c5d8" font-size="13">H₂O</text><rect x="80" y="70" width="120" height="20" rx="4" fill="#4f9eb7"><title>Water: 0.90–1.50 micrometres</title></rect><rect x="244" y="70" width="88" height="20" rx="4" fill="#4f9eb7"><title>Water: 1.72–2.16 micrometres</title></rect><rect x="380" y="70" width="170" height="20" rx="4" fill="#4f9eb7"><title>Water: 2.40–3.25 micrometres</title></rect><rect x="900" y="70" width="70" height="20" rx="4" fill="#4f9eb7"><title>Water: 5.00–5.35 micrometres</title></rect></g>
+          <g class="feature-lane" data-molecule="CO"><text x="0" y="103" fill="#b7a4e4" font-size="13">CO</text><rect x="360" y="115" width="20" height="20" rx="4" fill="#8d77c2"><title>Carbon monoxide: 2.30–2.40 micrometres</title></rect><rect x="820" y="115" width="72" height="20" rx="4" fill="#8d77c2"><title>Carbon monoxide: 4.60–4.96 micrometres</title></rect></g>
+          <g class="feature-lane" data-molecule="CO2"><text x="0" y="148" fill="#83c49d" font-size="13">CO₂</text><rect x="430" y="160" width="50" height="20" rx="4" fill="#579d77"><title>Carbon dioxide: 2.65–2.90 micrometres</title></rect><rect x="732" y="160" width="84" height="20" rx="4" fill="#579d77"><title>Carbon dioxide: 4.16–4.58 micrometres</title></rect></g>
+          <g class="feature-lane" data-molecule="SO2"><rect x="692" y="25" width="28" height="20" rx="4" fill="#cb7888"><title>Sulfur dioxide: 3.96–4.10 micrometres</title></rect></g>
+        </svg>
+      </div>
+      <div class="molecule-detail" aria-live="polite" id="molecule-detail"><strong>All reported features</strong><span>Highlighted bands mark wavelength intervals used in NASA's annotated spectrum guide. Overlapping intervals can contain contributions from more than one molecule.</span></div>
+      <div class="significance-grid">
+        <article><span>Na</span><strong>19σ</strong><small>reported detection significance</small></article>
+        <article><span>H₂O</span><strong>33σ</strong><small>reported detection significance</small></article>
+        <article><span>CO₂</span><strong>28σ</strong><small>reported detection significance</small></article>
+        <article><span>CO</span><strong>7σ</strong><small>reported detection significance</small></article>
+        <article class="significance-lower"><span>SO₂</span><strong>2.7σ</strong><small>reported feature significance</small></article>
+      </div>
+      <p class="significance-note">Significances are the values reported in the 2023 Nature paper for this JWST/NIRSpec PRISM observation. They quantify statistical evidence under that paper's analysis; they are not atmospheric mixing ratios, abundances or proof that a molecule is present at a particular concentration. The SO₂ feature is substantially less significant than the strongest detections.</p>
+    </div>
+
+    <div class="spectroscopy-explainer">
+      <article class="card"><span class="eyebrow">1 · Transit</span><h3>Compare starlight.</h3><p>Measure the apparent stellar brightness during the transit and compare it with the out-of-transit level at each wavelength.</p></article>
+      <article class="card"><span class="eyebrow">2 · Absorption</span><h3>Read the pattern.</h3><p>Atmospheric molecules absorb selected wavelength ranges. Their combined bands change the planet's apparent radius with wavelength.</p></article>
+      <article class="card"><span class="eyebrow">3 · Retrieval</span><h3>Test atmosphere models.</h3><p>Scientists compare spectra with radiative-transfer models to infer which molecules, clouds and atmospheric conditions best explain the observations.</p></article>
+    </div>
+
+    <div class="spectroscopy-limit prose">
+      <span class="eyebrow">Data provenance · Scope · Limits</span><h2>What this first lab does—and does not—show.</h2>
+      <p>The image is NASA's published JWST NIRSpec PRISM transmission spectrum of WASP-39 b. The wavelength intervals shown in the interactive ruler are annotations from NASA's spectrum guide. This page does not fetch raw telescope telemetry, fit a new atmospheric model, recreate the measurement uncertainties or digitise the plotted transit-depth values.</p>
+      <p>The first version focuses on this one JWST observation. It does not yet include a matched Hubble spectrum or a multi-instrument comparison. Different instruments, wavelength coverage, data reductions and retrieval assumptions must be handled explicitly before spectra can be compared quantitatively.</p>
+      <p><strong>Primary sources:</strong> <a href="https://science.nasa.gov/asset/webb/exoplanet-wasp-39-b-transmission-spectra/" target="_blank" rel="noreferrer">NASA spectrum asset and wavelength annotations ↗</a>; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9946832/" target="_blank" rel="noreferrer">Rustamkulov et al. (2023), Nature — Early Release Science of WASP-39 b with JWST NIRSpec PRISM ↗</a>; <a href="https://doi.org/10.5281/zenodo.7388032" target="_blank" rel="noreferrer">published data products on Zenodo ↗</a>; <a href="https://archive.stsci.edu/missions-and-data/jwst" target="_blank" rel="noreferrer">STScI MAST JWST public archive ↗</a>.</p>
+    </div>
+  </section>
+  <script>
+    const filters = [...document.querySelectorAll<HTMLButtonElement>("[data-molecule-filter]")];
+    const lanes = [...document.querySelectorAll<SVGGElement>(".feature-lane")];
+    const detail = document.querySelector<HTMLElement>("#molecule-detail");
+    const descriptions: Record<string,{title:string,copy:string}> = {
+      all:{title:"All reported features",copy:"Highlighted bands mark wavelength intervals used in NASA's annotated spectrum guide. Overlapping intervals can contain contributions from more than one molecule."},
+      Na:{title:"Sodium (Na) · 0.52–0.70 μm",copy:"The sodium feature is in the visible/near-infrared edge of this spectrum. The Nature paper reports a 19σ detection significance."},
+      H2O:{title:"Water vapour (H₂O) · four wavelength intervals",copy:"The annotated water intervals are 0.90–1.50, 1.72–2.16, 2.40–3.25 and 5.00–5.35 μm. The Nature paper reports a 33σ detection significance."},
+      CO:{title:"Carbon monoxide (CO) · two wavelength intervals",copy:"The annotated intervals are 2.30–2.40 and 4.60–4.96 μm. The Nature paper reports a 7σ detection significance."},
+      CO2:{title:"Carbon dioxide (CO₂) · two wavelength intervals",copy:"The annotated intervals are 2.65–2.90 and 4.16–4.58 μm. The Nature paper reports a 28σ detection significance."},
+      SO2:{title:"Sulfur dioxide (SO₂) · 3.96–4.10 μm",copy:"A feature near 4 μm was best explained by SO₂ in the Nature paper, with a reported 2.7σ significance. This is weaker evidence than the high-significance molecular detections."}
+    };
+    filters.forEach(button=>button.addEventListener("click",()=>{
+      const selected=button.dataset.moleculeFilter ?? "all";
+      filters.forEach(item=>{
+        const active=item===button;
+        item.classList.toggle("is-active",active);
+        item.setAttribute("aria-pressed",String(active));
+      });
+      lanes.forEach(lane=>{
+        lane.classList.toggle("is-muted",selected!=="all"&&lane.dataset.molecule!==selected);
+        lane.classList.toggle("is-highlighted",selected!=="all"&&lane.dataset.molecule===selected);
+      });
+      if(detail){
+        const copy=descriptions[selected];
+        detail.replaceChildren();
+        const strong=document.createElement("strong");strong.textContent=copy.title;
+        const span=document.createElement("span");span.textContent=copy.copy;
+        detail.append(strong,span);
+      }
+    }));
+  </script>
+  <style>
+    .heading-muted{color:#8796ad}
+    .spectroscopy-section{padding-top:18px}
+    .spectrum-intro{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:17px}
+    .spectrum-intro>div{max-width:680px}
+    .spectrum-intro h2{font-size:1.8rem;margin:8px 0}
+    .spectrum-intro p{color:var(--muted);font-size:.9rem;line-height:1.75;margin:0}
+    .source-link{flex:0 0 auto;color:var(--gold-bright);font-size:.75rem;text-decoration:underline;text-underline-offset:3px}
+    .spectrum-figure{margin:0;padding:20px;background:#fff}
+    .spectrum-image-wrap{overflow-x:auto}
+    .spectrum-image-wrap img{display:block;width:100%;min-width:620px;height:auto;object-fit:contain}
+    .spectrum-figure figcaption{margin-top:12px;color:#596a79;font-size:.7rem;line-height:1.6}
+    .molecule-lab{margin-top:16px;padding:24px}
+    .molecule-heading{display:flex;align-items:start;justify-content:space-between;gap:15px}
+    .molecule-heading h2{font-size:1.7rem;margin:8px 0}
+    .molecule-heading p{max-width:700px;margin:0;color:var(--muted);font-size:.84rem;line-height:1.7}
+    .molecule-filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 14px}
+    .molecule-filters button{min-height:39px;padding:8px 12px;border:1px solid var(--line-strong);border-radius:5px;background:transparent;color:var(--muted);font-size:.72rem;cursor:pointer}
+    .molecule-filters button.is-active{background:#1d354e;color:#fff;border-color:#1d354e}
+    .spectrum-ruler-wrap{max-width:100%;overflow-x:auto;padding:9px 0}
+    .spectrum-ruler{display:block;width:100%;min-width:620px;height:auto;border:1px solid var(--line);border-radius:8px;background:#0b1523}
+    .feature-lane{transition:opacity .18s ease}
+    .feature-lane.is-muted{opacity:.13}
+    .feature-lane.is-highlighted{filter:drop-shadow(0 0 5px rgba(255,255,255,.45))}
+    .molecule-detail{display:grid;gap:4px;margin-top:10px;padding:13px 15px;border:1px solid var(--line);border-radius:6px;background:rgba(14,30,48,.58)}
+    .molecule-detail strong{color:var(--gold-bright);font-size:.82rem}
+    .molecule-detail span{color:var(--muted);font-size:.75rem;line-height:1.6}
+    .significance-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-top:13px}
+    .significance-grid article{padding:12px 13px;border:1px solid var(--line);border-radius:7px;background:rgba(12,23,37,.72)}
+    .significance-grid article>span,.significance-grid article small{display:block;color:var(--quiet);font-size:.66rem}
+    .significance-grid article strong{display:block;margin:4px 0;color:var(--cyan);font:600 1.35rem "Space Grotesk",sans-serif}
+    .significance-grid .significance-lower strong{color:#d6a27c}
+    .significance-note{margin:13px 0 0;color:var(--quiet);font-size:.7rem;line-height:1.65}
+    .spectroscopy-explainer{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+    .spectroscopy-explainer article{padding:19px}
+    .spectroscopy-explainer h3{font-size:1.1rem;margin:8px 0}
+    .spectroscopy-explainer p{margin:0;color:var(--quiet);font-size:.77rem;line-height:1.7}
+    .spectroscopy-limit{margin:38px auto 0}
+    .spectroscopy-limit p{font-size:.9rem;line-height:1.8}
+    .spectroscopy-limit a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:850px){.spectrum-intro{align-items:flex-start;flex-direction:column;gap:10px}.significance-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:620px){.molecule-lab{padding:17px}.molecule-heading{flex-direction:column}.molecule-heading h2{font-size:1.45rem}.spectroscopy-explainer{grid-template-columns:1fr}.spectrum-figure{padding:12px}.significance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</SiteLayout>
