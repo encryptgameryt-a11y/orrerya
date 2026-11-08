@@ -1,0 +1,297 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { ephemerisElements } from "../../data/ephemeris";
+---
+<SiteLayout title="3D Solar System explorer" description="Explore the inclined three-dimensional planetary orbits using NASA/JPL approximate orbital elements.">
+  <div class="container breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>3D orbital explorer</span></div>
+  <header class="page-intro container">
+    <div class="eyebrow">TOOL 09 · 3D ORBITAL EXPLORER</div>
+    <h1>See the Solar System<br /><span class="heading-muted">in three dimensions.</span></h1>
+    <p class="lede">Explore the planets above and below the ecliptic plane. The scene uses ORRERYA's NASA/JPL long-range approximate orbital elements for the selected instant.</p>
+  </header>
+  <section class="section container orbit3d-section">
+    <div class="orbit3d-toolbar card">
+      <div class="field"><label for="scene-date">Simulation date and local time</label><input id="scene-date" type="datetime-local" min="0001-01-01T00:00" max="3000-12-31T23:59" /></div>
+      <div class="field"><label for="focus-body">Focus camera on</label><select id="focus-body"><option value="sun">Sun</option>{ephemerisElements.map((p)=><option value={p.slug}>{p.name}</option>)}</select></div>
+      <div class="scene-scale-control"><span class="eyebrow">Distance mapping</span><div class="scene-scale-buttons"><button type="button" id="scale-compressed" class="is-active" aria-pressed="true">Compressed</button><button type="button" id="scale-linear" aria-pressed="false">Linear AU</button></div></div>
+      <button type="button" class="scene-now" id="scene-now">Use current time</button>
+    </div>
+    <div class="orbit3d-frame card">
+      <div class="orbit3d-canvas-wrap"><canvas id="orrery-3d" aria-label="Interactive three-dimensional model showing the Sun and the eight planets on inclined orbital paths. Use a mouse or touch gesture to orbit, pan and zoom the camera."></canvas><div class="scene-loading" id="scene-status" role="status" aria-live="polite">Preparing the 3D Solar System…</div><div class="scene-compass">J2000 ECLIPTIC · NORTH UP</div><div class="scene-scale-key"><span><i></i> Orbit paths · approximate</span><span>Planet sizes exaggerated</span></div></div>
+      <div class="orbit3d-controls"><span class="eyebrow">Camera controls</span><p><strong>Drag</strong> to orbit · <strong>Right-drag</strong> to pan · <strong>Scroll / pinch</strong> to zoom.</p><button type="button" id="focus-selected" class="focus-button">Focus selected body</button><p class="scene-selected" id="scene-selected">Sun · central reference</p></div>
+    </div>
+    <div class="scale-explainer">
+      <article class="card"><span class="eyebrow">Compressed mode</span><h2>See all eight planets.</h2><p>Radial distances use a logarithmic mapping. This brings the outer planets closer on screen, but it is not a linear distance scale and cannot be used to measure spacing.</p></article>
+      <article class="card"><span class="eyebrow">Linear AU mode</span><h2>Compare orbital distances.</h2><p>Radial distances are proportional to heliocentric distance in AU. Neptune's orbit is therefore about 30 times farther from the Sun than Earth's. Planet diameters remain enlarged so the bodies are visible.</p></article>
+    </div>
+    <div class="orbit3d-data card">
+      <div class="section-head"><div><span class="eyebrow">JPL orbital reference</span><h2>Inclination and orbital size.</h2></div><p>Values below are the JPL J2000 element snapshot (semi-major axis and inclination), not instantaneous positions. The Earth row represents the Earth–Moon barycentre proxy.</p></div>
+      <div class="table-scroll"><table><thead><tr><th scope="col">Body</th><th scope="col">Semi-major axis</th><th scope="col">Inclination to J2000 ecliptic</th></tr></thead><tbody>
+        {ephemerisElements.map((p)=><tr><th scope="row">{p.name}{p.slug === "earth" ? "*" : ""}</th><td>{p.a.toFixed(8)} AU</td><td>{p.inclination.toFixed(6)}°</td></tr>)}
+      </tbody></table></div>
+      <p class="data-footnote">* JPL's Earth orbital elements describe the Earth–Moon barycentre (EMB), used here as a close proxy for Earth's orbit.</p>
+    </div>
+    <div class="orbit3d-method prose">
+      <span class="eyebrow">Model notes · Read before using</span><h2>Accurate geometry is not the same as an N-body simulation.</h2>
+      <p>Planet positions are calculated in the browser from NASA/JPL Solar System Dynamics Table 2a secular Keplerian elements and the Table 2b periodic mean-anomaly corrections for Jupiter, Saturn, Uranus and Neptune. The resulting three-dimensional positions include the planets' inclinations relative to the J2000 mean ecliptic.</p>
+      <p>This is still a Keplerian approximation, not a numerically integrated multi-body simulation. It omits planetary perturbation integration, light-time and aberration corrections, topocentric parallax and a full UTC-to-TDB time-scale conversion. It is for exploring orbital geometry, not navigation or precision observing. Planet diameters, the Sun, orbit widths and visual spacing are schematic. The compressed mode distorts distances deliberately; linear AU mode preserves orbital-distance ratios but not body sizes.</p>
+      <p>For high-precision ephemerides, use <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">NASA/JPL Horizons ↗</a>. Read the <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">JPL approximate-position method and accuracy notes ↗</a>.</p>
+    </div>
+  </section>
+  <script>
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import { ephemerisElements } from "../../data/ephemeris";
+    import { elementsAt, orbitalPlaneToEcliptic, positionAt, radians } from "../../lib/jpl-approx-ephemeris.js";
+
+    const canvas = document.querySelector<HTMLCanvasElement>("#orrery-3d");
+    const status = document.querySelector<HTMLElement>("#scene-status");
+    const dateField = document.querySelector<HTMLInputElement>("#scene-date");
+    const focusField = document.querySelector<HTMLSelectElement>("#focus-body");
+    const nowButton = document.querySelector<HTMLButtonElement>("#scene-now");
+    const focusButton = document.querySelector<HTMLButtonElement>("#focus-selected");
+    const compressedButton = document.querySelector<HTMLButtonElement>("#scale-compressed");
+    const linearButton = document.querySelector<HTMLButtonElement>("#scale-linear");
+    const selectedText = document.querySelector<HTMLElement>("#scene-selected");
+    if (canvas && status && dateField && focusField) {
+      let renderer: THREE.WebGLRenderer | null = null;
+      try {
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050a12);
+        scene.fog = new THREE.Fog(0x050a12, 75, 150);
+        const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 220);
+        camera.position.set(44, 30, 44);
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: "low-power" });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        controls.dampingFactor = 0.07;
+        controls.minDistance = 3;
+        controls.maxDistance = 135;
+        controls.target.set(0, 0, 0);
+
+        scene.add(new THREE.AmbientLight(0x8899aa, 1.05));
+        const sunLight = new THREE.PointLight(0xffe2aa, 180, 0, 1.5);
+        sunLight.position.set(0,0,0);
+        scene.add(sunLight);
+        const sun = new THREE.Mesh(
+          new THREE.SphereGeometry(1.05, 40, 32),
+          new THREE.MeshBasicMaterial({ color: 0xffc46b })
+        );
+        scene.add(sun);
+        const sunGlow = new THREE.Mesh(
+          new THREE.SphereGeometry(1.32, 32, 24),
+          new THREE.MeshBasicMaterial({ color: 0xe7a04a, transparent: true, opacity: 0.12, side: THREE.BackSide })
+        );
+        scene.add(sunGlow);
+
+        // A deterministic star field adds orientation without external image assets.
+        let seed = 1977;
+        const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+        const starPositions = new Float32Array(900 * 3);
+        for (let i=0;i<900;i++) {
+          const u=rand()*2-1, phi=rand()*Math.PI*2, radius=95+rand()*22;
+          const t=Math.sqrt(1-u*u);
+          starPositions[i*3]=radius*t*Math.cos(phi);
+          starPositions[i*3+1]=radius*u;
+          starPositions[i*3+2]=radius*t*Math.sin(phi);
+        }
+        const starsGeometry=new THREE.BufferGeometry();
+        starsGeometry.setAttribute("position",new THREE.BufferAttribute(starPositions,3));
+        scene.add(new THREE.Points(starsGeometry,new THREE.PointsMaterial({color:0xb6c9dc,size:.18,sizeAttenuation:true,transparent:true,opacity:.72})));
+
+        const bodyObjects = new Map<string, THREE.Object3D>();
+        const pathObjects: THREE.Line[] = [];
+        const bodyColors: Record<string, number> = {
+          mercury:0xb6b2ad, venus:0xd6ad83, earth:0x4f9bd1, mars:0xc66c52,
+          jupiter:0xd3a77b, saturn:0xd7c18e, uranus:0x83c8cc, neptune:0x557fc3
+        };
+        const visualRadii: Record<string, number> = {
+          mercury:.19, venus:.26, earth:.28, mars:.22, jupiter:.62, saturn:.53, uranus:.39, neptune:.38
+        };
+        const planetMaterials = new Map<string, THREE.MeshStandardMaterial>();
+        ephemerisElements.forEach((item) => {
+          const material = new THREE.MeshStandardMaterial({ color: bodyColors[item.slug], roughness:.84, metalness:.02 });
+          planetMaterials.set(item.slug,material);
+          const mesh = new THREE.Mesh(new THREE.SphereGeometry(visualRadii[item.slug],24,18),material);
+          mesh.name=item.name;
+          scene.add(mesh);
+          bodyObjects.set(item.slug,mesh);
+          const ring = item.slug === "saturn"
+            ? new THREE.Mesh(new THREE.RingGeometry(.72,1.04,64),new THREE.MeshBasicMaterial({color:0xc8b18a,side:THREE.DoubleSide,transparent:true,opacity:.54}))
+            : null;
+          if(ring){ring.rotation.x=-Math.PI/2;mesh.add(ring);}
+          const orbitGeometry = new THREE.BufferGeometry();
+          const orbitLine = new THREE.Line(orbitGeometry,new THREE.LineBasicMaterial({color:bodyColors[item.slug],transparent:true,opacity:.38}));
+          scene.add(orbitLine);
+          pathObjects.push(orbitLine);
+        });
+
+        let scaleMode: "compressed" | "linear" = "compressed";
+        function mappedVector(x:number,y:number,z:number) {
+          const raw = new THREE.Vector3(x,z,-y); // ecliptic north (native +z) maps to scene +y
+          const distance=raw.length();
+          if(distance===0)return raw;
+          const mappedRadius=scaleMode==="linear" ? distance*1.65 : Math.log1p(distance)/Math.log1p(30.1)*50;
+          return raw.multiplyScalar(mappedRadius/distance);
+        }
+        function julianCenturies(dateValue:string) {
+          const instant=new Date(dateValue);
+          const jd=instant.getTime()/86400000+2440587.5;
+          return (jd-2451545.0)/36525;
+        }
+        function updateScene() {
+          if(!dateField.value)return;
+          const localYear=Number(dateField.value.slice(0,4));
+          const date=new Date(dateField.value);
+          if(Number.isNaN(date.getTime())||!Number.isInteger(localYear)||localYear<1||localYear>3000){
+            status.textContent="Choose a valid date between 1 CE and 3000 CE.";
+            return;
+          }
+          const T=julianCenturies(dateField.value);
+          ephemerisElements.forEach((item,index)=>{
+            const p=positionAt(item,T);
+            const at=mappedVector(p.x,p.y,p.z);
+            const object=bodyObjects.get(item.slug);
+            object?.position.copy(at);
+            const el=elementsAt(item,T);
+            const omega=radians(el.perihelion-el.node);
+            const node=radians(el.node);
+            const pts:THREE.Vector3[]=[];
+            for(let step=0;step<=180;step++){
+              const E=step*Math.PI*2/180;
+              const q=orbitalPlaneToEcliptic(el.a,el.e,el.inclination,omega,node,E);
+              pts.push(mappedVector(q.x,q.y,q.z));
+            }
+            const line=pathObjects[index];
+            line.geometry.dispose();
+            line.geometry=new THREE.BufferGeometry().setFromPoints(pts);
+          });
+          status.textContent="Approximate 3D positions calculated · "+new Intl.DateTimeFormat(undefined,{dateStyle:"medium",timeStyle:"short"}).format(date);
+          setFocusLabel();
+        }
+        function setFocusLabel(){
+          const id=focusField.value;
+          if(id==="sun"){
+            selectedText && (selectedText.textContent="Sun · central reference");
+            return;
+          }
+          const item=ephemerisElements.find(p=>p.slug===id);
+          const object=bodyObjects.get(id);
+          if(item && object && selectedText)selectedText.textContent=item.name+" · "+Math.hypot(object.position.x,object.position.y,object.position.z).toFixed(2)+" scene units from the Sun";
+        }
+        function focusSelected(){
+          const id=focusField.value;
+          const target=id==="sun"?sun:bodyObjects.get(id);
+          if(!target)return;
+          controls.target.copy(target.position);
+          const direction=camera.position.clone().sub(controls.target).normalize();
+          camera.position.copy(controls.target.clone().add(direction.multiplyScalar(Math.max(9,camera.position.distanceTo(controls.target)))));
+          controls.update();
+          setFocusLabel();
+        }
+        function resize(){
+          if(!renderer)return;
+          const rect=canvas!.getBoundingClientRect();
+          const width=Math.max(1,Math.floor(rect.width)),height=Math.max(1,Math.floor(rect.height));
+          renderer.setSize(width,height,false);
+          camera.aspect=width/height;
+          camera.updateProjectionMatrix();
+          renderer.render(scene,camera);
+        }
+        const observer=new ResizeObserver(resize);
+        observer.observe(canvas);
+        dateField.value=(()=>{
+          const d=new Date();const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+          return local.toISOString().slice(0,16);
+        })();
+        dateField.addEventListener("change",updateScene);
+        focusField.addEventListener("change",focusSelected);
+        focusButton?.addEventListener("click",focusSelected);
+        nowButton?.addEventListener("click",()=>{
+          const d=new Date();const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+          dateField.value=local.toISOString().slice(0,16);updateScene();
+        });
+        compressedButton?.addEventListener("click",()=>{
+          scaleMode="compressed";compressedButton.classList.add("is-active");linearButton?.classList.remove("is-active");
+          compressedButton.setAttribute("aria-pressed","true");linearButton?.setAttribute("aria-pressed","false");
+          updateScene();
+        });
+        linearButton?.addEventListener("click",()=>{
+          scaleMode="linear";linearButton.classList.add("is-active");compressedButton?.classList.remove("is-active");
+          linearButton?.setAttribute("aria-pressed","true");compressedButton?.setAttribute("aria-pressed","false");
+          updateScene();
+        });
+        controls.addEventListener("change",setFocusLabel);
+        updateScene();
+        resize();
+        renderer.setAnimationLoop(()=>{
+          if(!document.hidden){controls.update();renderer?.render(scene,camera);}
+        });
+        document.addEventListener("visibilitychange",()=>{
+          if(document.hidden)renderer?.setAnimationLoop(null);
+          else renderer?.setAnimationLoop(()=>{controls.update();renderer?.render(scene,camera);});
+        });
+        window.addEventListener("pagehide",()=>{
+          observer.disconnect();renderer?.setAnimationLoop(null);
+          pathObjects.forEach(line=>{line.geometry.dispose();(line.material as THREE.Material).dispose();});
+          planetMaterials.forEach(material=>material.dispose());
+          renderer?.dispose();
+        },{once:true});
+      } catch (error) {
+        status.textContent="WebGL could not start in this browser. The orbital reference data remains available in the table below.";
+        console.error("ORRERYA 3D viewer:",error);
+      }
+    }
+  </script>
+  <style>
+    .heading-muted{color:#8796ad}
+    .orbit3d-section{padding-top:20px}
+    .orbit3d-toolbar{display:grid;grid-template-columns:1.2fr 1fr 1.2fr auto;align-items:end;gap:14px;padding:18px}
+    .orbit3d-toolbar .field{margin:0;min-width:0}
+    .orbit3d-toolbar label{display:block;margin-bottom:6px;font-size:.74rem;color:var(--muted)}
+    .orbit3d-toolbar input,.orbit3d-toolbar select{width:100%;min-height:44px}
+    .scene-scale-buttons{display:flex;gap:5px;margin-top:6px;padding:4px;border:1px solid var(--line);border-radius:7px}
+    .scene-scale-buttons button,.scene-now,.focus-button{min-height:36px;padding:7px 10px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font-size:.72rem;font-weight:650;cursor:pointer}
+    .scene-scale-buttons button{flex:1}
+    .scene-scale-buttons button.is-active{background:#d8c29b;color:#132234}
+    .scene-now,.focus-button{border-color:var(--line-strong);color:var(--gold-bright)}
+    .orbit3d-frame{display:grid;grid-template-columns:minmax(0,1fr) 235px;gap:0;margin-top:14px;overflow:hidden;background:#050a12}
+    .orbit3d-canvas-wrap{position:relative;min-height:530px;min-width:0;background:radial-gradient(ellipse at 48% 48%,#101e30,#050a12 70%)}
+    #orrery-3d{display:block;width:100%;height:530px;touch-action:none;outline:none}
+    #orrery-3d:focus-visible{outline:2px solid #e7c98f;outline-offset:-3px}
+    .scene-loading{position:absolute;left:16px;top:14px;padding:7px 10px;border:1px solid rgba(210,220,235,.15);border-radius:5px;background:rgba(5,10,18,.8);color:#e2d8c6;font-size:.68rem;pointer-events:none}
+    .scene-compass{position:absolute;right:15px;top:15px;color:#9cacbd;font-size:.58rem;letter-spacing:.14em;pointer-events:none}
+    .scene-scale-key{position:absolute;left:16px;bottom:15px;display:flex;gap:17px;flex-wrap:wrap;color:#a8b6c5;font-size:.65rem;pointer-events:none}
+    .scene-scale-key span{display:flex;align-items:center;gap:6px}
+    .scene-scale-key i{width:7px;height:7px;border-radius:50%;background:#c3a573}
+    .orbit3d-controls{padding:22px;border-left:1px solid rgba(255,255,255,.1);color:#d7e0e8}
+    .orbit3d-controls .eyebrow{color:#d5b981}
+    .orbit3d-controls p{font-size:.74rem;line-height:1.7;color:#aab8c7}
+    .orbit3d-controls strong{color:#f5f0e7}
+    .focus-button{margin:8px 0;color:#e5c991}
+    .orbit3d-controls .scene-selected{margin-top:15px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12);color:#e4d6bd}
+    .scale-explainer{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
+    .scale-explainer article{padding:20px}
+    .scale-explainer h2{font-size:1.25rem;margin:9px 0}
+    .scale-explainer p{margin:0;color:var(--quiet);font-size:.78rem;line-height:1.7}
+    .orbit3d-data{margin-top:14px;padding:23px}
+    .orbit3d-data .section-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:18px}
+    .orbit3d-data .section-head h2{font-size:1.65rem;margin:8px 0}
+    .orbit3d-data .section-head p{font-size:.76rem}
+    .orbit3d-data table{width:100%;border-collapse:collapse;font-size:.78rem;font-variant-numeric:tabular-nums}
+    .orbit3d-data th,.orbit3d-data td{padding:11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+    .orbit3d-data th:first-child,.orbit3d-data td:first-child{text-align:left}
+    .orbit3d-data thead th{color:var(--quiet);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+    .data-footnote{font-size:.68rem;color:var(--quiet);margin-top:13px}
+    .orbit3d-method{margin:38px auto 0}
+    .orbit3d-method p{font-size:.9rem;line-height:1.8}
+    .orbit3d-method a{color:var(--gold-bright);text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:1000px){.orbit3d-toolbar{grid-template-columns:1fr 1fr}.orbit3d-frame{grid-template-columns:minmax(0,1fr) 205px}}
+    @media(max-width:700px){.orbit3d-frame{grid-template-columns:1fr}.orbit3d-canvas-wrap{min-height:390px}#orrery-3d{height:390px}.orbit3d-controls{border-left:0;border-top:1px solid rgba(255,255,255,.1);padding:15px 18px}.orbit3d-controls p{margin:5px 0}.focus-button{margin:4px 0}.orbit3d-data{padding:16px}.orbit3d-data .section-head{grid-template-columns:1fr;gap:5px}.scale-explainer{grid-template-columns:1fr}}
+    @media(max-width:440px){.orbit3d-toolbar{grid-template-columns:1fr}.scene-scale-buttons button{min-height:40px}.orbit3d-canvas-wrap{min-height:330px}#orrery-3d{height:330px}.scene-compass{font-size:.5rem}.scene-scale-key{font-size:.58rem;gap:10px}}
+  </style>
+</SiteLayout>
