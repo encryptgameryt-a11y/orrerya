@@ -155,6 +155,12 @@ test("selected satellite catalogue has unique bodies, valid inputs and traceable
   assert.deepEqual(satellitePhysical.map(body => body.name), expectedSatellites);
   assert.equal(new Set(satellitePhysical.map(body => body.name)).size, expectedSatellites.length);
 
+  const moonRecord = satellitePhysical.find(body => body.name === "Moon");
+  assert.equal(Object.hasOwn(moonRecord, "equatorialRadiusUncertaintyKm"), false,
+    "Planet/dwarf uncertainty metadata must not leak into satellite records");
+  assert.equal(Object.hasOwn(moonRecord, "massUncertaintyKg"), false,
+    "Planet/dwarf uncertainty metadata must not leak into satellite records");
+
   for (const body of satellitePhysical) {
     assertPositiveFinite(body.gmKm3S2, body.name + " GM");
     assertPositiveFinite(body.meanRadiusKm, body.name + " mean radius");
