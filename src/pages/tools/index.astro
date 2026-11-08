@@ -61,7 +61,7 @@ import {
       EARTH_SIDEREAL_YEAR_DAYS
     } from "../../lib/scientific-constants.js";
     const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
-    function pulseResult(target: HTMLElement | null) {
+    function pulseResult(target) {
       if (!target) return;
       target.classList.remove("result-updated");
       void target.offsetWidth;
@@ -155,7 +155,7 @@ import {
     yearSelect?.addEventListener("change", () => updateYear(true));
     updateYear();
     const calculatorDialogs = Array.from(document.querySelectorAll<HTMLDialogElement>(".tool-dialog"));
-    function openCalculator(id: string, addHistory = true) {
+    function openCalculator(id, addHistory = true) {
       const dialog = calculatorDialogs.find((item) => item.id === id);
       if (!dialog) return;
       if (!dialog.open) dialog.showModal();
