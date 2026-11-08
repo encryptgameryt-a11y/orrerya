@@ -123,8 +123,8 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
     <div><strong>{solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(2)}% <small>of Sun + planets</small></strong><span>Share of the combined mass of the Sun and eight planets</span></div>
     <div><strong>149.6 <small>million km</small></strong><span>Earth's average distance from the Sun</span></div>
   </section>
-  <p class="home-facts-note">The 4.5673-billion-year age comes from calcium–aluminium-rich inclusions (CAIs), mineral inclusions in primitive meteorites. They are among the earliest accurately dated solids; planets assembled later. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
-  <p class="home-facts-note">The 99.87% figure compares the Sun with the eight planets only. NASA’s broader estimate of about 99.85% uses a different inventory, so the two figures have different denominators.</p>
+  <p class="home-facts-note">The 4.5673-billion-year estimate comes from calcium–aluminium-rich inclusions (CAIs) found in primitive meteorites. These formed very early; planets assembled later over millions of years. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
+  <p class="home-facts-note">The displayed percentage compares the Sun with the eight planets only. NASA’s broader estimate of about 99.85% uses a wider inventory, so the two figures have different denominators.</p>
 
   <section class="section container home-planets-section">
     <div class="section-head">
@@ -135,7 +135,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
       {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
-      <div class="outer-band-copy"><span class="eyebrow">OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are mostly hydrogen and helium. Uranus and Neptune contain a larger share of water, ammonia and methane deep inside.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
+      <div class="outer-band-copy"><span class="eyebrow">OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are mostly hydrogen and helium. Uranus and Neptune are called ice giants because their interiors contain more water, ammonia and methane.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
       <div class="outer-mini-grid">{outer.map((planet) => <a href={"/planets/" + planet.slug + "/"}><img src={planet.image} alt={planet.imageAlt} loading="lazy" /><span>{planet.name}</span></a>)}</div>
     </div>
   </section>
@@ -148,7 +148,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
         <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-icon"><LineIcon name="sun" size={28} /></span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun sends a steady stream of particles into space. Changes in its magnetic field can also produce flares and powerful eruptions.</p><span class="text-link">Meet our star ↗</span></div></a>
         <a class="discover-card" href="/explore/moons/"><span class="discover-icon"><LineIcon name="moon" size={28} /></span><div><span class="eyebrow">Moons and rings</span><h3>Moons & rings</h3><p>Europa and Enceladus may hide oceans beneath ice. Io has active volcanoes, while Saturn’s rings are made of countless icy particles.</p><span class="text-link">Explore the moons ↗</span></div></a>
         <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-icon"><LineIcon name="planet" size={28} /></span><div><span class="eyebrow">Dwarf planets</span><h3>Dwarf planets</h3><p>Pluto, Ceres, Haumea, Makemake and Eris are the five officially recognised dwarf planets.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
-        <a class="discover-card" href="/science/"><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">Planetary science</span><h3>Gravity, seasons and tides</h3><p>Gravity governs the planets’ paths. Earth’s tilt causes the seasons, and the Moon’s gravity helps raise ocean tides.</p><span class="text-link">Explore the science ↗</span></div></a>
+        <a class="discover-card" href="/science/"><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">How it works</span><h3>Gravity, seasons and tides</h3><p>Gravity governs the planets’ paths. Earth’s tilt causes the seasons, and the Moon’s gravity helps raise ocean tides.</p><span class="text-link">Explore the science ↗</span></div></a>
       </div>
       <a class="comets-banner" href="/explore/small-bodies/">
         <div class="comets-banner-art" role="img" aria-label="Illustration of a bright comet passing rocky asteroid fragments.">
