@@ -56,16 +56,22 @@ export interface SolarBodyPhysical {
   orbitDays?: number;
   siderealRotationDays?: number;
   note?: string;
+  /** Optional quoted uncertainty from the source physical-parameter table. */
+  equatorialRadiusKm?: number;
+  equatorialRadiusUncertaintyKm?: number;
+  meanRadiusUncertaintyKm?: number;
+  massUncertaintyKg?: number;
+  densityUncertaintyGcm3?: number;
 }
 
 export const planetPhysics: SolarBodyPhysical[] = [
-  {name:"Mercury",type:"Terrestrial planet",massKg:3.30103e23,meanRadiusKm:2439.4,densityGcm3:5.4289,equatorialGravityMS2:3.70,escapeVelocityKmS:4.25,meanDistanceAU:0.3871,orbitDays:87.969257175,siderealRotationDays:58.6462},
-  {name:"Venus",type:"Terrestrial planet",massKg:4.86731e24,meanRadiusKm:6051.8,densityGcm3:5.243,equatorialGravityMS2:8.87,escapeVelocityKmS:10.36,meanDistanceAU:0.7233,orbitDays:224.700799215,siderealRotationDays:-243.018,note:"Retrograde rotation; negative sign denotes direction."},
-  {name:"Earth",type:"Terrestrial planet",massKg:5.97217e24,meanRadiusKm:6371.0084,densityGcm3:5.5134,equatorialGravityMS2:9.80,escapeVelocityKmS:11.19,meanDistanceAU:1,orbitDays:365.25635535,siderealRotationDays:0.99726968},
-  {name:"Mars",type:"Terrestrial planet",massKg:6.41691e23,meanRadiusKm:3389.50,densityGcm3:3.9340,equatorialGravityMS2:3.71,escapeVelocityKmS:5.03,meanDistanceAU:1.5237,orbitDays:686.9795859,siderealRotationDays:1.02595676},
-  {name:"Jupiter",type:"Gas giant",massKg:1.898125e27,meanRadiusKm:69911,densityGcm3:1.3262,equatorialGravityMS2:24.79,escapeVelocityKmS:60.20,meanDistanceAU:5.2028,orbitDays:4332.82012875,siderealRotationDays:0.41354},
-  {name:"Saturn",type:"Gas giant",massKg:5.68317e26,meanRadiusKm:58232,densityGcm3:0.6871,equatorialGravityMS2:10.44,escapeVelocityKmS:36.09,meanDistanceAU:9.5388,orbitDays:10755.6986445,siderealRotationDays:0.44401,note:"Very low bulk density; equatorial gravity includes rapid rotation and oblateness."},
-  {name:"Uranus",type:"Ice giant",massKg:8.68099e25,meanRadiusKm:25362,densityGcm3:1.270,equatorialGravityMS2:8.87,escapeVelocityKmS:21.38,meanDistanceAU:19.191,orbitDays:30687.1530015,siderealRotationDays:-0.71833,note:"Retrograde rotation; axial tilt is close to 98 degrees."},
+  {name:"Mercury",type:"Terrestrial planet",massKg:3.30103e23,meanRadiusKm:2439.4,densityGcm3:5.4289,equatorialGravityMS2:3.70,escapeVelocityKmS:4.25,meanDistanceAU:0.3871,orbitDays:87.969257175,siderealRotationDays:58.6462,equatorialRadiusUncertaintyKm:0.04,meanRadiusUncertaintyKm:0.1,massUncertaintyKg:2.1e19,densityUncertaintyGcm3:0.0007},
+  {name:"Venus",type:"Terrestrial planet",massKg:4.86731e24,meanRadiusKm:6051.8,densityGcm3:5.243,equatorialGravityMS2:8.87,escapeVelocityKmS:10.36,meanDistanceAU:0.7233,orbitDays:224.700799215,siderealRotationDays:-243.018,note:"Retrograde rotation; negative sign denotes direction.",equatorialRadiusUncertaintyKm:1.0,meanRadiusUncertaintyKm:1.0,massUncertaintyKg:2.3e20,densityUncertaintyGcm3:0.003},
+  {name:"Earth",type:"Terrestrial planet",massKg:5.97217e24,meanRadiusKm:6371.0084,densityGcm3:5.5134,equatorialGravityMS2:9.80,escapeVelocityKmS:11.19,meanDistanceAU:1,orbitDays:365.25635535,siderealRotationDays:0.99726968,equatorialRadiusUncertaintyKm:0.0001,meanRadiusUncertaintyKm:0.0001,massUncertaintyKg:2.8e20,densityUncertaintyGcm3:0.0003},
+  {name:"Mars",type:"Terrestrial planet",massKg:6.41691e23,meanRadiusKm:3389.50,densityGcm3:3.9340,equatorialGravityMS2:3.71,escapeVelocityKmS:5.03,meanDistanceAU:1.5237,orbitDays:686.9795859,siderealRotationDays:1.02595676,equatorialRadiusUncertaintyKm:0.1,meanRadiusUncertaintyKm:0.2,massUncertaintyKg:3.0e19,densityUncertaintyGcm3:0.0007},
+  {name:"Jupiter",type:"Gas giant",massKg:1.898125e27,meanRadiusKm:69911,densityGcm3:1.3262,equatorialGravityMS2:24.79,escapeVelocityKmS:60.20,meanDistanceAU:5.2028,orbitDays:4332.82012875,siderealRotationDays:0.41354,equatorialRadiusUncertaintyKm:4,meanRadiusUncertaintyKm:6,massUncertaintyKg:8.8e22,densityUncertaintyGcm3:0.0003},
+  {name:"Saturn",type:"Gas giant",massKg:5.68317e26,meanRadiusKm:58232,densityGcm3:0.6871,equatorialGravityMS2:10.44,escapeVelocityKmS:36.09,meanDistanceAU:9.5388,orbitDays:10755.6986445,siderealRotationDays:0.44401,note:"Very low bulk density; equatorial gravity includes rapid rotation and oblateness.",equatorialRadiusUncertaintyKm:4,meanRadiusUncertaintyKm:6,massUncertaintyKg:2.6e22,densityUncertaintyGcm3:0.0002},
+  {name:"Uranus",type:"Ice giant",massKg:8.68099e25,meanRadiusKm:25362,densityGcm3:1.270,equatorialGravityMS2:8.87,escapeVelocityKmS:21.38,meanDistanceAU:19.191,orbitDays:30687.1530015,siderealRotationDays:-0.71833,note:"Retrograde rotation; axial tilt is close to 98 degrees.",equatorialRadiusUncertaintyKm:4,meanRadiusUncertaintyKm:7,massUncertaintyKg:4.0e21,densityUncertaintyGcm3:0.001},
   {name:"Neptune",type:"Ice giant",massKg:1.024092e26,meanRadiusKm:24622,densityGcm3:1.638,equatorialGravityMS2:11.15,escapeVelocityKmS:23.56,meanDistanceAU:30.07,orbitDays:60190.02963,siderealRotationDays:0.67125}
 ];
 
@@ -100,10 +106,10 @@ export const solarMassDistribution = {
  * https://ssd.jpl.nasa.gov/planets/phys_par.html
  */
 export const dwarfPlanets: SolarBodyPhysical[] = [
-  {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five widely recognised dwarf planets; largest object in the main asteroid belt."},
-  {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent."},
-  {name:"Haumea",type:"Dwarf planet · trans-Neptunian region",massKg:4.006e21,meanRadiusKm:715,densityGcm3:2.6,equatorialGravityMS2:0.35,escapeVelocityKmS:0.78,meanDistanceAU:43.13,orbitDays:103774,siderealRotationDays:0.1631,note:"Fast rotation makes Haumea strongly elongated; a single spherical diameter hides its triaxial shape."},
-  {name:"Makemake",type:"Dwarf planet · Kuiper Belt",massKg:3.1e21,meanRadiusKm:714,densityGcm3:2.1,equatorialGravityMS2:0.40,escapeVelocityKmS:0.76,meanDistanceAU:45.43,orbitDays:112897,siderealRotationDays:0.937,note:"Radius, mass and density are less tightly constrained than for Pluto or Ceres."},
+  {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five widely recognised dwarf planets; largest object in the main asteroid belt.",equatorialRadiusUncertaintyKm:15,meanRadiusUncertaintyKm:19,massUncertaintyKg:4.8e21,densityUncertaintyGcm3:0.004,equatorialRadiusKm:482.1,massUncertaintyKg:1.3e16,densityUncertaintyGcm3:0.008},
+  {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent.",equatorialRadiusKm:1188.3,equatorialRadiusUncertaintyKm:1.6,meanRadiusUncertaintyKm:1.6,massUncertaintyKg:6.0e18,densityUncertaintyGcm3:0.004},
+  {name:"Haumea",type:"Dwarf planet · trans-Neptunian region",massKg:4.006e21,meanRadiusKm:715,densityGcm3:2.6,equatorialGravityMS2:0.35,escapeVelocityKmS:0.78,meanDistanceAU:43.13,orbitDays:103774,siderealRotationDays:0.1631,note:"Fast rotation makes Haumea strongly elongated; a single spherical diameter hides its triaxial shape.",equatorialRadiusKm:870,massUncertaintyKg:4.0e19},
+  {name:"Makemake",type:"Dwarf planet · Kuiper Belt",massKg:3.1e21,meanRadiusKm:714,densityGcm3:2.1,equatorialGravityMS2:0.40,escapeVelocityKmS:0.76,meanDistanceAU:45.43,orbitDays:112897,siderealRotationDays:0.937,note:"Radius, mass and density are less tightly constrained than for Pluto or Ceres.",equatorialRadiusKm:717,equatorialRadiusUncertaintyKm:7,meanRadiusUncertaintyKm:7},
   {name:"Eris",type:"Dwarf planet · scattered disc",massKg:1.66e22,meanRadiusKm:1200,densityGcm3:2.3,equatorialGravityMS2:0.77,escapeVelocityKmS:1.36,meanDistanceAU:67.7,orbitDays:203830,siderealRotationDays:1.079,note:"Most massive of the five widely recognised dwarf planets; its diameter uncertainty overlaps Pluto's."}
 ];
 
@@ -118,7 +124,7 @@ export interface SatellitePhysical {
 }
 
 export const satellitePhysical: SatellitePhysical[] = [
-  {name:"Moon",host:"Earth",gmReference:"DE440",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts."},
+  {name:"Moon",host:"Earth",gmReference:"DE440",gmKm3S2:4902.800,meanRadiusKm:1737.4,description:"Differentiated rocky satellite; tidal driver and record of early impacts.",equatorialRadiusKm:1200,equatorialRadiusUncertaintyKm:50,meanRadiusUncertaintyKm:50,massUncertaintyKg:2.0e20,densityUncertaintyGcm3:0.3},
   {name:"Phobos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0007087,meanRadiusKm:11.08,description:"Small irregular inner moon; orbital evolution is driven by Mars tides."},
   {name:"Deimos",host:"Mars",gmReference:"MAR097",gmKm3S2:0.0000962,meanRadiusKm:6.2,description:"Small irregular outer moon of Mars."},
   {name:"Io",host:"Jupiter",gmReference:"JUP365",gmKm3S2:5959.91547,meanRadiusKm:1821.49,description:"Extremely volcanically active; heated by tidal flexing."},
