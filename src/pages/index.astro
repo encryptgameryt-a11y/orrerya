@@ -26,13 +26,11 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
     <div class="container orrery-home-inner">
       <div class="orrery-hero-head">
         <div class="orrery-brand-feature">
-          <span class="eyebrow">SOLAR SYSTEM FIELD GUIDE</span>
           <h1 class="orrery-logo-title">ORRERYA</h1>
-          <p class="orrery-brand-tag">THE SOLAR SYSTEM, EXPLAINED</p>
         </div>
         <div class="orrery-hero-intro">
-          <p class="orrery-hero-line">Start with the Sun. Follow the evidence outward.</p>
-          <p class="orrery-hero-description">Compare planetary worlds, follow their orbits and examine the rocky and icy material left from the system’s formation.</p>
+          <p class="orrery-hero-line">Meet the planets. Then keep exploring.</p>
+          <p class="orrery-hero-description">Explore the eight planets, their moons, and the asteroids, comets and icy worlds that orbit much farther out.</p>
           <div class="hero-actions">
             <a class="btn" href="/planets/">Meet the planets <span aria-hidden="true">↗</span></a>
             <a class="btn secondary" href="/explore/">Explore the system <span aria-hidden="true">→</span></a>
@@ -45,7 +43,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
           <span class="orrery-scroll-hint">SWIPE TO EXPLORE →</span>
         </div>
         <div class="orrery-map-scroll">
-          <div class="orrery-map" role="group" aria-label="A schematic view of the Solar System showing the Sun, the eight planets in order, the asteroid belt between Mars and Jupiter, and the Kuiper Belt among trans-Neptunian objects. Planet sizes and orbital distances are not to scale.">
+          <div class="orrery-map" role="group" aria-label="A schematic showing the Sun, the eight planets, the asteroid belt and the Kuiper Belt. Planet sizes and orbital distances are not to scale.">
             <svg class="orrery-orbit-art" viewBox="0 0 1400 420" aria-hidden="true" focusable="false">
               <defs>
                 <radialGradient id="orrery-sun-fill" cx="34%" cy="30%">
@@ -92,8 +90,8 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
                 <text x="110" y="326" text-anchor="middle">THE SUN</text>
                 <text x="612" y="72" text-anchor="middle">ASTEROID BELT</text>
                 <path d="M612 82 L612 126" />
-                <text x="1252" y="82" text-anchor="middle">TRANS-NEPTUNIAN</text>
-                <text x="1252" y="101" text-anchor="middle">OBJECTS</text>
+                <text x="1252" y="82" text-anchor="middle">OBJECTS BEYOND</text>
+                <text x="1252" y="101" text-anchor="middle">NEPTUNE</text>
                 <path d="M1252 110 L1252 132" />
                 <text x="1265" y="382" text-anchor="middle">KUIPER BELT</text>
               </g>
@@ -113,44 +111,44 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
         <p class="orrery-map-note">Planet sizes and distances are simplified so you can see the whole system at a glance.</p>
       </div>
       <div class="orrery-hero-bottom">
-        <span>START ANYWHERE</span><span class="line"></span>
+        <span>EXPLORE</span><span class="line"></span>
         <a href="/explore/sun/">The Sun</a><span>·</span><a href="/planets/">The planets</a><span>·</span><a href="/explore/moons/">Moons & rings</a><span>·</span><a href="/science/">The science</a>
       </div>
     </div>
   </section>
 
   <section class="home-facts container" aria-label="Solar System at a glance">
-    <div><strong>4.5673 <small>billion years</small></strong><span>Age of the oldest accurately dated Solar System solids (CAIs)</span></div>
+    <div><strong>4.5673 <small>billion years</small></strong><span>Age of the earliest accurately dated Solar System solids</span></div>
     <div><strong>8 <small>planets</small></strong><span>Four rocky worlds and four giant planets</span></div>
-    <div><strong>{solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(2)}% <small>of Sun + planets</small></strong><span>Sun share of the combined mass of the Sun and eight planets</span></div>
+    <div><strong>{solarMassDistribution.sunShareOfSunPlusEightPlanetsPercent.toFixed(2)}% <small>of Sun + planets</small></strong><span>Share of the combined mass of the Sun and eight planets</span></div>
     <div><strong>149.6 <small>million km</small></strong><span>Earth's average distance from the Sun</span></div>
   </section>
-  <p class="home-facts-note">The value refers to calcium–aluminium-rich inclusions (CAIs) in primitive meteorites: the earliest accurately dated solids. Planetesimals and planets assembled over the following millions of years. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
-  <p class="home-facts-note">The displayed percentage uses the Sun and eight planets only. NASA’s broader estimate for the whole Solar System is about 99.85%; it uses a different inventory and denominator.</p>
+  <p class="home-facts-note">The 4.5673-billion-year age comes from calcium–aluminium-rich inclusions (CAIs), mineral inclusions in primitive meteorites. They are among the earliest accurately dated solids; planets assembled later. <a href="https://pubmed.ncbi.nlm.nih.gov/23118187/" target="_blank" rel="noreferrer">Connelly et al. (2012) ↗</a></p>
+  <p class="home-facts-note">The 99.87% figure compares the Sun with the eight planets only. NASA’s broader estimate of about 99.85% uses a different inventory, so the two figures have different denominators.</p>
 
   <section class="section container home-planets-section">
     <div class="section-head">
-      <div><div class="eyebrow">01 / THE INNER PLANETS</div><h2>The four inner planets</h2></div>
-      <div class="section-side"><p>Mercury, Venus, Earth and Mars have solid surfaces and metal-rich interiors.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
+      <div><div class="eyebrow">INNER PLANETS</div><h2>The four inner planets</h2></div>
+      <div class="section-side"><p>Mercury, Venus, Earth and Mars are rocky planets with solid surfaces.</p><a class="text-link" href="/planets/">Explore all eight planets ↗</a></div>
     </div>
     <div class="home-planet-grid">
-      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><span class="planet-card-kicker">PLANET {planet.order.toString().padStart(2, "0")}</span><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
+      {featured.map((planet) => <a class="planet-card home-planet-card" href={"/planets/" + planet.slug + "/"}><div class="planet-card-image"><img src={planet.image} alt={planet.imageAlt} loading="lazy" /></div><div class="planet-card-body"><h3>{planet.name}</h3><p>{planet.short}</p><span class="text-link">Explore {planet.name} ↗</span></div></a>)}
     </div>
     <div class="home-outer-band">
-      <div class="outer-band-copy"><span class="eyebrow">02 / THE OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are gas giants, made mostly of hydrogen and helium. Uranus and Neptune are ice giants, with larger amounts of water-, ammonia- and methane-bearing material inside.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
+      <div class="outer-band-copy"><span class="eyebrow">OUTER PLANETS</span><h3>The four giant planets</h3><p>Jupiter and Saturn are mostly hydrogen and helium. Uranus and Neptune contain a larger share of water, ammonia and methane deep inside.</p><a class="text-link" href="/planets/#outer-planets">Meet the outer planets ↗</a></div>
       <div class="outer-mini-grid">{outer.map((planet) => <a href={"/planets/" + planet.slug + "/"}><img src={planet.image} alt={planet.imageAlt} loading="lazy" /><span>{planet.name}</span></a>)}</div>
     </div>
   </section>
 
   <section class="section home-discover">
     <div class="container">
-      <div class="section-head"><div><div class="eyebrow">03 / MORE TO EXPLORE</div><h2>Moons, the Sun and planetary science</h2></div><p>Explore solar activity, moons with possible subsurface oceans and the physics that shapes planetary orbits.</p></div>
+      <div class="section-head"><div><div class="eyebrow">EXPLORE MORE</div><h2>The Sun, moons and other worlds</h2></div><p>Learn how the Sun changes, explore moons that may hide oceans, and see how gravity shapes the planets.</p></div>
 
       <div class="discover-grid">
-        <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-number">01</span><span class="discover-icon"><LineIcon name="sun" size={28} /></span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun gives us light and heat. It also creates magnetic storms and sends tiny particles into space.</p><span class="text-link">Meet our star ↗</span></div></a>
-        <a class="discover-card" href="/explore/moons/"><span class="discover-number">02</span><span class="discover-icon"><LineIcon name="moon" size={28} /></span><div><span class="eyebrow">Moons and rings</span><h3>Moons & rings</h3><p>Some moons may hide oceans; others have active volcanoes or rings made from countless small pieces.</p><span class="text-link">Explore the moons ↗</span></div></a>
-        <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-number">03</span><span class="discover-icon"><LineIcon name="planet" size={28} /></span><div><span class="eyebrow">Dwarf planets</span><h3>Dwarf planets</h3><p>Meet Pluto, Ceres, Haumea, Makemake and Eris, and see what makes them special.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
-        <a class="discover-card" href="/science/"><span class="discover-number">04</span><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">Planetary science</span><h3>How the Solar System works</h3><p>See how gravity moves planets, why seasons change and how moons create tides.</p><span class="text-link">Explore the science ↗</span></div></a>
+        <a class="discover-card sun-card" href="/explore/sun/"><span class="discover-icon"><LineIcon name="sun" size={28} /></span><div><span class="eyebrow">Our star</span><h3>The Sun</h3><p>The Sun sends a steady stream of particles into space. Changes in its magnetic field can also produce flares and powerful eruptions.</p><span class="text-link">Meet our star ↗</span></div></a>
+        <a class="discover-card" href="/explore/moons/"><span class="discover-icon"><LineIcon name="moon" size={28} /></span><div><span class="eyebrow">Moons and rings</span><h3>Moons & rings</h3><p>Europa and Enceladus may hide oceans beneath ice. Io has active volcanoes, while Saturn’s rings are made of countless icy particles.</p><span class="text-link">Explore the moons ↗</span></div></a>
+        <a class="discover-card" href="/explore/dwarf-planets/"><span class="discover-icon"><LineIcon name="planet" size={28} /></span><div><span class="eyebrow">Dwarf planets</span><h3>Dwarf planets</h3><p>Pluto, Ceres, Haumea, Makemake and Eris are the five officially recognised dwarf planets.</p><span class="text-link">Meet the dwarf planets ↗</span></div></a>
+        <a class="discover-card" href="/science/"><span class="discover-icon"><LineIcon name="orbit" size={28} /></span><div><span class="eyebrow">Planetary science</span><h3>Gravity, seasons and tides</h3><p>Gravity governs the planets’ paths. Earth’s tilt causes the seasons, and the Moon’s gravity helps raise ocean tides.</p><span class="text-link">Explore the science ↗</span></div></a>
       </div>
       <a class="comets-banner" href="/explore/small-bodies/">
         <div class="comets-banner-art" role="img" aria-label="Illustration of a bright comet passing rocky asteroid fragments.">
@@ -175,21 +173,21 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
           </svg>
         </div>
         <div class="comets-banner-copy">
-          <span class="eyebrow">04 / SMALL BODIES</span><h3>Asteroids and comets</h3>
-          <p>Asteroids and comets preserve material from the Solar System's formation and record billions of years of collisions and change.</p>
+          <span class="eyebrow">ASTEROIDS & COMETS</span><h3>Asteroids and comets</h3>
+          <p>Asteroids are mostly rock and metal. Comets contain ice, dust and rock. Both preserve clues to the Solar System’s early history.</p>
           <span class="text-link">Explore comets & asteroids ↗</span>
         </div>
       </a>
       <section class="distant-worlds" aria-labelledby="distant-worlds-title">
         <div class="distant-worlds-heading">
-          <div><span class="eyebrow">05 / BEYOND NEPTUNE</span><h3 id="distant-worlds-title">The Kuiper Belt and beyond</h3><p>The Kuiper Belt contains many icy bodies beyond Neptune. Farther out, the Oort Cloud is thought to contain a large population of long-period comets.</p></div>
+          <div><span class="eyebrow">BEYOND NEPTUNE</span><h3 id="distant-worlds-title">Icy worlds beyond Neptune</h3><p>The Kuiper Belt is a broad region of icy objects beyond Neptune. Much farther out, the Oort Cloud may be the source of comets with very long orbits.</p></div>
           <span class="carousel-hint">SCROLL TO EXPLORE <span aria-hidden="true">→</span></span>
         </div>
         <div class="distant-worlds-track" role="region" aria-label="Distant icy worlds. Scroll sideways to explore." tabindex="0">
-          <a class="distant-world-card" href="/explore/small-bodies/"><span class="distant-world-number">01</span><LineIcon name="orbit" size={26} /><h4>The Kuiper Belt</h4><p>A wide ring of icy objects beyond Neptune.</p><span class="text-link">Explore the Kuiper Belt ↗</span></a>
-          <a class="distant-world-card" href="/explore/dwarf-planets/"><span class="distant-world-number">02</span><LineIcon name="planet" size={26} /><h4>Pluto</h4><p>A small icy world with mountains, glaciers and five moons.</p><span class="text-link">Meet Pluto ↗</span></a>
-          <a class="distant-world-card" href="/explore/dwarf-planets/"><span class="distant-world-number">03</span><LineIcon name="planet" size={26} /><h4>Eris</h4><p>A faraway dwarf planet with a small moon of its own.</p><span class="text-link">Explore dwarf planets ↗</span></a>
-          <a class="distant-world-card" href="/explore/small-bodies/"><span class="distant-world-number">04</span><LineIcon name="moon" size={26} /><h4>Many more worlds</h4><p>Many smaller icy objects travel around the Sun far beyond Neptune.</p><span class="text-link">Explore distant objects ↗</span></a>
+          <a class="distant-world-card" href="/explore/small-bodies/"><LineIcon name="orbit" size={26} /><h4>The Kuiper Belt</h4><p>A broad region filled with icy objects beyond Neptune.</p><span class="text-link">Explore the Kuiper Belt ↗</span></a>
+          <a class="distant-world-card" href="/explore/dwarf-planets/"><LineIcon name="planet" size={26} /><h4>Pluto</h4><p>An icy world with mountains, glaciers and five known moons.</p><span class="text-link">Meet Pluto ↗</span></a>
+          <a class="distant-world-card" href="/explore/dwarf-planets/"><LineIcon name="planet" size={26} /><h4>Eris</h4><p>A distant dwarf planet with a moon named Dysnomia.</p><span class="text-link">Explore dwarf planets ↗</span></a>
+          <a class="distant-world-card" href="/explore/small-bodies/"><LineIcon name="moon" size={26} /><h4>Many more worlds</h4><p>Many more icy objects orbit the Sun in this distant region.</p><span class="text-link">Explore distant objects ↗</span></a>
         </div>
       </section>
     </div>
@@ -197,8 +195,8 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
 
   <section class="section container home-tools-section">
     <div class="section-head">
-      <div><div class="eyebrow">06 / INTERACTIVE LAB</div><h2>Put the physics to work</h2></div>
-      <p>Start with a question, change a variable and inspect what the model predicts. <a class="text-link" href="/tools/">Browse the full lab ↗</a></p>
+      <div><div class="eyebrow">INTERACTIVE TOOLS</div><h2>Explore with interactive models</h2></div>
+      <p>Change a value, move a planet along its orbit or compare the planets by their physical properties. <a class="text-link" href="/tools/">See all tools ↗</a></p>
     </div>
 
     <div class="tool-preview-grid">
@@ -206,26 +204,26 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
         <span class="tool-index">GRAVITY</span>
         <span class="tool-symbol"><LineIcon name="scale" size={27} /></span>
         <h3>Same mass, different weight</h3>
-        <p>Keep the mass fixed and compare the gravitational force acting on it at each world’s surface.</p>
+        <p>Keep your mass the same and see how strongly each planet pulls on it.</p>
         <span class="text-link">Compare surface gravity ↗</span>
       </a>
       <a class="tool-preview" href="/tools/orbit-model/">
-        <span class="tool-index">ORBITAL MECHANICS</span>
+        <span class="tool-index">PLANETS IN MOTION</span>
         <span class="tool-symbol"><LineIcon name="orbit" size={27} /></span>
         <h3>Why does a planet speed up?</h3>
         <p>Move a planet along an elliptical orbit and compare its distance and speed at different points.</p>
         <span class="text-link">Explore an orbit ↗</span>
       </a>
       <a class="tool-preview" href="/tools/correlation-lab/">
-        <span class="tool-index">PLANETARY DATA</span>
+        <span class="tool-index">PLANET COMPARISONS</span>
         <span class="tool-symbol"><LineIcon name="planet" size={27} /></span>
-        <h3>Do planetary properties track together?</h3>
-        <p>Plot mass, density, gravity and orbital distance to look for relationships across the planets.</p>
+        <h3>Compare the planets by the numbers</h3>
+        <p>Chart each planet’s mass, density, gravity and distance from the Sun to see where they differ.</p>
         <span class="text-link">Open the data lab ↗</span>
       </a>
     </div>
   </section>
-  <section class="container home-endcap"><div><span class="eyebrow">START EXPLORING</span><h2>Explore the Solar System</h2><p>Start with a planet, moon or small body. Every page includes sources and further reading.</p></div><a class="btn" href="/planets/">Enter the encyclopedia ↗</a></section>
+  <section class="container home-endcap"><div><span class="eyebrow">KEEP EXPLORING</span><h2>Choose a place to begin</h2><p>Choose a planet, moon or smaller object. Each page links to its sources and further reading.</p></div><a class="btn" href="/planets/">Explore the planets ↗</a></section>
   <style>
     .home-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 77% 47%,rgba(33,66,111,.34),transparent 37rem),linear-gradient(180deg,rgba(13,23,39,.25),transparent)}
     .home-hero-grid{display:grid;grid-template-columns:1.03fr .97fr;gap:25px;align-items:center;min-height:610px;padding-top:35px;padding-bottom:35px}
@@ -299,7 +297,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
     .orrery-home-inner{padding-top:52px}
     .home-hero.orrery-home-hero .orrery-hero-head{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:end;padding:14px 0 30px;border-bottom:1px solid rgba(25,47,70,.14)}
     .home-hero.orrery-home-hero .orrery-brand-feature .eyebrow{letter-spacing:.16em;font-size:.68rem}
-    .orrery-logo-title{margin:10px 0 0!important;font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(4.2rem,9vw,7.5rem)!important;line-height:.9!important;font-weight:500!important;letter-spacing:.045em!important;color:#142a40!important}
+    .orrery-logo-title{margin:0!important;font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(4.2rem,9vw,7.5rem)!important;line-height:.9!important;font-weight:500!important;letter-spacing:.045em!important;color:#142a40!important}
     .home-hero.orrery-home-hero .orrery-brand-tag{margin:16px 0 0!important;color:#8c683b!important;font-size:.78rem!important;letter-spacing:.24em!important;font-weight:600;text-transform:uppercase}
     .orrery-hero-intro{max-width:520px;justify-self:end;padding-bottom:3px}
     .home-hero.orrery-home-hero .orrery-hero-line{color:#18354d!important;font:italic 1.55rem/1.25 Georgia,"Times New Roman",serif!important;margin:0 0 10px!important}
