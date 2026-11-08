@@ -92,6 +92,13 @@ export const solarMassDistribution = {
   }
 } as const;
 
+/**
+ * Dwarf-planet reference parameters copied from the separate table on the
+ * JPL Planetary Physical Parameters page. JPL marks bulk density, equatorial
+ * gravity and escape velocity with an asterisk as derived quantities.
+ * These are reference values, not one uniformly direct-measurement dataset.
+ * https://ssd.jpl.nasa.gov/planets/phys_par.html
+ */
 export const dwarfPlanets: SolarBodyPhysical[] = [
   {name:"Ceres",type:"Dwarf planet · main asteroid belt",massKg:9.38416e20,meanRadiusKm:469.7,densityGcm3:2.162,equatorialGravityMS2:0.27,escapeVelocityKmS:0.51,meanDistanceAU:2.767,orbitDays:1681.6,siderealRotationDays:0.37809042,note:"Smallest of the five widely recognised dwarf planets; largest object in the main asteroid belt."},
   {name:"Pluto",type:"Dwarf planet · Kuiper Belt",massKg:1.30246e22,meanRadiusKm:1188.3,densityGcm3:1.853,equatorialGravityMS2:0.62,escapeVelocityKmS:1.21,meanDistanceAU:39.48,orbitDays:90560,siderealRotationDays:-6.3872,note:"NASA describes Pluto as slightly larger in diameter than Eris; both diameter estimates are close and model-dependent."},
