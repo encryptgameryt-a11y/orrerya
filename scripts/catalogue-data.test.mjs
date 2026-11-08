@@ -56,7 +56,17 @@ test("planet physical catalogue contains exactly the eight planets in order", ()
     assertPositiveFinite(body.escapeVelocityKmS, body.name + " escape velocity");
     assertPositiveFinite(body.meanDistanceAU, body.name + " mean distance");
     assertPositiveFinite(body.orbitDays, body.name + " sidereal orbital period");
+    for (const field of ["equatorialRadiusUncertaintyKm", "meanRadiusUncertaintyKm",
+      "massUncertaintyKg", "densityUncertaintyGcm3"]) {
+      assertPositiveFinite(body[field], body.name + " quoted " + field);
+    }
   }
+
+  const neptune = planetPhysics.find(body => body.name === "Neptune");
+  assert.equal(neptune.equatorialRadiusUncertaintyKm, 15);
+  assert.equal(neptune.meanRadiusUncertaintyKm, 19);
+  assert.equal(neptune.massUncertaintyKg, 4.8e21);
+  assert.equal(neptune.densityUncertaintyGcm3, 0.004);
 
   for (let index = 1; index < planetPhysics.length; index += 1) {
     assert.ok(
@@ -105,11 +115,40 @@ test("dwarf-planet catalogue contains the five named reference worlds", () => {
     assertPositiveFinite(body.equatorialGravityMS2, body.name + " equatorial gravity");
     assertPositiveFinite(body.escapeVelocityKmS, body.name + " escape velocity");
     assertPositiveFinite(body.orbitDays, body.name + " orbital period");
+    assertPositiveFinite(body.equatorialRadiusKm, body.name + " equatorial radius");
+    if (body.massUncertaintyKg !== undefined) {
+      assertPositiveFinite(body.massUncertaintyKg, body.name + " mass uncertainty");
+    }
+    if (body.meanRadiusUncertaintyKm !== undefined) {
+      assertPositiveFinite(body.meanRadiusUncertaintyKm, body.name + " mean-radius uncertainty");
+    }
+    if (body.equatorialRadiusUncertaintyKm !== undefined) {
+      assertPositiveFinite(body.equatorialRadiusUncertaintyKm, body.name + " equatorial-radius uncertainty");
+    }
+    if (body.densityUncertaintyGcm3 !== undefined) {
+      assertPositiveFinite(body.densityUncertaintyGcm3, body.name + " density uncertainty");
+    }
   }
+
+  const ceres = dwarfPlanets.find(body => body.name === "Ceres");
+  assert.equal(ceres.equatorialRadiusKm, 482.1);
+  assert.equal(ceres.massUncertaintyKg, 1.3e16);
+  const pluto = dwarfPlanets.find(body => body.name === "Pluto");
+  assert.equal(pluto.meanRadiusUncertaintyKm, 1.6);
+  assert.equal(pluto.massUncertaintyKg, 6.0e18);
+  const makemake = dwarfPlanets.find(body => body.name === "Makemake");
+  assert.equal(makemake.meanRadiusUncertaintyKm, 7);
+  const eris = dwarfPlanets.find(body => body.name === "Eris");
+  assert.equal(eris.meanRadiusUncertaintyKm, 50);
+  assert.equal(eris.massUncertaintyKg, 2.0e20);
 
   const haumea = dwarfPlanets.find(body => body.name === "Haumea");
   assert.match(haumea.note, /elongated|triaxial|shape/i,
     "Haumea's non-spherical shape limitation must remain explicit");
+  assert.equal(haumea.equatorialRadiusKm, 870);
+  assert.equal(haumea.meanRadiusKm, 715);
+  assert.ok(haumea.equatorialRadiusKm > haumea.meanRadiusKm,
+    "Haumea's equatorial and volume-equivalent radii must not be conflated");
 });
 
 test("selected satellite catalogue has unique bodies, valid inputs and traceable GM solutions", () => {
