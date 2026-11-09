@@ -142,5 +142,5 @@ if (errors.length) {
   for (const error of errors) console.error(" - " + error);
   process.exitCode = 1;
 } else {
-  console.log("All audited text colours meet WCAG AA's 4.5:1 normal-text threshold against the tested light surfaces.");
+  console.log("All audited text colours meet WCAG AA's 4.5:1 normal-text threshold on the sampled light and dark surfaces; focus indicators meet 3:1 non-text contrast.");
 }
