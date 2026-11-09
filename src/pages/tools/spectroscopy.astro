@@ -14,7 +14,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       <a class="source-link" href="https://science.nasa.gov/asset/webb/exoplanet-wasp-39-b-transmission-spectra/" target="_blank" rel="noreferrer">Open the original NASA spectrum asset ↗</a>
     </div>
     <figure class="spectrum-figure card">
-      <div class="spectrum-image-wrap"><img src="https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2022/11/STScI-01H32P2N5S5JQQZRM8VQT7MEYZ.png/jcr:content/renditions/PRISM%20Spectrum,%20Full%20Res%20(For%20Display).jpg" alt="NASA-published JWST NIRSpec PRISM transmission spectrum of WASP-39 b, plotting transit depth against wavelength from about 0.5 to 5.5 micrometres, with atmospheric absorption features annotated." loading="lazy" />
+      <div class="spectrum-image-wrap" tabindex="0" role="region" aria-label="Reference spectrum image; scroll horizontally to inspect the full wavelength range"><img src="https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2022/11/STScI-01H32P2N5S5JQQZRM8VQT7MEYZ.png/jcr:content/renditions/PRISM%20Spectrum,%20Full%20Res%20(For%20Display).jpg" alt="NASA-published JWST NIRSpec PRISM transmission spectrum of WASP-39 b, plotting transit depth against wavelength from about 0.5 to 5.5 micrometres, with atmospheric absorption features annotated." loading="lazy" />
       </div>
       <figcaption>Observed spectrum image: NASA, ESA, CSA, Joseph Olmsted (STScI). The plotted spectrum is the published data visual; the wavelength-band explorer below is a separate annotation aid, not a digitisation of its plotted points.</figcaption>
     </figure>
@@ -29,7 +29,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         <button type="button" data-molecule-filter="CO2" aria-pressed="false">Carbon dioxide (CO₂)</button>
         <button type="button" data-molecule-filter="SO2" aria-pressed="false">Sulfur dioxide (SO₂)</button>
       </div>
-      <div class="spectrum-ruler-wrap">
+      <div class="spectrum-ruler-wrap" tabindex="0" role="region" aria-label="Molecular wavelength ruler; scroll horizontally to inspect all bands">
         <svg class="spectrum-ruler" viewBox="0 0 1000 205" role="img" aria-labelledby="ruler-title ruler-desc">
           <title id="ruler-title">Wavelength intervals for atmospheric features in WASP-39 b</title>
           <desc id="ruler-desc">A wavelength ruler from 0.5 to 5.5 micrometres, showing NASA-reported wavelength intervals for sodium, water, carbon monoxide, carbon dioxide and sulfur dioxide.</desc>
