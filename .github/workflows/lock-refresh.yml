@@ -6,6 +6,13 @@ on:
       - security/astro-7-sharp-0355-a11y
     paths-ignore:
       - package-lock.json
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: dependency-lock-${{ github.event.pull_request.head.ref || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
