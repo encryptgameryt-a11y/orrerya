@@ -25,7 +25,7 @@ const dwarfs = [
 
     <div class="dwarf-physical-reference">
       <div class="section-head"><div><span class="eyebrow">PUBLISHED PHYSICAL PARAMETERS</span><h2>Size and physical properties</h2></div><p>These values follow JPL's published dwarf-planet parameter table. The quantities do not all have the same evidential status: JPL marks bulk density, equatorial gravity and escape velocity as derived from referenced measurements and model conventions. The mass and dimensions of distant bodies can carry larger uncertainties.</p></div>
-      <div class="table-wrap"><table class="dwarf-physical-table">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Dwarf planet physical parameters table; scroll horizontally to read all columns"><table class="dwarf-physical-table">
         <thead><tr><th>Object</th><th>Mass (kg)</th><th>Mean radius · volume-equivalent</th><th>Equatorial radius</th><th>Bulk density*</th><th>Equatorial gravity*</th><th>Escape velocity*</th><th>Sidereal rotation</th></tr></thead>
         <tbody>{dwarfPlanets.map((d) => <tr><th>{d.name}</th><td>{formatMass(d.massKg, d.massUncertaintyKg)}</td><td>{formatRadius(d.meanRadiusKm, d.meanRadiusUncertaintyKm)}</td><td>{d.equatorialRadiusKm === undefined ? "—" : formatRadius(d.equatorialRadiusKm, d.equatorialRadiusUncertaintyKm)}</td><td>{formatDensity(d.densityGcm3, d.densityUncertaintyGcm3)}</td><td>{d.equatorialGravityMS2} m/s²</td><td>{d.escapeVelocityKmS} km/s</td><td>{d.siderealRotationDays} days</td></tr>)}</tbody>
       </table></div>
