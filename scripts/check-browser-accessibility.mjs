@@ -172,13 +172,25 @@ async function main() {
         const layout = await page.evaluate(() => ({
           viewport: window.innerWidth,
           documentWidth: document.documentElement.scrollWidth,
+          overflowElements: [...document.querySelectorAll("*")]
+            .map(element => ({ element, rect: element.getBoundingClientRect() }))
+            .filter(({ element, rect }) => rect.width > 0 && (rect.right > window.innerWidth + 1 || rect.left < -1))
+            .slice(0, 8)
+            .map(({ element, rect }) => ({
+              tag: element.tagName.toLowerCase(),
+              id: element.id,
+              className: typeof element.className === "string" ? element.className : "",
+              left: Math.round(rect.left),
+              right: Math.round(rect.right),
+              width: Math.round(rect.width)
+            })),
           hasHeader: Boolean(document.querySelector("header")),
           hasMain: Boolean(document.querySelector("main")),
           hasFooter: Boolean(document.querySelector("footer"))
         }));
 
         if (layout.documentWidth > layout.viewport + 1) {
-          fail(width + "px " + route + ": document overflows horizontally (" + layout.documentWidth + "px document vs " + layout.viewport + "px viewport).");
+          fail(width + "px " + route + ": document overflows horizontally (" + layout.documentWidth + "px document vs " + layout.viewport + "px viewport); elements: " + JSON.stringify(layout.overflowElements));
         }
         if (!layout.hasHeader || !layout.hasMain || !layout.hasFooter) {
           fail(width + "px " + route + ": a site landmark is missing.");
@@ -249,6 +261,9 @@ async function main() {
     console.log("Axe WCAG 2.2 A/AA scans: " + axeScans);
     console.log("Full-page screenshots: " + screenshots + " (artifacts/visual-qa)");
     console.log("Axe violations: " + axeFindings.length + " total; " + axeFindings.filter(item => severeImpacts.has(item.impact)).length + " serious/critical");
+    for (const finding of axeFindings.filter(item => severeImpacts.has(item.impact))) {
+      console.error("Axe detail: " + finding.width + "px " + finding.route + " " + finding.id + " " + JSON.stringify(finding.examples));
+    }
     console.log("Browser errors: " + consoleErrors.length + " | Failed same-origin requests: " + failedSameOriginRequests.length);
 
     for (const finding of axeFindings.filter(item => item.impact === "moderate" || item.impact === "minor")) {
