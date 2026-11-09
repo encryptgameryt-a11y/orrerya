@@ -42,7 +42,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
           <span>OUR SOLAR SYSTEM</span>
           <span class="orrery-scroll-hint">SWIPE TO EXPLORE →</span>
         </div>
-        <div class="orrery-map-scroll">
+        <div class="orrery-map-scroll" tabindex="0" role="region" aria-label="Schematic Solar System map. Scroll horizontally to view the full diagram.">
           <div class="orrery-map" role="group" aria-label="A schematic showing the Sun, the eight planets, the asteroid belt and the Kuiper Belt. Planet sizes and orbital distances are not to scale.">
             <svg class="orrery-orbit-art" viewBox="0 0 1400 420" aria-hidden="true" focusable="false">
               <defs>
@@ -305,7 +305,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
     .orrery-hero-intro .hero-actions{margin-top:20px}
     .home-hero.orrery-home-hero .orrery-map-frame{padding:22px 0 12px}
     .orrery-map-topline{display:flex;justify-content:space-between;gap:16px;margin:0 4px 8px;color:#64778a;font-size:.65rem;font-weight:700;letter-spacing:.15em}
-    .orrery-scroll-hint{display:none;color:#8c683b}
+    .orrery-scroll-hint{display:none;color:#d8bd8f}
     .orrery-map-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-color:#c2ccd3 transparent;scrollbar-width:thin}
     .orrery-map{position:relative;width:100%;min-width:900px;height:auto;aspect-ratio:10/3;isolation:isolate;background:radial-gradient(ellipse at 8% 50%,rgba(230,179,106,.12),transparent 16%),linear-gradient(180deg,rgba(255,255,255,.45),rgba(236,241,244,.36));border-block:1px solid rgba(39,64,86,.08)}
     .orrery-orbit-art{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
@@ -379,6 +379,7 @@ const orbitalDisplay = planets.map((planet, index) => ({ ...planet, diagramImage
     .section.home-discover .discover-card p{color:#5a6e81!important}
     .section.home-discover .discover-card .eyebrow{color:#927044!important}
     .section.home-discover .discover-card .text-link{color:#1b5d82!important}
+    .home-planets-section .section-side .text-link,.home-tools-section .section-head .text-link{color:#b8d5e6!important}
     .section.home-discover .discover-icon{color:#98713e!important}
     .section.home-discover .discover-number{color:#8798a7!important}
     .section.home-discover .discover-card:hover{border-color:rgba(221,185,129,.68)!important;transform:translateY(-3px)}
