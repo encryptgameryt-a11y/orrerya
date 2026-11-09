@@ -13,12 +13,17 @@
     "preview": "astro preview",
     "check:site": "node scripts/check-site.mjs",
     "check:accessibility": "node scripts/check-accessibility.mjs",
-    "verify": "npm run test:physics && npm run test:catalogue && npm run test:ephemeris && npm run test:mission && npm run test:contrast && npm run check:accessibility && npm run build && npm run check:site",
+    "test:browser": "node scripts/check-browser-accessibility.mjs",
+    "verify": "npm run test:physics && npm run test:catalogue && npm run test:ephemeris && npm run test:mission && npm run test:contrast && npm run check:accessibility && npm run build && npm run check:site && npm run test:browser",
     "test:physics": "node --test scripts/orbital-mechanics.test.mjs",
     "test:catalogue": "node --experimental-strip-types --test scripts/catalogue-data.test.mjs",
     "test:ephemeris": "node --experimental-strip-types --test scripts/ephemeris-horizons.test.mjs",
     "test:contrast": "node scripts/check-contrast.mjs",
     "test:mission": "node --test scripts/mission-design.test.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.65.0"
   },
   "dependencies": {
     "astro": "7.4.7",
