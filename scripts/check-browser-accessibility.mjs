@@ -196,6 +196,17 @@ async function main() {
           fail(width + "px " + route + ": a site landmark is missing.");
         }
 
+        const accessibleLandmarks = {
+          banner: await page.getByRole("banner").count(),
+          main: await page.getByRole("main").count(),
+          contentinfo: await page.getByRole("contentinfo").count(),
+          primaryNavigation: await page.getByRole("navigation", { name: "Primary navigation" }).count(),
+          h1: await page.getByRole("heading", { level: 1 }).count()
+        };
+        for (const [landmark, count] of Object.entries(accessibleLandmarks)) {
+          if (count < 1) fail(width + "px " + route + ": accessible role tree is missing " + landmark + ".");
+        }
+
         if (screenshotRoutes.has(route)) {
           const safeRoute = route === "/" ? "home" : route.replace(/^\/+|\/+$/g, "").replaceAll("/", "-");
           await page.screenshot({
@@ -249,6 +260,7 @@ async function main() {
       failures,
       notes: [
         "Axe scans cover WCAG 2.0/2.1/2.2 A and AA rules at 390px and 1366px. Manual interpretation is still required.",
+        "The browser checks also assert the accessibility-tree banner, main, contentinfo, named primary navigation, and page H1 roles on every route.",
         "Screen-reader output must still be manually checked with NVDA, VoiceOver, or TalkBack; browser automation cannot certify it."
       ]
     };
