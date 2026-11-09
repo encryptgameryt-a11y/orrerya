@@ -46,7 +46,7 @@ import { ephemerisElements } from "../../data/ephemeris";
 
     <div class="card ephem-table-card">
       <div class="section-head"><div><div class="eyebrow">Computed coordinates</div><h2>Planet by planet.</h2></div><p>EMB-relative distances are geometric, not light-time-corrected apparent positions. “Light time” is a one-way vacuum estimate from the Earth–Moon barycentre.</p></div>
-      <div class="table-scroll">
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Planetary position results table; scroll horizontally to read all columns">
         <table class="ephem-table">
           <thead><tr><th scope="col">Planet</th><th scope="col">Sun distance</th><th scope="col">EMB distance*</th><th scope="col">EMB-centred ecliptic longitude*</th><th scope="col">Light time</th></tr></thead>
           <tbody>
