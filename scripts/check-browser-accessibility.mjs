@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import process from "node:process";
 import { chromium } from "playwright";
-import AxeBuilder from "@axe-core/playwright";
+import { AxeBuilder } from "@axe-core/playwright";
 
 const origin = "http://127.0.0.1:4321";
 const widths = [390, 768, 1366, 1920];
@@ -142,6 +142,9 @@ async function main() {
       });
       const page = await context.newPage();
       page.on("pageerror", error => consoleErrors.push(width + "px " + page.url() + ": " + error.message));
+      page.on("console", message => {
+        if (message.type() === "error") consoleErrors.push(width + "px " + page.url() + ": " + message.text());
+      });
       page.on("requestfailed", request => {
         if (request.url().startsWith(origin)) {
           failedSameOriginRequests.push(width + "px " + request.url() + ": " + (request.failure()?.errorText ?? "request failed"));
