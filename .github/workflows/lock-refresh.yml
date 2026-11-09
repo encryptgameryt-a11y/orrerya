@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - security/astro-7-sharp-0355-a11y
+    paths-ignore:
+      - package-lock.json
 
 permissions:
   contents: write
 
 jobs:
   lockfile:
-    if: github.event.head_commit.message != 'chore: refresh Astro and Sharp lockfile'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
