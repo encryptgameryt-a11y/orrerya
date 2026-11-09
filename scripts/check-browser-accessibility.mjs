@@ -88,6 +88,9 @@ async function inspectKeyboardNavigation(page, width) {
     if (await toggle.getAttribute("aria-expanded") !== "true") {
       fail(width + "px: Enter did not expand the mobile navigation.");
     }
+    if (await page.getByRole("navigation", { name: "Primary navigation" }).count() !== 1) {
+      fail(width + "px: expanded mobile navigation is missing from the accessibility tree.");
+    }
 
     await page.keyboard.press("Escape");
     if (await toggle.getAttribute("aria-expanded") !== "false") {
@@ -204,9 +207,11 @@ async function main() {
           banner: await page.getByRole("banner").count(),
           main: await page.getByRole("main").count(),
           contentinfo: await page.getByRole("contentinfo").count(),
-          primaryNavigation: await page.getByRole("navigation", { name: "Primary navigation" }).count(),
           h1: await page.getByRole("heading", { level: 1 }).count()
         };
+        if (width > 820) {
+          accessibleLandmarks.primaryNavigation = await page.getByRole("navigation", { name: "Primary navigation" }).count();
+        }
         for (const [landmark, count] of Object.entries(accessibleLandmarks)) {
           if (count < 1) fail(width + "px " + route + ": accessible role tree is missing " + landmark + ".");
         }
