@@ -12,7 +12,11 @@ const screenshotRoutes = new Set([
   "/planets/",
   "/planets/earth/",
   "/explore/dwarf-planets/",
-  "/tools/correlation-lab/"
+  "/tools/correlation-lab/",
+  "/tools/3d-orbit/",
+  "/tools/orbit-model/",
+  "/explore/outer-solar-system/",
+  "/missions/"
 ]);
 const screenshotDirectory = "artifacts/visual-qa";
 const severeImpacts = new Set(["critical", "serious"]);
