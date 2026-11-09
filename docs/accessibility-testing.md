@@ -12,7 +12,7 @@ Every push and pull request runs:
 - Keyboard checks for the skip link and the mobile navigation disclosure, including Enter, Space, Escape and focus return.
 - Accessibility-tree role checks for the banner, main, contentinfo, named primary navigation, and page-level H1.
 - axe-core scans for WCAG 2.0, 2.1 and 2.2 Level A/AA rules at 390px and 1366px.
-- Screenshots for the homepage, planet directory, Earth profile, dwarf-planet page and correlation lab at each viewport. The JSON report and PNGs are uploaded as a CI artifact.
+- Screenshots for the homepage, planet directory, Earth profile, dwarf-planet page, correlation lab, 3D orbit explorer, orbit model, outer-system guide and mission timeline at each viewport. The JSON report and PNGs are uploaded as a CI artifact.
 
 Automated contrast and axe results are evaluated on rendered pages, not inferred from stylesheet source alone.
 
