@@ -27,5 +27,15 @@ jobs:
         run: npm ci --no-fund
       - name: Audit dependencies
         run: npm audit --audit-level=high
+      - name: Install Chromium for browser QA
+        run: npx playwright install --with-deps chromium
       - name: Build and verify site
         run: npm run verify
+      - name: Upload responsive QA screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orrerya-visual-qa
+          path: artifacts/visual-qa/
+          if-no-files-found: ignore
+          retention-days: 14
