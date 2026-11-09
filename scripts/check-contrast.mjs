@@ -109,8 +109,8 @@ const darkTokens = ["--text", "--muted", "--quiet", "--gold", "--gold-bright", "
 const lightAndDarkBackgrounds = [...new Set([...backgrounds, ...darkBackgrounds])];
 
 function readThemeToken(source, name, sourcePath) {
-  const root = source.match(/:root\\s*\\{([^}]*)\\}/i)?.[1];
-  const value = root?.match(new RegExp(escapeRegExp(name) + "\\\\s*:\\\\s*(#[0-9a-f]{6})", "i"))?.[1];
+  const root = source.match(/:root\s*\{([^}]*)\}/i)?.[1];
+  const value = root?.match(new RegExp(escapeRegExp(name) + "\\s*:\\s*(#[0-9a-f]{6})", "i"))?.[1];
   if (!value) throw new Error("Missing colour token " + name + " in " + sourcePath);
   return value;
 }
