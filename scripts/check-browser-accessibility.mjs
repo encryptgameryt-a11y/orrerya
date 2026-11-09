@@ -49,12 +49,16 @@ async function waitForServer() {
 }
 
 function decodeXml(value) {
-  return value
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&apos;", "'");
+  const entities = {
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&apos;": "'"
+  };
+  // One regex pass decodes each XML entity at most once; decoded ampersands
+  // are not interpreted again during this operation.
+  return value.replace(/&(amp|lt|gt|quot|apos);/g, entity => entities[entity]);
 }
 
 function fail(message) {
