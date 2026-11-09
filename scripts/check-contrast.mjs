@@ -58,7 +58,7 @@ function selectorColour(selector) {
 }
 
 const backgrounds = ["#ffffff", "#f8fafb", "#f3f6f8", "#edf2f6", "#e8f0f5"];
-const tokens = ["--text", "--muted", "--quiet", "--gold-bright", "--accent"];
+const tokens = ["--text", "--muted", "--quiet", "--gold", "--gold-bright", "--accent"];
 const textRules = [
   ".eyebrow",
   ".gold",
@@ -102,11 +102,45 @@ for (const selector of textRules) {
   }
 }
 
-console.log("ORRERYA light-theme text contrast checks: " + checks);
+const darkStylesheetPath = "src/styles/premium.css";
+const darkCss = await readFile(darkStylesheetPath, "utf8");
+const darkBackgrounds = ["#050914", "#080f1c", "#0d192a", "#12233a"];
+const darkTokens = ["--text", "--muted", "--quiet", "--gold", "--gold-bright", "--cyan"];
+const lightAndDarkBackgrounds = [...new Set([...backgrounds, ...darkBackgrounds])];
+
+function readThemeToken(source, name, sourcePath) {
+  const root = source.match(/:root\s*\{([^}]*)\}/i)?.[1];
+  const value = root?.match(new RegExp(escapeRegExp(name) + "\\s*:\\s*(#[0-9a-f]{6})", "i"))?.[1];
+  if (!value) throw new Error("Missing colour token " + name + " in " + sourcePath);
+  return value;
+}
+
+for (const token of darkTokens) {
+  const foreground = readThemeToken(darkCss, token, darkStylesheetPath);
+  for (const background of darkBackgrounds) {
+    const ratio = contrastRatio(foreground, background);
+    checks++;
+    if (ratio < 4.5) {
+      errors.push("dark " + token + " " + foreground + " on " + background + " = " + ratio.toFixed(2) + ":1 (needs 4.5:1).");
+    }
+  }
+}
+
+// Focus indicators are non-text UI graphics; WCAG 2.2 AA requires at least 3:1.
+const focusIndicator = "#b27b35";
+for (const background of lightAndDarkBackgrounds) {
+  const ratio = contrastRatio(focusIndicator, background);
+  checks++;
+  if (ratio < 3) {
+    errors.push("focus indicator " + focusIndicator + " on " + background + " = " + ratio.toFixed(2) + ":1 (needs 3:1).");
+  }
+}
+
+console.log("ORRERYA light and dark theme contrast checks: " + checks);
 if (errors.length) {
   console.error("Found " + errors.length + " contrast failure(s):");
   for (const error of errors) console.error(" - " + error);
   process.exitCode = 1;
 } else {
-  console.log("All audited text colours meet WCAG AA's 4.5:1 normal-text threshold against the tested light surfaces.");
+  console.log("All audited text colours meet WCAG AA's 4.5:1 normal-text threshold on the sampled light and dark surfaces; focus indicators meet 3:1 non-text contrast.");
 }

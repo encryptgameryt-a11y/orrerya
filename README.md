@@ -6,7 +6,7 @@ Canonical site origin: [https://orrerya.encryptgameryt.workers.dev](https://orre
 
 ## Run locally
 
-Requirements: Node.js 20 or newer.
+Requirements: Node.js 22.22.0 or newer. The repository pins Node.js 24.22.1 for reproducible Cloudflare Workers Builds and CI.
 
 ```sh
 npm install
@@ -19,7 +19,7 @@ Build and verify the static site:
 npm run verify
 ```
 
-The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants; checks key light-theme text colours against WCAG AA contrast; and verifies that every generated public HTML route appears exactly once in the XML sitemap.
+The production build is written to `dist/`. `npm run check:site` checks generated HTML for core document metadata, exactly one level-one heading, image alternative text, form-control labels, button accessible names, duplicate IDs, and broken same-site links and fragments. The verification workflow runs unit tests for Kepler's equation, orbital-state calculations, energy conservation and shared physical constants; checks representative text colours in both light and dark themes plus focus-indicator contrast; checks skip-link, landmark, mobile disclosure, Escape/focus-return, visible-focus and reduced-motion source behavior; validates generated HTML, accessible names, image alt attributes, duplicate IDs, internal links/fragments and sitemap coverage. CI also runs `npm audit --audit-level=high` on every push and pull request and once daily, while Dependabot proposes weekly npm and GitHub Actions updates. Static checks do not replace manual keyboard testing or testing with actual screen readers.
 
 ## Site map
 
@@ -94,6 +94,11 @@ The benchmark is a regression check at selected epochs, not a proof of accuracy 
 
 ## Quality checks
 
-Every push to `main` and every pull request runs the GitHub Actions quality workflow. The `npm run verify` command runs the 13 orbital-physics tests, 6 catalogue/provenance tests, 2 Horizons ephemeris regression tests, selected WCAG AA colour-contrast checks, a production Astro build, and generated-site checks for document structure, accessible names, image alt attributes, duplicate IDs, internal links/fragments, and complete sitemap coverage.
+Every push to `main`, every pull request, and a daily scheduled run execute the GitHub Actions quality workflow. CI installs the exact lockfile, runs `npm audit --audit-level=high`, and then runs `npm run verify`. Verification includes the orbital-physics, catalogue/provenance and JPL Horizons regression tests; light/dark palette and focus-indicator contrast checks; static keyboard/navigation semantics checks; a production Astro build; generated-site structure, accessible-name, image-alt, duplicate-ID, internal-link and sitemap checks; and Playwright browser QA. The browser suite visits every sitemap route at 390, 768, 1366 and 1920 CSS pixels, tests keyboard navigation, checks accessible landmark roles, runs axe-core WCAG 2.0/2.1/2.2 A/AA scans at 390 and 1366 pixels, and saves full-page screenshots of nine key science pages plus a JSON report under `artifacts/visual-qa/`. CI uploads those visuals as a 14-day artifact.
 
 A committed `package-lock.json` records the dependency graph resolved by Node.js 24/npm 11 in the GitHub Actions environment. CI uses `npm ci` so the build installs the exact dependency tree represented by that lockfile rather than resolving a new compatible tree on every run. Update the lockfile deliberately when changing dependencies and verify the result in CI.
+
+
+Separate daily security workflows run CodeQL analysis for JavaScript/TypeScript and Gitleaks over full Git history; the Gitleaks Action is pinned to a full commit SHA. Dependabot proposes weekly npm and GitHub Actions updates. npm audit, CodeQL, Gitleaks and automated accessibility checks complement one another; none is a substitute for reviewing configuration, runtime behavior or manually responding to an exposed credential.
+
+The automated checks do not certify spoken screen-reader output. Follow [the accessibility testing protocol](docs/accessibility-testing.md) for NVDA, VoiceOver and TalkBack manual acceptance checks. Do not claim a screen-reader check is complete unless a real assistive technology was used and the browser, OS, version and routes were recorded.

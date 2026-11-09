@@ -26,7 +26,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     </div>
     <div class="orbit3d-data card">
       <div class="section-head"><div><span class="eyebrow">JPL orbital reference</span><h2>Inclination and orbital size.</h2></div><p>Values below are the JPL J2000 element snapshot (semi-major axis and inclination), not instantaneous positions. The Earth row represents the Earth–Moon barycentre proxy.</p></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Body</th><th scope="col">Semi-major axis</th><th scope="col">Inclination to J2000 ecliptic</th></tr></thead><tbody>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="JPL orbital reference table; scroll horizontally to read all columns"><table><thead><tr><th scope="col">Body</th><th scope="col">Semi-major axis</th><th scope="col">Inclination to J2000 ecliptic</th></tr></thead><tbody>
         {ephemerisElements.map((p)=><tr><th scope="row">{p.name}{p.slug === "earth" ? "*" : ""}</th><td>{p.a.toFixed(8)} AU</td><td>{p.inclination.toFixed(6)}°</td></tr>)}
       </tbody></table></div>
       <p class="data-footnote">* JPL's Earth orbital elements describe the Earth–Moon barycentre (EMB), used here as a close proxy for Earth's orbit.</p>
@@ -268,7 +268,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     .scene-scale-key{position:absolute;left:16px;bottom:15px;display:flex;gap:17px;flex-wrap:wrap;color:#a8b6c5;font-size:.65rem;pointer-events:none}
     .scene-scale-key span{display:flex;align-items:center;gap:6px}
     .scene-scale-key i{width:7px;height:7px;border-radius:50%;background:#c3a573}
-    .orbit3d-controls{padding:22px;border-left:1px solid rgba(255,255,255,.1);color:#d7e0e8}
+    .orbit3d-controls{padding:22px;border-left:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,#0b1423,#101b2d);color:#d7e0e8}
     .orbit3d-controls .eyebrow{color:#d5b981}
     .orbit3d-controls p{font-size:.74rem;line-height:1.7;color:#aab8c7}
     .orbit3d-controls strong{color:#f5f0e7}
@@ -278,7 +278,7 @@ import { ephemerisElements } from "../../data/ephemeris";
     .scale-explainer article{padding:20px}
     .scale-explainer h2{font-size:1.25rem;margin:9px 0}
     .scale-explainer p{margin:0;color:var(--quiet);font-size:.78rem;line-height:1.7}
-    .orbit3d-data{margin-top:14px;padding:23px}
+    .orbit3d-data{margin-top:14px;padding:23px;min-width:0;overflow:hidden}.orbit3d-data .table-scroll{max-width:100%;overflow-x:auto}.orbit3d-data table{min-width:560px}
     .orbit3d-data .section-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:18px}
     .orbit3d-data .section-head h2{font-size:1.65rem;margin:8px 0}
     .orbit3d-data .section-head p{font-size:.76rem}

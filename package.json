@@ -3,20 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "npm@11.19.1",
+  "engines": {
+    "node": ">=22.22.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "check:site": "node scripts/check-site.mjs",
-    "verify": "npm run test:physics && npm run test:catalogue && npm run test:ephemeris && npm run test:mission && npm run test:contrast && npm run build && npm run check:site",
+    "check:accessibility": "node scripts/check-accessibility.mjs",
+    "test:browser": "node scripts/check-browser-accessibility.mjs",
+    "verify": "npm run test:physics && npm run test:catalogue && npm run test:ephemeris && npm run test:mission && npm run test:contrast && npm run check:accessibility && npm run build && npm run check:site && npm run test:browser",
     "test:physics": "node --test scripts/orbital-mechanics.test.mjs",
     "test:catalogue": "node --experimental-strip-types --test scripts/catalogue-data.test.mjs",
     "test:ephemeris": "node --experimental-strip-types --test scripts/ephemeris-horizons.test.mjs",
     "test:contrast": "node scripts/check-contrast.mjs",
     "test:mission": "node --test scripts/mission-design.test.mjs"
   },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.65.0"
+  },
   "dependencies": {
-    "astro": "^5.0.0",
+    "astro": "7.4.7",
+    "sharp": "0.35.5",
     "three": "0.187.0"
   }
 }

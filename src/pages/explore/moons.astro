@@ -20,8 +20,8 @@ const moons = [
   <header class="page-intro container"><div class="eyebrow">MOONS AND RINGS</div><h1>Moons of the Solar System.</h1><p class="lede">Some moons have atmospheres, volcanoes, magnetic fields or possible oceans beneath their icy crusts. Tides help shape many of these environments.</p></header>
   <aside class="container callout moon-count-note" aria-label="Current moon catalogue count">
     <strong>Catalogue snapshot · 4 November 2026</strong>
-    <p>NASA reports 461 officially recognised moons orbiting the eight planets and dwarf planet Pluto. The JPL Solar System Dynamics catalogue listed 461 planetary satellites on 4 November 2026. Hundreds of additional moons are confirmed around asteroids and other small bodies, so 461 is not a count of every natural satellite in the Solar System.</p>
-    <p><a href="https://ssd.jpl.nasa.gov/sats/" target="_blank" rel="noreferrer">JPL Planetary Satellites catalogue ↗</a> · <a href="https://science.nasa.gov/solar-system/moons/facts/" target="_blank" rel="noreferrer">NASA Moons: Facts ↗</a></p>
+    <p>The JPL Solar System Dynamics discovery-circumstances table represents 460 officially recognised planetary satellites, including Pluto's moons but excluding Earth's Moon. Add Earth's Moon and the total is 461 across the eight planets and Pluto. This is not a count of every natural satellite in the Solar System: additional moons orbit asteroids and other small bodies.</p>
+    <p><a href="https://ssd.jpl.nasa.gov/sats/discovery.html" target="_blank" rel="noreferrer">JPL Planetary Satellites catalogue ↗</a> · <a href="https://science.nasa.gov/solar-system/moons/facts/" target="_blank" rel="noreferrer">NASA Moons: Facts ↗</a></p>
   </aside>
   <section class="section container">
     <div class="section-head"><div><div class="eyebrow">SELECTED NATURAL SATELLITES</div><h2>Explore notable moons.</h2></div><p>This is a curated starting set, not a complete moon catalogue. Confirmed moon totals change as new discoveries are announced and objects are re-observed.</p></div>
@@ -29,7 +29,7 @@ const moons = [
 
     <section class="moon-reference">
       <div class="section-head"><div><span class="eyebrow">JPL PHYSICAL PARAMETERS</span><h2>Physical properties of selected moons.</h2></div><p>Mass, gravitational acceleration at an equivalent-volume mean radius, and idealised spherical escape speed below are derived from JPL's gravitational parameter (GM) and mean radius. These are reference values, not local measurements; for irregular bodies, local gravity and escape conditions vary with shape, rotation and position.</p></div>
-      <div class="table-wrap"><table class="moon-physical-table">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Selected moon physical parameters table; scroll horizontally to read all columns"><table class="moon-physical-table">
         <thead><tr><th>Moon</th><th>Orbits</th><th>GM solution</th><th>Mean radius</th><th>Mass (derived)</th><th>Mean density (derived)</th><th>Gravity at mean radius (derived)</th><th>Spherical escape speed (derived)</th></tr></thead>
         <tbody>{satellitePhysical.map((m) => { const d = satelliteDerived(m); return <tr><th>{m.name}</th><td>{m.host}</td><td><code>{m.gmReference}</code></td><td>{m.meanRadiusKm.toLocaleString("en-US")} km</td><td>{d.massKg.toExponential(3)} kg</td><td>{d.densityGcm3.toFixed(3)} g/cm³</td><td>{d.gravityMS2.toFixed(3)} m/s²</td><td>{d.escapeVelocityKmS.toFixed(3)} km/s</td></tr>; })}</tbody>
       </table></div>

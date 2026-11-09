@@ -40,7 +40,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 
     <div class="card data-table-card">
       <div class="section-head"><div><div class="eyebrow">The values behind the plot</div><h2>Inspect the data.</h2></div><p>Numbers are rounded reference values used by ORRERYA's planet profiles, not a new precision database.</p></div>
-      <div class="table-scroll"><table class="planet-data-table"><thead><tr><th scope="col">Planet</th><th scope="col" id="table-x-heading">Semi-major axis (AU)</th><th scope="col" id="table-y-heading">Orbital period (Earth days)</th></tr></thead><tbody id="planet-data-rows"></tbody></table></div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Planet correlation data table; scroll horizontally to read all columns"><table class="planet-data-table"><thead><tr><th scope="col">Planet</th><th scope="col" id="table-x-heading">Semi-major axis (AU)</th><th scope="col" id="table-y-heading">Orbital period (Earth days)</th></tr></thead><tbody id="planet-data-rows"></tbody></table></div>
     </div>
 
     <div class="data-method prose">

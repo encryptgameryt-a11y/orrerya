@@ -171,7 +171,7 @@ import { planets } from "../../data/planets";
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches && orbitPlay) {
       orbitPlay.disabled = true;
-      orbitPlay.setAttribute("aria-label", "Orbit animation disabled because reduced motion is enabled");
+      orbitPlay.setAttribute("aria-label", "Play orbit — animation is disabled because reduced motion is enabled");
       if (orbitPlayStatus) orbitPlayStatus.textContent = "Animation is disabled by your reduced-motion setting. Use the slider to move the planet.";
     }
   </script>
