@@ -99,4 +99,6 @@ Every push to `main`, every pull request, and a daily scheduled run execute the 
 A committed `package-lock.json` records the dependency graph resolved by Node.js 24/npm 11 in the GitHub Actions environment. CI uses `npm ci` so the build installs the exact dependency tree represented by that lockfile rather than resolving a new compatible tree on every run. Update the lockfile deliberately when changing dependencies and verify the result in CI.
 
 
+Separate daily security workflows run CodeQL analysis for JavaScript/TypeScript and Gitleaks over full Git history; the Gitleaks Action is pinned to a full commit SHA. Dependabot proposes weekly npm and GitHub Actions updates. npm audit, CodeQL, Gitleaks and automated accessibility checks complement one another; none is a substitute for reviewing configuration, runtime behavior or manually responding to an exposed credential.
+
 The automated checks do not certify spoken screen-reader output. Follow [the accessibility testing protocol](docs/accessibility-testing.md) for NVDA, VoiceOver and TalkBack manual acceptance checks. Do not claim a screen-reader check is complete unless a real assistive technology was used and the browser, OS, version and routes were recorded.
