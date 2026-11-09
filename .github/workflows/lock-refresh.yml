@@ -9,6 +9,8 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - package-lock.json
 
 concurrency:
   group: dependency-lock-${{ github.event.pull_request.head.ref || github.ref }}
@@ -37,13 +39,9 @@ jobs:
         run: npm ci --no-fund
       - name: Audit dependencies
         run: npm audit --audit-level=high
-      - name: Install Chromium for browser QA
-        run: npx playwright install --with-deps chromium
-      - name: Run project verification
-        run: npm run verify
       - name: Check patch whitespace
         run: git diff --check
-      - name: Commit verified lockfile
+      - name: Commit verified dependency lockfile
         run: |
           if ! git diff --quiet -- package-lock.json; then
             git config user.name "github-actions[bot]"
@@ -54,3 +52,15 @@ jobs:
           else
             echo "package-lock.json is already current."
           fi
+      - name: Install Chromium for browser QA
+        run: npx playwright install --with-deps chromium
+      - name: Run project verification
+        run: npm run verify
+      - name: Upload responsive QA screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orrerya-lock-refresh-visual-qa
+          path: artifacts/visual-qa/
+          if-no-files-found: ignore
+          retention-days: 14
