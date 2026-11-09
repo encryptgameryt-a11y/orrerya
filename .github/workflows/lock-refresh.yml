@@ -30,6 +30,8 @@ jobs:
         run: npm ci --no-fund
       - name: Audit dependencies
         run: npm audit --audit-level=high
+      - name: Install Chromium for browser QA
+        run: npx playwright install --with-deps chromium
       - name: Run project verification
         run: npm run verify
       - name: Check patch whitespace
