@@ -99,7 +99,7 @@ export const planets: Planet[] = [
       "Mercury's large iron-rich core makes it unusually dense for a small rocky world. The MESSENGER mission transformed our understanding of its composition, geology and magnetic environment."
     ],
     highlight: "One Mercury solar day — sunrise to sunrise — lasts about 176 Earth days. That is different from its roughly 59-day rotation relative to distant stars.",
-    mission: "NASA's MESSENGER orbited Mercury from 2011 to 2015. ESA and JAXA's BepiColombo mission entered its Mercury arrival phase in September 2026. Orbit capture is scheduled for 21 November 2026, with the two orbiters due to separate in December and routine science planned for April 2027."
+    mission: "NASA's MESSENGER orbited Mercury from 2011 to 2015. ESA and JAXA's BepiColombo mission entered its Mercury arrival phase in September 2026. Mercury orbit capture is scheduled for 21 November 2026. ESA's current timeline places Mio's separation on 9–10 December 2026 and the science phase in April 2027."
   },
   {
     slug: "venus", name: "Venus", order: 2, className: "Terrestrial planet",
